@@ -1,0 +1,66 @@
+.rocket-container {
+    position: absolute;
+    bottom: 50px;
+    /* Bring it up into view so observer sees it */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 20;
+    /* High z-index to sit on top */
+    pointer-events: none;
+}
+
+.rocket-icon {
+    font-size: 3rem;
+    color: var(--accent-neon);
+    transform: rotate(-45deg);
+}
+
+.rocket-container.launch {
+    opacity: 1;
+    animation: flightPath 4s ease-out forwards;
+}
+
+.rocket-exhaust {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 0;
+    background: linear-gradient(to bottom, cyan, transparent);
+    transition: height 0.2s;
+}
+
+.rocket-container.launch .rocket-exhaust {
+    height: 40px;
+    animation: exhaustPulse 0.1s infinite alternate;
+}
+
+@keyframes flightPath {
+    0% {
+        transform: translate(-50%, 0) rotate(-45deg) scale(0.5);
+    }
+
+    10% {
+        transform: translate(-50%, -20px) rotate(-45deg) scale(1);
+    }
+
+    100% {
+        transform: translate(200px, -600px) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+@keyframes exhaustPulse {
+    0% {
+        opacity: 0.6;
+        height: 30px;
+    }
+
+    100% {
+        opacity: 1;
+        height: 50px;
+    }
+}

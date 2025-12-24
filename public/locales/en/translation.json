@@ -1,0 +1,282 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "technologies": "Technologies",
+    "about": "About",
+    "estimate": "Estimate",
+    "lets_talk": "Let's Talk"
+  },
+  "footer": {
+    "tagline": "Digital solutions under key for business and startups.",
+    "menu": "Menu",
+    "connect": "Connect",
+    "rights": "All rights reserved."
+  },
+  "hero": {
+    "title": "Digital solutions <br /> <span class='text-gradient'>under key</span> for <br /> business and startups",
+    "subtitle": "Web, mobile applications, automation and AI <br /> using Google ecosystem and modern backend.",
+    "cta_discuss": "Discuss the project",
+    "cta_consult": "Get consultation"
+  },
+  "tech": {
+    "title": "Technology Stack",
+    "subtitle": "We choose the right tools for scalability, performance, and speed.",
+    "categories": {
+      "frontend": "Core & Frontend",
+      "backend": "Backend & Cloud",
+      "ai": "AI & Automation"
+    }
+  },
+  "value_prop": {
+    "header": "More than just code",
+    "subheader": "We build full digital ecosystems, not just isolated apps.",
+    "cards": {
+      "architecture": {
+        "title": "Architecture",
+        "desc": "Scalable foundations built for growth from day one."
+      },
+      "automation": {
+        "title": "Automation",
+        "desc": "Streamlined workflows to save time and reduce errors."
+      },
+      "scalability": {
+        "title": "Scalability",
+        "desc": "Systems designed to handle millions of users."
+      },
+      "ai": {
+        "title": "AI Integration",
+        "desc": "Smart solutions leveraging the latest in AI technology."
+      }
+    }
+  },
+  "services": {
+    "header": {
+      "title": "Comprehensive Digital Solutions",
+      "subtitle": "From concept to launch, we handle every technical aspect of your product."
+    },
+    "web": {
+      "title": "Web Development",
+      "desc": "High-performance websites and web applications built with React, Next.js, and modern CSS."
+    },
+    "mobile": {
+      "title": "Mobile Applications",
+      "desc": "Cross-platform mobile apps that provide native-like experiences for iOS and Android."
+    },
+    "backend": {
+      "title": "Backend & Databases",
+      "desc": "Secure and scalable backend architectures using cloud solutions and robust databases."
+    },
+    "automation": {
+      "title": "Business Automation",
+      "desc": "Streamlining operations with Google Workspace automation and custom scripts."
+    },
+    "ai": {
+      "title": "AI Solutions",
+      "desc": "Integrating OpenAI and custom models to add intelligence to your products."
+    },
+    "design": {
+      "title": "Design & Brand Identity",
+      "desc": "User-centric UI/UX design that builds trust and converts visitors."
+    }
+  },
+  "about": {
+    "philosophy": {
+      "title": "Our Philosophy",
+      "subtitle": "We don't just write code. We engineer digital products.",
+      "system": {
+        "title": "System Thinking > Templates",
+        "desc": "Every business is unique. We reject cookie-cutter templates in favor of thoughtful systems designed specifically for your operational needs and growth trajectory."
+      },
+      "automation": {
+        "title": "Automation > Manual Work",
+        "desc": "If it can be automated, it should be. We implement robust automation strategies to free up your time for high-value strategic work, reducing human error and increasing efficiency."
+      },
+      "ai": {
+        "title": "AI as an Efficiency Multiplier",
+        "desc": "AI isn't a gimmick; it's a fundamental shift in how we build. We integrate AI to enhance user experience, optimize backend processes, and deliver smarter products."
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready to build a scalable digital product?",
+    "subtitle": "Let's discuss your project and turn your vision into a robust reality.",
+    "button": "Start the Conversation"
+  },
+  "contact": {
+    "title": "Let's build something <br /> <span class='text-gradient'>remarkable</span>.",
+    "subtitle": "Ready to transform your business? Fill out the form, and we'll schedule a call to discuss your vision.",
+    "details": {
+      "email": "Email",
+      "socials": "Socials"
+    },
+    "success": {
+      "title": "Message Sent!",
+      "message": "Thank you for reaching out. We'll get back to you shortly."
+    },
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "company": "Company",
+      "type": "Inquiry Type",
+      "details": "Project Details",
+      "placeholders": {
+        "name": "John Doe",
+        "email": "john@company.com",
+        "company": "Company Name",
+        "details": "Tell us about your goals..."
+      },
+      "options": {
+        "project": "New Project",
+        "consultation": "Consultation",
+        "other": "Other"
+      },
+      "buttons": {
+        "send": "Send Request",
+        "sending": "Sending...",
+        "sent": "Message Sent!"
+      }
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know about working with us.",
+    "items": [
+      {
+        "question": "What services do you offer?",
+        "answer": "We specialize in custom web development, mobile applications, backend solutions, and business automation. From landing pages to complex SaaS platforms, we cover the full digital spectrum."
+      },
+      {
+        "question": "How much does a project cost?",
+        "answer": "Every project is unique. We provide a tailored estimate based on complexity and features. You can use our Estimate Calculator to get a rough idea, or book a consultation for a precise quote."
+      },
+      {
+        "question": "How long does development take?",
+        "answer": "Timelines vary by project size. A simple website might take 2-4 weeks, while a full-scale mobile app could take 2-4 months. We prioritize speed without compromising quality."
+      },
+      {
+        "question": "Do you offer post-launch support?",
+        "answer": "Yes! We offer ongoing maintenance packages to ensure your digital product remains secure, up-to-date, and performs optimally as your business grows."
+      },
+      {
+        "question": "What technologies do you use?",
+        "answer": "We use modern, scalable tech stacks including React, Next.js, Node.js, Flutter, Supabase, and AI integrations like OpenAI to build future-proof solutions."
+      }
+    ]
+  },
+  "widget": {
+    "title": "Welcome Intro",
+    "subtitle": "Discover how we build the future."
+  },
+  "calc": {
+    "header": {
+      "title": "Project Estimator",
+      "subtitle": "Customize your digital solution and get an instant estimate."
+    },
+    "steps": {
+      "service": "Service",
+      "scale": "Scale",
+      "features": "Features",
+      "estimate": "Estimate"
+    },
+    "from": "From",
+    "multiplier": "Multiplier",
+    "result": {
+      "title": "Estimated Investment",
+      "disclaimer": "*This is a rough estimate. Final price may vary based on specific requirements.",
+      "start_over": "Start Over",
+      "book": "Book Consultation"
+    },
+    "nav": {
+      "back": "Back",
+      "next": "Next"
+    },
+    "services": {
+      "web": {
+        "title": "Web Development",
+        "desc": "Landing pages, corporate sites, or web apps."
+      },
+      "mobile": {
+        "title": "Mobile App",
+        "desc": "iOS and Android applications with Flutter."
+      },
+      "system": {
+        "title": "Custom System",
+        "desc": "CRMs, Dashboards, and SaaS platforms."
+      },
+      "ai": {
+        "title": "AI Solution",
+        "desc": "Chatbots, automation, and predictive models."
+      }
+    },
+    "types": {
+      "mvp": {
+        "title": "Startup / MVP",
+        "desc": "Essential features for quick launch."
+      },
+      "growth": {
+        "title": "Small Business",
+        "desc": "Polished design and scalability."
+      },
+      "enterprise": {
+        "title": "Enterprise",
+        "desc": "Maximum security, compliance, and scale."
+      }
+    },
+    "features": {
+      "cms": "Admin / CMS",
+      "payment": "Payment Integration",
+      "auth": "User Authentication",
+      "multi_lang": "Multilingual",
+      "seo": "Advanced SEO",
+      "api": "External API Integration",
+      "chat": "Live Chat / Support",
+      "ai_bot": "AI Chatbot"
+    }
+  },
+  "process": {
+    "title": "How It Works",
+    "steps": {
+      "analysis": {
+        "title": "Analysis",
+        "short": "Deep dive into requirements",
+        "detail": "We dissect your business goals and technical needs to define a precise roadmap, minimizing risks before development begins."
+      },
+      "architecture": {
+        "title": "Architecture",
+        "short": "System design & planning",
+        "detail": "Engineering scalable, secure, and modular systems capable of handling high loads and future expansion without technical debt."
+      },
+      "uxui": {
+        "title": "UX/UI",
+        "short": "User-centric interface design",
+        "detail": "Merging aesthetics with behavioral psychology to create intuitive interfaces that guide users effortlessly toward conversion."
+      },
+      "dev": {
+        "title": "Development",
+        "short": "Clean, scalable code",
+        "detail": "Using modern, type-safe technologies to build high-performance applications that are easy to maintain and extend."
+      },
+      "backend": {
+        "title": "Backend",
+        "short": "Robust data management",
+        "detail": "Architecting powerful APIs and secure databases to handle complex data logic and real-time processing at scale."
+      },
+      "ai": {
+        "title": "AI Integration",
+        "short": "Smart features implementation",
+        "detail": "Leveraging cutting-edge AI—from predictive models to LLMs—to automate workflows and give your product a competitive edge."
+      },
+      "testing": {
+        "title": "Testing",
+        "short": "Rigorous quality assurance",
+        "detail": "Comprehensive automated and manual testing to ensure a bug-free, secure, and reliable performance across all devices."
+      },
+      "launch": {
+        "title": "Launch",
+        "short": "Deployment & support",
+        "detail": "Managing the entire deployment process with CI/CD pipelines, ensuring a smooth transition to production with ongoing monitoring."
+      }
+    }
+  }
+}

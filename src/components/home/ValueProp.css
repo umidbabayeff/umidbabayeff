@@ -1,0 +1,61 @@
+.value-prop {
+    background: var(--bg-dark);
+}
+
+.value-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.value-header h2 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.value-header p {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+}
+
+.value-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.value-card {
+    background: var(--bg-card);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition-medium);
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-blue);
+}
+
+.value-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+    /* White monotone */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.value-card:hover .value-icon {
+    color: var(--accent-blue);
+    /* Color on hover */
+    transform: scale(1.1);
+}
+
+.value-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.value-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}

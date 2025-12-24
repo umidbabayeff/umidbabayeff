@@ -1,0 +1,169 @@
+.process-section {
+    background: transparent;
+    /* Let global background show through */
+}
+
+.process-section h2 {
+    text-align: center;
+    font-size: var(--text-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    align-items: flex-start;
+    /* Prevent cards from stretching to match tallest sibling */
+}
+
+.process-step {
+    padding: var(--spacing-lg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(10, 10, 10, 0.5);
+    /* 50% transparent black as requested */
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: var(--radius-lg);
+    /* 16px */
+    display: flex;
+    flex-direction: column;
+}
+
+.process-step:hover,
+.process-step:focus {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-blue);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    outline: none;
+}
+
+.step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-sm);
+}
+
+.step-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+    line-height: 1;
+}
+
+.step-icon {
+    font-size: 2rem;
+    color: var(--accent-blue);
+    opacity: 0.7;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.process-step:hover .step-icon,
+.process-step:focus .step-icon {
+    opacity: 1;
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+}
+
+.process-step:hover .step-number,
+.process-step:focus .step-number {
+    color: var(--accent-blue);
+}
+
+.process-step h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.step-short {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Detail Expansion Animation */
+.step-detail-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.step-detail {
+    overflow: hidden;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    padding-top: 0;
+}
+
+.process-step:hover .step-detail-wrapper,
+.process-step:focus .step-detail-wrapper {
+    grid-template-rows: 1fr;
+}
+
+.process-step:hover .step-detail,
+.process-step:focus .step-detail {
+    opacity: 1;
+    transform: translateY(0);
+    padding-top: var(--spacing-md);
+}
+
+.process-step:hover .step-short,
+.process-step:focus .step-short {
+    display: none;
+    /* Hide short desc on hover to reduce clutter, or keep it? Prompt says "Reveal detailed". Usually replacing is cleaner. Let's try hiding short. */
+    /* Wait, "display: none" breaks transition. Better to just fade it out or keep it distinct. */
+    /* Let's keep it visible but maybe dimmed, or let the detail appear below it. */
+    /* The design rule: "Default: minimal... On hover: expansion... reveal detailed" */
+    /* Hiding the short desc might cause a jump if not careful. Let's JUST show the detail below. */
+}
+
+/* Override the previous hide logic */
+.process-step:hover .step-short,
+.process-step:focus .step-short {
+    display: block;
+    opacity: 0.5;
+    /* Dim the short desc to focus on detail */
+}
+
+/* Light Mode Overrides */
+[data-theme="light"] .process-step {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .process-step:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--accent-blue);
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .process-step h3 {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .step-short,
+[data-theme="light"] .step-detail {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .step-number {
+    color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .process-step:hover .step-number {
+    color: var(--accent-blue);
+}

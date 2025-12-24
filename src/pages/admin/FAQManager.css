@@ -1,0 +1,84 @@
+.faq-manager {
+    padding: 20px;
+}
+
+.language-selector {
+    margin-bottom: 30px;
+}
+
+.language-selector select {
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+}
+
+.faq-form-container {
+    background-color: #242424;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+
+.faq-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.faq-form textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #444;
+    background-color: #333;
+    color: #fff;
+    resize: vertical;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.faq-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #242424;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.faq-table th,
+.faq-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+.faq-table th {
+    background-color: #1a1a1a;
+    font-weight: bold;
+    color: var(--accent-blue);
+}
+
+.action-btn {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.action-btn.edit {
+    background-color: #eab308;
+    color: black;
+}
+
+.action-btn.delete {
+    background-color: #ef4444;
+    color: white;
+}

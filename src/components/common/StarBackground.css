@@ -1,0 +1,305 @@
+.star-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* Behind everything */
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    pointer-events: none;
+    overflow: hidden;
+    transition: background 0.5s ease;
+}
+
+[data-theme="light"] .star-background {
+    /* Blue sky with corner sunlight (top right) - No Sun Orb, just light */
+    background:
+        radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 60%),
+        /* Corner Light */
+        linear-gradient(to bottom, #4fa8e0, #cceeff);
+    /* Sky Gradient */
+}
+
+/* Hide stars in light mode - Force hidden */
+[data-theme="light"] .star,
+[data-theme="light"] .shooting-star {
+    display: none !important;
+}
+
+/* Remove Sun Orb (Old) */
+[data-theme="light"] .star-background::after {
+    display: none;
+}
+
+/* Sunshine Rays Animation - INTENSIFIED */
+[data-theme="light"] .star-background::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: repeating-conic-gradient(from 0deg at 50% 50%,
+            rgba(255, 255, 255, 0.25) 0deg 10deg,
+            transparent 10deg 20deg);
+    animation: rotateSunshine 120s linear infinite;
+    z-index: 0;
+    /* Behind clouds */
+    pointer-events: none;
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 80%);
+    mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 80%);
+    /* Extended mask */
+    mix-blend-mode: overlay;
+    /* Adds that 'shiny' glow interaction */
+}
+
+@keyframes rotateSunshine {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Shooting Stars */
+.shooting-star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1), 0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 1);
+    animation: shoot 3s linear infinite;
+    /* Slower animation for visibility */
+    opacity: 0;
+}
+
+.shooting-star::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 400px;
+    /* Longer tail */
+    height: 2px;
+    /* Thicker tail */
+    background: linear-gradient(90deg, rgba(255, 255, 255, 1), transparent);
+}
+
+@keyframes shoot {
+    0% {
+        transform: rotate(315deg) translateX(0);
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+        /* Quick fade in */
+    }
+
+    70% {
+        transform: rotate(315deg) translateX(-1500px);
+        /* Loooooooong travel */
+        opacity: 1;
+        /* Stay visible longer */
+    }
+
+    100% {
+        transform: rotate(315deg) translateX(-1500px);
+        opacity: 0;
+    }
+}
+
+/* Realistic Clouds 3D Parallax - Sprite Sheet */
+.cloud {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease;
+    pointer-events: none;
+    will-change: transform;
+    background-image: url('/clouds-sprite.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    mix-blend-mode: screen;
+}
+
+[data-theme="light"] .cloud {
+    opacity: 1;
+}
+
+.cloud-vary-1 {
+    background-position: 10% 20%;
+    background-size: 200%;
+}
+
+.cloud-vary-2 {
+    background-position: 80% 50%;
+    background-size: 250%;
+}
+
+.cloud-vary-3 {
+    background-position: 50% 80%;
+    background-size: 180%;
+}
+
+/* Layer Specifics */
+.cloud-back {
+    z-index: 1;
+    filter: blur(4px);
+    opacity: 0;
+}
+
+[data-theme="light"] .cloud-back {
+    opacity: 0.6;
+}
+
+.cloud-mid {
+    z-index: 5;
+    filter: blur(1px);
+    opacity: 0;
+}
+
+[data-theme="light"] .cloud-mid {
+    opacity: 0.8;
+}
+
+.cloud-front {
+    z-index: 10;
+    filter: none;
+    opacity: 0;
+}
+
+[data-theme="light"] .cloud-front {
+    opacity: 0.95;
+}
+
+
+/* Individual Cloud Animations & Positions */
+.cloud-b1 {
+    width: 300px;
+    top: 20%;
+    left: -20%;
+    animation: floatRight 180s linear infinite;
+}
+
+.cloud-b2 {
+    width: 350px;
+    top: 10%;
+    left: 40%;
+    animation: floatRight 200s linear infinite;
+    animation-delay: -50s;
+}
+
+.cloud-b3 {
+    width: 250px;
+    bottom: 30%;
+    right: -20%;
+    animation: floatLeft 220s linear infinite;
+}
+
+.cloud-m1 {
+    width: 500px;
+    top: 30%;
+    left: -20%;
+    animation: floatRight 120s linear infinite;
+    animation-delay: -20s;
+}
+
+.cloud-m2 {
+    width: 550px;
+    bottom: 20%;
+    right: -20%;
+    animation: floatLeft 140s linear infinite;
+    animation-delay: -40s;
+}
+
+.cloud-f1 {
+    width: 700px;
+    bottom: -10%;
+    left: -20%;
+    animation: floatRight 90s linear infinite;
+    opacity: 0;
+}
+
+.cloud-f2 {
+    width: 800px;
+    top: -10%;
+    right: -20%;
+    animation: floatLeft 100s linear infinite;
+    animation-delay: -30s;
+}
+
+
+@keyframes floatRight {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(100vw);
+    }
+}
+
+@keyframes floatLeft {
+    from {
+        transform: translateX(100vw);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* Snow Effect */
+.snow-layer {
+    background: #FFF;
+    /* Use solid white background for the 'main' particle too */
+    border-radius: 50%;
+    position: absolute;
+    top: -100vh;
+    left: 0;
+    right: 0;
+    animation: snowfall linear infinite;
+    z-index: 100;
+    /* High z-index */
+    pointer-events: none;
+}
+
+.layer-1 {
+    width: 3px;
+    height: 3px;
+    animation-duration: 10s;
+    opacity: 1;
+}
+
+.layer-2 {
+    width: 4px;
+    height: 4px;
+    animation-duration: 8s;
+    opacity: 0.9;
+}
+
+.layer-3 {
+    width: 5px;
+    height: 5px;
+    animation-duration: 6s;
+    opacity: 0.8;
+}
+
+@keyframes snowfall {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(200vh);
+    }
+}
+
+/* Hide snow in light mode */
+[data-theme="light"] .snow-layer {
+    display: none !important;
+}

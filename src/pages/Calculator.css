@@ -1,0 +1,458 @@
+.calculator-page {
+    padding-top: var(--spacing-md);
+    min-height: 100vh;
+}
+
+.calculator-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.calculator-header h1 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--spacing-xs);
+    background: linear-gradient(to right, #fff, #a0a0a0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .calculator-header h1 {
+    background: linear-gradient(to right, #1a1a1a, #4a5568);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.calculator-header p {
+    color: var(--text-secondary);
+}
+
+/* Ensure step titles are visible */
+[data-theme="light"] .step-title {
+    color: var(--text-primary);
+}
+
+.calculator-content {
+    background: rgba(255, 255, 255, 0.03);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    min-height: 400px;
+}
+
+[data-theme="light"] .calculator-content {
+    background: rgba(255, 255, 255, 0.6);
+    /* More opaque white */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+}
+
+.calculator-container {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    max-width: 900px;
+    margin: 0 auto var(--spacing-xl);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* Progress Bar */
+.progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    padding: 0 var(--spacing-md);
+}
+
+.progress-step {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    background: var(--bg-card);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    z-index: 2;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.progress-step.active {
+    color: var(--text-primary);
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+    font-weight: 600;
+}
+
+[data-theme="light"] .progress-step.active {
+    color: #ffffff !important;
+    /* Force white text on blue background */
+}
+
+.progress-line {
+    flex: 1;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 10px;
+    transition: background 0.3s ease;
+}
+
+.progress-line.filled {
+    background: var(--accent-blue);
+}
+
+/* Step Grids */
+.step-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.calc-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.calc-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-5px);
+}
+
+.calc-card.selected {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+/* Light Mode Card Styling */
+[data-theme="light"] .calc-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .calc-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    /* border-color: var(--accent-blue); User removed border preference */
+    background: #ffffff;
+}
+
+[data-theme="light"] .calc-card.selected {
+    background: #eff6ff;
+    /* Very bright blue tint */
+    /* border-color: var(--accent-blue); REMOVED */
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+    /* Soft blue shadow instead of border */
+}
+
+
+[data-theme="light"] .calc-card h3 {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .calc-card p {
+    color: var(--text-secondary);
+}
+
+.calc-icon {
+    font-size: 2.5rem;
+    color: var(--accent-blue);
+    margin-bottom: 1rem;
+}
+
+.calc-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.calc-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.price-tag {
+    font-weight: 700;
+    color: var(--accent-neon);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* Features List */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.feature-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.feature-item.selected {
+    border-color: var(--accent-blue);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: all 0.2s;
+}
+
+[data-theme="light"] .checkbox {
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    /* Checkmark is white */
+}
+
+/* Feature Item Light Mode */
+[data-theme="light"] .feature-item {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .feature-item:hover {
+    background: #fff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    /* border-color: var(--accent-blue); REMOVED */
+}
+
+[data-theme="light"] .feature-item.selected {
+    background: #eff6ff;
+    /* border-color: var(--accent-blue); REMOVED */
+    box-shadow: 0 2px 4px -1px rgba(37, 99, 235, 0.15);
+}
+
+.feature-item.selected .checkbox {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+
+.feature-price {
+    margin-left: auto;
+    font-weight: 600;
+    color: var(--accent-neon);
+}
+
+[data-theme="light"] .feature-price {
+    color: var(--accent-blue);
+}
+
+/* Estimate Result */
+.estimate-result {
+    text-align: center;
+    padding: var(--spacing-md);
+}
+
+.total-price {
+    font-size: 4rem;
+    font-weight: 800;
+    margin: var(--spacing-md) 0;
+    background: linear-gradient(to right, var(--accent-blue), var(--accent-neon));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .total-price {
+    /* Make total price pop in light mode */
+    background: linear-gradient(to right, #2563eb, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.disclaimer {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-lg);
+}
+
+.result-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Footer Navigation */
+.calculator-footer {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: var(--spacing-md);
+}
+
+[data-theme="light"] .calculator-footer {
+    border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.calculator-footer .btn-outline {
+    color: #fff;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #fff;
+}
+
+[data-theme="light"] .calculator-footer .btn-outline {
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    opacity: 1;
+}
+
+[data-theme="light"] .calculator-footer .btn-outline:hover {
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.calculator-footer .btn-outline:hover {
+    opacity: 1;
+}
+
+[data-theme="light"] .btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+[data-theme="light"] .btn-secondary:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+}
+
+.spacer {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .calculator-container {
+        padding: 0;
+        /* Remove container padding so content hits edges better */
+        margin: 0 0.5rem 2rem;
+        background: transparent;
+        /* Remove background on container if using content bg */
+        box-shadow: none;
+        /* Flatten */
+        border: none;
+    }
+
+    .calculator-content {
+        padding: 1.5rem 1rem;
+        /* Reduce internal padding */
+    }
+
+    .progress-bar {
+        font-size: 0.75rem;
+        padding: 0;
+        gap: 0.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .progress-step {
+        padding: 0.4rem 0.8rem;
+        border-radius: 12px;
+        white-space: nowrap;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 5px;
+    }
+
+    .progress-line {
+        display: none;
+    }
+
+    .step-grid,
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .calc-card {
+        width: 100%;
+        /* Force full width */
+        max-width: 100%;
+        /* Ensure no weird constraints */
+    }
+
+    .total-price {
+        font-size: 2rem;
+    }
+}
+
+/* Light mode overrides for the mobile steps */
+[data-theme="light"] .progress-step {
+    border-color: rgba(0, 0, 0, 0.1);
+    background: #fff;
+    color: var(--text-secondary);
+    /* Ensure inactive text is visible */
+}
+
+[data-theme="light"] .progress-step.active {
+    background: var(--accent-blue);
+    color: #ffffff;
+    border-color: var(--accent-blue);
+}
+
+@media (max-width: 480px) {
+    .progress-bar {
+        gap: 0.25rem;
+    }
+
+    .progress-step {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+    }
+}

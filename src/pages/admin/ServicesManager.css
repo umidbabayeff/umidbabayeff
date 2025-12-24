@@ -1,0 +1,115 @@
+.services-manager {
+    padding: 20px;
+    color: white;
+}
+
+.service-form-container {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.service-form .form-group {
+    margin-bottom: 15px;
+}
+
+.service-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+.service-form input,
+.service-form textarea,
+.service-form select {
+    width: 100%;
+    padding: 10px;
+    background-color: #2d2d2d;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: white;
+}
+
+.service-form textarea {
+    min-height: 100px;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-primary {
+    background-color: #3b82f6;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background-color: #4b5563;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.service-card-admin {
+    background-color: #242424;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.service-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.icon-badge {
+    background-color: #3b82f6;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+.card-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit {
+    background-color: #10b981;
+    color: white;
+}
+
+.delete {
+    background-color: #ef4444;
+    color: white;
+}

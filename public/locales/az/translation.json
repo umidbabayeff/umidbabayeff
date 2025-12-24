@@ -1,0 +1,282 @@
+{
+    "nav": {
+        "home": "Ana Səhifə",
+        "services": "Xidmətlər",
+        "technologies": "Texnologiyalar",
+        "about": "Haqqımızda",
+        "estimate": "Qiymətləndirmə",
+        "lets_talk": "Əlaqə"
+    },
+    "footer": {
+        "tagline": "Biznes və startaplar üçün rəqəmsal həllər.",
+        "menu": "Menyu",
+        "connect": "Əlaqə",
+        "rights": "Bütün hüquqlar qorunur."
+    },
+    "hero": {
+        "title": "Biznes və startaplar üçün <br /> <span class='text-gradient'>açar təhvil</span> <br /> rəqəmsal həllər",
+        "subtitle": "Google ekosistemi və müasir backend əsasında <br /> Veb, mobil tətbiqlər, avtomatlaşdırma və süni intellekt.",
+        "cta_discuss": "Layihəni müzakirə et",
+        "cta_consult": "Konsultasiya al"
+    },
+    "tech": {
+        "title": "Texnologiya Steki",
+        "subtitle": "Miqyaslılıq, performans və sürət üçün doğru alətləri seçirik.",
+        "categories": {
+            "frontend": "Core & Frontend",
+            "backend": "Backend & Bulud",
+            "ai": "Süni İntellekt & Avtomatlaşdırma"
+        }
+    },
+    "value_prop": {
+        "header": "Sadəcə koddan daha çoxu",
+        "subheader": "Biz sadəcə təcrid olunmuş tətbiqlər deyil, tam rəqəmsal ekosistemlər qururuq.",
+        "cards": {
+            "architecture": {
+                "title": "Memarlıq",
+                "desc": "İlk gündən böyümək üçün qurulmuş miqyaslı təməllər."
+            },
+            "automation": {
+                "title": "Avtomatlaşdırma",
+                "desc": "Vaxta qənaət və səhvləri azaltmaq üçün optimallaşdırılmış iş axınları."
+            },
+            "scalability": {
+                "title": "Miqyaslılıq",
+                "desc": "Milyonlarla istifadəçini idarə etmək üçün hazırlanmış sistemlər."
+            },
+            "ai": {
+                "title": "Süni İntellekt İnteqrasiyası",
+                "desc": "Ən son Sİ texnologiyalarından istifadə edən ağıllı həllər."
+            }
+        }
+    },
+    "services": {
+        "header": {
+            "title": "Hərtərəfli Rəqəmsal Həllər",
+            "subtitle": "Konseptdən işə salınmaya qədər, məhsulunuzun hər texniki tərəfini həll edirik."
+        },
+        "web": {
+            "title": "Veb İnkişafı",
+            "desc": "React, Next.js və müasir CSS ilə qurulmuş yüksək performanslı saytlar."
+        },
+        "mobile": {
+            "title": "Mobil Tətbiqlər",
+            "desc": "iOS və Android üçün nativ təcrübə təmin edən çarpaz platformalı tətbiqlər."
+        },
+        "backend": {
+            "title": "Backend və Verilənlər Bazas",
+            "desc": "Bulud həllərindən istifadə edərək təhlükəsiz və miqyaslana bilən backend."
+        },
+        "automation": {
+            "title": "Biznes Avtomatlaşdırılması",
+            "desc": "Google Workspace avtomatlaşdırması və xüsusi skriptlərlə əməliyyatların sadələşdirilməsi."
+        },
+        "ai": {
+            "title": "Sİ Həlləri",
+            "desc": "Məhsullarınıza zəka əlavə etmək üçün OpenAI və xüsusi modellərin inteqrasiyası."
+        },
+        "design": {
+            "title": "Dizayn və Brend İdentikliyi",
+            "desc": "İnam yaradan və ziyarətçiləri müştəriyə çevirən istifadəçi yönümlü UI/UX."
+        }
+    },
+    "about": {
+        "philosophy": {
+            "title": "Fəlsəfəmiz",
+            "subtitle": "Biz sadəcə kod yazmırıq. Biz rəqəmsal məhsullar mühəndisliyi edirik.",
+            "system": {
+                "title": "Sistemli Düşüncə > Şablonlar",
+                "desc": "Hər biznes unikaldır. Biz sizin ehtiyaclarınıza uyğun dizayn edilmiş düşünülmüş sistemləri üstün tuturuq."
+            },
+            "automation": {
+                "title": "Avtomatlaşdırma > Əl Əməyi",
+                "desc": "Əgər avtomatlaşdırıla bilərsə, edilməlidir. Vaxtınızı strateji işlərə ayırmaq üçün güclü strategiyalar tətbiq edirik."
+            },
+            "ai": {
+                "title": "Sİ Səmərəlilik Multiplikatoru Kimi",
+                "desc": "Sİ sadəcə bir hiylə deyil; bu, quruculuq tərzimizdə əsaslı bir keçiddir. Biz Sİ-ni inteqrasiya edirik."
+            }
+        }
+    },
+    "cta": {
+        "title": "Miqyaslı rəqəmsal məhsul qurmağa hazırsınız?",
+        "subtitle": "Gəlin layihənizi müzakirə edək və vizyonunuzu reallığa çevirək.",
+        "button": "Danışığa Başla"
+    },
+    "contact": {
+        "title": "Gəlin birlikdə <br /> <span class='text-gradient'>möhtəşəm</span> bir şey quraq.",
+        "subtitle": "Biznesinizi dəyişdirməyə hazırsınız? Formanı doldurun, vizyonunuzu müzakirə etmək üçün əlaqə saxlayaq.",
+        "details": {
+            "email": "E-poçt",
+            "socials": "Sosiallar"
+        },
+        "success": {
+            "title": "Mesaj Göndərildi!",
+            "message": "Müraciətiniz üçün təşəkkür edirik. Tezliklə sizinlə əlaqə saxlayacağıq."
+        },
+        "form": {
+            "name": "Ad",
+            "email": "E-poçt",
+            "company": "Şirkət",
+            "type": "Sorğu Növü",
+            "details": "Layihə Təfərrüatları",
+            "placeholders": {
+                "name": "Ad Soyad",
+                "email": "ad@sirket.com",
+                "company": "Şirkət Adı",
+                "details": "Məqsədləriniz haqqında danışın..."
+            },
+            "options": {
+                "project": "Yeni Layihə",
+                "consultation": "Konsultasiya",
+                "other": "Digər"
+            },
+            "buttons": {
+                "send": "Sorğu Göndər",
+                "sending": "Göndərilir...",
+                "sent": "Mesaj Göndərildi!"
+            }
+        }
+    },
+    "widget": {
+        "title": "Xoş Gəlmisiniz",
+        "subtitle": "Gələcəyi necə qurduğumuzu kəşf edin."
+    },
+    "calc": {
+        "header": {
+            "title": "Layihə Hesablayıcı",
+            "subtitle": "Rəqəmsal həllinizi fərdiləşdirin və ani qiymətləndirmə əldə edin."
+        },
+        "steps": {
+            "service": "Xidmət",
+            "scale": "Miqyas",
+            "features": "Xüsusiyyətlər",
+            "estimate": "Qiymət"
+        },
+        "from": "Başlanğıc",
+        "multiplier": "Multiplikator",
+        "result": {
+            "title": "Təxmini İnvestisiya",
+            "disclaimer": "*Bu təxmini qiymətdir. Yekun qiymət xüsusi tələblərə əsasən dəyişə bilər.",
+            "start_over": "Yenidən Başla",
+            "book": "Konsultasiya Sifariş Et"
+        },
+        "nav": {
+            "back": "Geri",
+            "next": "İrəli"
+        },
+        "services": {
+            "web": {
+                "title": "Veb İnkişafı",
+                "desc": "Landing səhifələr, korporativ saytlar və ya veb tətbiqlər."
+            },
+            "mobile": {
+                "title": "Mobil Tətbiq",
+                "desc": "Flutter ilə iOS və Android tətbiqləri."
+            },
+            "system": {
+                "title": "Xüsusi Sistem",
+                "desc": "CRM-lər, İdarəetmə panelləri və SaaS platformaları."
+            },
+            "ai": {
+                "title": "Sİ Həlli",
+                "desc": "Çatbotlar, avtomatlaşdırma və proqnozlaşdırıcı modellər."
+            }
+        },
+        "types": {
+            "mvp": {
+                "title": "Startap / MVP",
+                "desc": "Sürətli başlanğıc üçün əsas funksiyalar."
+            },
+            "growth": {
+                "title": "Kiçik Biznes",
+                "desc": "Cilalanmış dizayn və miqyaslılıq."
+            },
+            "enterprise": {
+                "title": "Enterprise",
+                "desc": "Maksimum təhlükəsizlik, uyğunluq və miqyas."
+            }
+        },
+        "features": {
+            "cms": "Admin / CMS",
+            "payment": "Ödəniş İnteqrasiyası",
+            "auth": "İstifadəçi Doğrulaması",
+            "multi_lang": "Çoxdilli",
+            "seo": "Qabaqcıl SEO",
+            "api": "Xarici API İnteqrasiyası",
+            "chat": "Canlı Çat / Dəstək",
+            "ai_bot": "Sİ Çatbot"
+        }
+    },
+    "process": {
+        "title": "İş Prosesimiz",
+        "steps": {
+            "analysis": {
+                "title": "Analiz",
+                "short": "Tələblərə dərindən baxış",
+                "detail": "İnkişafdan əvvəl riskləri minimuma endirmək üçün biznes məqsədlərinizi və texniki ehtiyaclarınızı analiz edirik."
+            },
+            "architecture": {
+                "title": "Memarlıq",
+                "short": "Sistem dizaynı və planlaşdırma",
+                "detail": "Yüksək yükləri idarə edə bilən miqyaslı, təhlükəsiz və modul sistemlərin mühəndisliyi."
+            },
+            "uxui": {
+                "title": "UX/UI",
+                "short": "İstifadəçi yönümlü dizayn",
+                "detail": "İstifadəçiləri konversiyaya yönəldən intuitiv interfeyslər yaratmaq üçün estetika və psixologiyanın birləşməsi."
+            },
+            "dev": {
+                "title": "İnkişaf",
+                "short": "Təmiz, miqyaslı kod",
+                "detail": "Yüksək performanslı, asan idarə olunan tətbiqlər qurmaq üçün müasir texnologiyalardan istifadə."
+            },
+            "backend": {
+                "title": "Backend",
+                "short": "Güclü məlumat idarəçiliyi",
+                "detail": "Mürəkkəb məlumat məntiqini və real vaxt rejimində emalı idarə etmək üçün güclü API və verilənlər bazaları."
+            },
+            "ai": {
+                "title": "Sİ İnteqrasiyası",
+                "short": "Ağıllı funksiyaların tətbiqi",
+                "detail": "İş axınlarını avtomatlaşdırmaq və rəqabət üstünlüyü qazanmaq üçün ən son Sİ texnologiyalarından istifadə."
+            },
+            "testing": {
+                "title": "Test",
+                "short": "Keyfiyyət təminatı",
+                "detail": "Bütün cihazlarda etibarlı performans təmin etmək üçün hərtərəfli avtomatlaşdırılmış və manual testlər."
+            },
+            "launch": {
+                "title": "Buraxılış",
+                "short": "Yerləşdirmə və dəstək",
+                "detail": "İstehsala hamar keçid təmin etmək üçün CI/CD boru kəmərləri ilə bütün yerləşdirmə prosesinin idarə edilməsi."
+            }
+        }
+    },
+    "faq": {
+        "title": "Tez-tez Verilən Suallar",
+        "subtitle": "Bizimlə işləmək haqqında bilməli olduğunuz hər şey.",
+        "items": [
+            {
+                "question": "Hansı xidmətləri təklif edirsiniz?",
+                "answer": "Biz xüsusi veb inkişafı, mobil tətbiqlər, backend həlləri və biznes avtomatlaşdırılması üzrə ixtisaslaşmışıq. Landing səhifələrdən mürəkkəb SaaS platformalarına qədər tam rəqəmsal spektri əhatə edirik."
+            },
+            {
+                "question": "Layihə neçəyə başa gəlir?",
+                "answer": "Hər layihə unikaldır. Biz mürəkkəblik və xüsusiyyətlərə əsaslanaraq fərdi qiymətləndirmə təqdim edirik. Təxmini fikir əldə etmək üçün Qiymətləndirmə Kalkulyatorumuzdan istifadə edə və ya dəqiq təklif üçün konsultasiya sifariş edə bilərsiniz."
+            },
+            {
+                "question": "İnkişaf nə qədər vaxt aparır?",
+                "answer": "Müddətlər layihənin ölçüsünə görə dəyişir. Sadə bir veb sayt 2-4 həftə çəkə bilər, tam miqyaslı mobil tətbiq isə 2-4 ay çəkə bilər. Biz keyfiyyətdən ödün vermədən sürətə üstünlük veririk."
+            },
+            {
+                "question": "Buraxılışdan sonra dəstək təklif edirsiniz?",
+                "answer": "Bəli! Biz rəqəmsal məhsulunuzun təhlükəsiz, yenilənmiş və biznesiniz böyüdükcə optimal işləməsini təmin etmək üçün davamlı texniki xidmət paketləri təklif edirik."
+            },
+            {
+                "question": "Hansı texnologiyalardan istifadə edirsiniz?",
+                "answer": "Gələcəyə hazır həllər qurmaq üçün React, Next.js, Node.js, Flutter, Supabase və OpenAI kimi Sİ inteqrasiyaları daxil olmaqla müasir, miqyaslana bilən texnologiya steklərindən istifadə edirik."
+            }
+        ]
+    }
+}
