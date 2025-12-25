@@ -1,52 +1,193 @@
-.dashboard {
-    padding: 20px;
-}
+/* c:\Users\Acer\Desktop\umidbabayeff\src\pages\admin\Dashboard.css */
 
-.section-header {
-    margin-top: 30px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
-}
-
-.card-grid {
+.dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
 }
 
-.message-card {
-    background-color: #242424;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #333;
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-.msg-header {
+.dash-card {
+    background: rgba(30, 30, 30, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dash-card-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5px;
-    color: var(--accent-blue);
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.msg-date {
+.dash-card-header h2 {
+    font-size: 1.1rem;
+    color: #fff;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.view-all-link {
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.view-all-link:hover {
+    text-decoration: underline;
+}
+
+.dash-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dash-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.dash-list-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow: hidden;
+}
+
+.item-title {
+    color: #e5e7eb;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.item-sub {
+    color: #9ca3af;
     font-size: 0.8rem;
-    color: #888;
 }
 
-.msg-email {
-    font-size: 0.9rem;
-    color: #ccc;
-    margin-bottom: 10px;
+.item-sub.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
 }
 
-.msg-content {
+.proj-status {
+    text-transform: capitalize;
+    color: #fbbf24;
+}
+
+.dash-list-item.priority-high {
+    border-left: 3px solid #f87171;
+}
+
+.dash-list-item.priority-urgent {
+    border-left: 3px solid #ef4444;
+}
+
+.dash-list-item.priority-medium {
+    border-left: 3px solid #60a5fa;
+}
+
+.dash-list-item.priority-low {
+    border-left: 3px solid #9ca3af;
+}
+
+.action-icon {
+    color: #60a5fa;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.action-icon:hover {
+    opacity: 1;
+}
+
+.sc-arrow {
+    color: #9ca3af;
+    font-size: 0.8rem;
+}
+
+.msg-time {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.empty-text {
+    color: #6b7280;
     font-style: italic;
-    color: #eee;
-    margin-bottom: 15px;
+    text-align: center;
+    padding: 20px;
 }
 
-.msg-meta {
-    font-size: 0.8rem;
-    color: #666;
+.time-stat-badge {
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.quick-actions-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.quick-action-btn {
+    background: #3b82f6;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.2s;
+}
+
+.quick-action-btn:hover {
+    background: #2563eb;
+}
+
+.quick-action-btn.secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.quick-action-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
 }

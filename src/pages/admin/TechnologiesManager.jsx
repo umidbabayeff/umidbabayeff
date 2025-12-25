@@ -126,7 +126,7 @@ const TechnologiesManager = () => {
 
     return (
         <div className="services-manager">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
                 <h1>Technologies Manager</h1>
                 <button onClick={handleRestoreDefaults} className="btn-secondary" style={{ backgroundColor: '#10b981' }}>
                     Restore Defaults
@@ -189,8 +189,8 @@ const TechnologiesManager = () => {
 
             <div className="service-list-container">
                 {categories.map(cat => (
-                    <div key={cat.key} style={{ marginBottom: '30px' }}>
-                        <h3 style={{ borderBottom: '1px solid #333', paddingBottom: '10px' }}>{cat.label}</h3>
+                    <div key={cat.key} style={{ marginBottom: '40px' }}>
+                        <h3 style={{ borderBottom: '1px solid #333', paddingBottom: '15px', marginBottom: '25px', color: '#fff' }}>{cat.label}</h3>
                         <div className="service-grid">
                             {techs.filter(t => t.category === cat.key).map((tech) => (
                                 <div key={tech.id} className="service-card-admin">

@@ -16,6 +16,7 @@ const ContactForm = () => {
         message: ''
     });
     const [status, setStatus] = useState('idle'); // idle, sending, success, error
+    const [errorMessage, setErrorMessage] = useState('');
     const [showModal, setShowModal] = useState(false);
 
     const handleChange = (e) => {
@@ -26,17 +27,51 @@ const ContactForm = () => {
         }));
     };
 
+    const validateForm = () => {
+        if (!formData.name.trim()) return t('contact.errors.name_required') || 'Name is required';
+        if (!formData.email.trim()) return t('contact.errors.email_required') || 'Email is required';
+
+        // Simple email regex for validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) return t('contact.errors.email_invalid') || 'Please enter a valid email';
+
+        if (!formData.message.trim()) return t('contact.errors.message_required') || 'Message is required';
+
+        return null;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorMessage('');
+
+        const validationError = validateForm();
+        if (validationError) {
+            setErrorMessage(validationError);
+            return;
+        }
+
         setStatus('sending');
 
         try {
+            // Prepare payload
+            const payload = {
+                name: formData.name,
+                email: formData.email,
+                company: formData.company,
+                type: formData.type,
+                message: formData.message,
+                // created_at is default now()
+                // status: 'new' // If your schema supports status, otherwise omit
+                is_converted: false
+            };
+
             const { error } = await supabase
                 .from('messages')
-                .insert([formData]);
+                .insert([payload]);
 
             if (error) throw error;
 
+            // Success: Only here do we show modal and reset
             setStatus('success');
             setShowModal(true);
             setFormData({
@@ -47,14 +82,14 @@ const ContactForm = () => {
                 message: ''
             });
 
-            // Reset status after a delay
+            // Reset button state after a delay
             setTimeout(() => {
                 setStatus('idle');
             }, 3000);
 
         } catch (error) {
             console.error('Error sending message:', error);
-            alert('Error sending message. Please try again.');
+            setErrorMessage(t('contact.errors.generic_error') || 'Failed to send message. Please try again later.');
             setStatus('error');
         }
     };
@@ -99,6 +134,7 @@ const ContactForm = () => {
                                 onChange={handleChange}
                                 required
                                 placeholder={t('contact.form.placeholders.name')}
+                                className={!formData.name && errorMessage ? 'error-input' : ''}
                             />
                         </div>
 
@@ -112,6 +148,7 @@ const ContactForm = () => {
                                 onChange={handleChange}
                                 required
                                 placeholder={t('contact.form.placeholders.email')}
+                                className={!formData.email && errorMessage ? 'error-input' : ''}
                             />
                         </div>
 
@@ -151,8 +188,15 @@ const ContactForm = () => {
                                 required
                                 placeholder={t('contact.form.placeholders.details')}
                                 rows="5"
+                                className={!formData.message && errorMessage ? 'error-input' : ''}
                             ></textarea>
                         </div>
+
+                        {errorMessage && (
+                            <div className="form-error-message">
+                                {errorMessage}
+                            </div>
+                        )}
 
                         <button
                             type="submit"

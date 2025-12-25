@@ -16,7 +16,18 @@ import FAQManager from './pages/admin/FAQManager';
 import TranslationManager from './pages/admin/TranslationManager';
 import MigrationTool from './pages/admin/MigrationTool';
 import ServicesManager from './pages/admin/ServicesManager';
+import BenefitsManager from './pages/admin/BenefitsManager';
 import TechnologiesManager from './pages/admin/TechnologiesManager';
+import SocialsManager from './pages/admin/SocialsManager';
+import ClientsManager from './pages/admin/ClientsManager';
+import TemplatesManager from './pages/admin/TemplatesManager';
+import ProjectsManager from './pages/admin/ProjectsManager';
+import ProjectDetails from './pages/admin/ProjectDetails';
+import TasksManager from './pages/admin/TasksManager';
+import TodayPage from './pages/admin/TodayPage';
+import DailyReview from './pages/admin/DailyReview';
+import WeeklyReview from './pages/admin/WeeklyReview';
+import MessagesManager from './pages/admin/MessagesManager';
 
 import { fetchSupabaseTranslations } from './lib/supabaseI18n';
 import i18n from './i18n';
@@ -63,14 +74,25 @@ function App() {
 
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Dashboard />} />
+            <Route index element={<TodayPage />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="faq" element={<FAQManager />} />
             <Route path="translations" element={<TranslationManager />} />
             <Route path="translations" element={<TranslationManager />} />
             <Route path="migrate" element={<MigrationTool />} />
             <Route path="services" element={<ServicesManager />} />
+            <Route path="benefits" element={<BenefitsManager />} />
             <Route path="technologies" element={<TechnologiesManager />} />
+            <Route path="socials" element={<SocialsManager />} />
+            <Route path="clients" element={<ClientsManager />} />
+            <Route path="templates" element={<TemplatesManager />} />
+            <Route path="projects" element={<ProjectsManager />} />
+            <Route path="projects/:id" element={<ProjectDetails />} />
+            <Route path="tasks" element={<TasksManager />} />
+            <Route path="today" element={<TodayPage />} />
+            <Route path="daily-review" element={<DailyReview />} />
+            <Route path="weekly-review" element={<WeeklyReview />} />
+            <Route path="messages" element={<MessagesManager />} />
           </Route>
           <Route path="/admin/login" element={<LoginPage />} />
         </Routes>

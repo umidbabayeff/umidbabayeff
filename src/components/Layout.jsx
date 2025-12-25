@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, Link, NavLink } from 'react-router-dom';
 import { BiMenu, BiX } from 'react-icons/bi';
+import { FaInstagram, FaLinkedin, FaYoutube, FaTiktok, FaEnvelope } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '../lib/supabaseClient';
 import StarBackground from './common/StarBackground';
 import ThemeToggle from './common/ThemeToggle';
 import LanguageSwitcher from './common/LanguageSwitcher';
@@ -10,10 +12,27 @@ import './Layout.css';
 
 const Layout = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [socials, setSocials] = useState([]);
     const { t } = useTranslation();
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const closeMenu = () => setIsMenuOpen(false);
+
+    useEffect(() => {
+        const fetchSocials = async () => {
+            const { data } = await supabase.from('social_links').select('*').order('id', { ascending: true });
+            if (data) setSocials(data);
+        };
+        fetchSocials();
+    }, []);
+
+    const iconMap = {
+        'FaInstagram': <FaInstagram />,
+        'FaLinkedin': <FaLinkedin />,
+        'FaYoutube': <FaYoutube />,
+        'FaTiktok': <FaTiktok />,
+        'FaEnvelope': <FaEnvelope />
+    };
 
     return (
         <div className="layout">
@@ -69,9 +88,14 @@ const Layout = () => {
                         <div className="footer-col">
                             <h4>{t('footer.connect')}</h4>
                             <ul>
-                                <li><a href="#">LinkedIn</a></li>
-                                <li><a href="#">Twitter</a></li>
-                                <li><a href="#">Email</a></li>
+                                {socials.map(social => (
+                                    <li key={social.id}>
+                                        <a href={social.url} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            {iconMap[social.icon] || <FaEnvelope />} {social.platform.charAt(0).toUpperCase() + social.platform.slice(1)}
+                                        </a>
+                                    </li>
+                                ))}
+                                {socials.length === 0 && <li>Loading...</li>}
                             </ul>
                         </div>
                     </div>

@@ -1,0 +1,184 @@
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+}
+
+.project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* c:\Users\Acer\Desktop\umidbabayeff\src\pages\admin\ProjectsManager.css */
+
+.crm-controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 5px;
+}
+
+.filter-tab {
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    padding: 6px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.filter-tab:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.filter-tab.active {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.project-card {
+    background: rgba(30, 30, 30, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background: rgba(40, 40, 40, 0.8);
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.project-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.project-status {
+    font-size: 0.85rem;
+    text-transform: capitalize;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #9ca3af;
+}
+
+.status-dot.active {
+    background: #4ade80;
+    box-shadow: 0 0 5px rgba(74, 222, 128, 0.5);
+}
+
+.status-dot.completed {
+    background: #60a5fa;
+}
+
+.status-dot.paused {
+    background: #facc15;
+}
+
+.status-dot.draft {
+    background: #9ca3af;
+}
+
+.project-card h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.client-name {
+    color: #9ca3af;
+    margin: 0;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+.project-meta {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #d1d5db;
+    font-size: 0.9rem;
+}
+
+.meta-item.price {
+    font-weight: 600;
+    color: #4ade80;
+}
+
+.project-card-progress {
+    margin-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 10px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-bottom: 5px;
+}
+
+.p-bar-track {
+    background: rgba(255, 255, 255, 0.1);
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.p-bar-fill {
+    background: #10b981;
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}

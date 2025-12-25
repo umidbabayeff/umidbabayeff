@@ -1,0 +1,172 @@
+/* c:\Users\Acer\Desktop\umidbabayeff\src\pages\admin\MessagesManager.css */
+
+.messages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .messages-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.message-card-full {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: all 0.2s;
+}
+
+.message-card-full:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.msg-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.msg-sender h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.msg-email-tag {
+    font-size: 0.9rem;
+    color: #9ca3af;
+}
+
+.msg-date-badge {
+    font-size: 0.8rem;
+    color: #6b7280;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.msg-details-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.detail-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.msg-body {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 8px;
+    color: #d1d5db;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.msg-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.convert-btn {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+}
+
+/* Form Sections in Modal */
+.form-group-section {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.form-group-section h3 {
+    margin: 0 0 15px 0;
+    font-size: 1rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 8px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.message-card-full.converted {
+    border-color: rgba(16, 185, 129, 0.3);
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.converted-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.converted-badge {
+    color: #10b981;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.crm-btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #d1d5db;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.crm-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.msg-actions-right {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon-btn-large {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: 8px;
+}

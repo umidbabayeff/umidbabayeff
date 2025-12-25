@@ -1,0 +1,638 @@
+.project-details-page {
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+    color: #fff;
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #9ca3af;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+.back-link:hover {
+    color: #fff;
+}
+
+.title-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.title-section h1 {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.status-badge-lg {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.status-badge-lg.draft {
+    background: rgba(156, 163, 175, 0.2);
+    color: #d1d5db;
+}
+
+.status-badge-lg.active {
+    background: rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+}
+
+.status-badge-lg.completed {
+    background: rgba(96, 165, 250, 0.2);
+    color: #60a5fa;
+}
+
+/* Tabs */
+.project-tabs {
+    display: flex;
+    gap: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 30px;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    padding: 12px 20px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    color: #fff;
+}
+
+.tab-btn.active {
+    color: #3b82f6;
+    border-bottom-color: #3b82f6;
+}
+
+/* Tab Content */
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.info-card {
+    background: rgba(30, 30, 30, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.info-card h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 1.2rem;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.info-row .label {
+    color: #9ca3af;
+}
+
+.info-row .value {
+    color: #fff;
+    font-weight: 500;
+}
+
+.value.money {
+    color: #4ade80;
+}
+
+.progress-section {
+    margin-top: 20px;
+}
+
+.progress-bar-wrapper {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #3b82f6;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* Steps Management */
+.new-step-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.step-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    outline: none;
+}
+
+.step-input:focus {
+    border-color: #60a5fa;
+}
+
+.btn-save {
+    background: #4ade80;
+    border: none;
+    padding: 0 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #000;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+.btn-cancel {
+    background: #f87171;
+    border: none;
+    padding: 0 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+.step-item {
+    background: rgba(30, 30, 30, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    padding: 15px;
+    transition: all 0.2s;
+}
+
+.step-item:hover {
+    background: rgba(40, 40, 40, 0.8);
+}
+
+.step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.step-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.step-sequence {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+.step-title {
+    font-size: 1.05rem;
+    color: #fff;
+    font-weight: 500;
+}
+
+.step-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.step-progress-mini {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    width: 80px;
+}
+
+.step-progress-mini span {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.mini-progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.mini-progress-bar div {
+    height: 100%;
+    background: #3b82f6;
+    border-radius: 2px;
+}
+
+.status-select {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #9ca3af;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-transform: capitalize;
+    outline: none;
+}
+
+.status-select:hover {
+    border-color: #60a5fa;
+}
+
+.status-select.done {
+    border-color: #4ade80;
+    color: #4ade80;
+}
+
+.status-select.active {
+    border-color: #60a5fa;
+    color: #60a5fa;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 6px;
+    font-size: 1rem;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.icon-btn:hover {
+    color: #fff;
+}
+
+.icon-btn.delete:hover {
+    color: #f87171;
+}
+
+.edit-step-input {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #3b82f6;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 1.05rem;
+    flex: 1;
+    max-width: 300px;
+    outline: none;
+}
+
+/* Tasks */
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.02);
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.task-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.priority-badge {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.priority-badge.high {
+    color: #f87171;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.priority-badge.medium {
+    color: #60a5fa;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.priority-badge.low {
+    color: #9ca3af;
+    background: rgba(156, 163, 175, 0.1);
+}
+
+.priority-badge.urgent {
+    color: #fff;
+    background: #ef4444;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #60a5fa;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-small:hover {
+    background: rgba(59, 130, 246, 0.3);
+}
+
+.tab-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Nested Tasks */
+.step-tasks {
+    margin-top: 15px;
+    padding-left: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 10px;
+}
+
+.task-mini-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.03);
+    margin-bottom: 6px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.task-mini-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.task-mini-item.status-done span {
+    text-decoration: line-through;
+    color: #6b7280;
+}
+
+.task-mini-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+}
+
+.task-mini-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.priority-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.priority-dot.low {
+    background: #9ca3af;
+}
+
+.priority-dot.medium {
+    background: #60a5fa;
+}
+
+.priority-dot.high {
+    background: #fbbf24;
+}
+
+.priority-dot.urgent {
+    background: #f87171;
+    box-shadow: 0 0 5px #f87171;
+}
+
+.add-task-btn-mini {
+    background: transparent;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    color: #9ca3af;
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    transition: all 0.2s;
+}
+
+.add-task-btn-mini:hover {
+    border-color: #3b82f6;
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.05);
+}
+
+/* Task Modal */
+.task-modal {
+    max-width: 600px !important;
+}
+
+.line-through {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.text-gray {
+    color: #9ca3af;
+}
+
+.task-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.status-select-lg {
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.status-select-lg.active {
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.3);
+}
+
+.status-select-lg.completed {
+    color: #60a5fa;
+    border-color: rgba(96, 165, 250, 0.3);
+}
+
+.status-select-lg.draft {
+    color: #9ca3af;
+    border-color: rgba(156, 163, 175, 0.3);
+}
+
+.status-select-lg.paused {
+    color: #fbbf24;
+    border-color: rgba(251, 191, 36, 0.3);
+}
+
+.status-select-lg option {
+    background: #1f2937;
+    color: #fff;
+}
+
+.btn-danger-outline {
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: #ef4444;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-danger-outline:hover {
+    background: rgba(239, 68, 68, 0.1);
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+}
+
+/* Timeline Edit Styles */
+.card-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card-header-actions h3 {
+    margin: 0;
+}
+
+.icon-btn-small {
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.icon-btn-small:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.edit-actions-mini {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn-small.save {
+    color: #10b981;
+}
+
+.icon-btn-small.cancel {
+    color: #ef4444;
+}
+
+.timeline-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.info-row-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-row-edit .label {
+    font-size: 0.85rem;
+    color: #9ca3af;
+}
+
+.info-row-edit input {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 8px;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.info-row-edit input:focus {
+    border-color: #3b82f6;
+    outline: none;
+}

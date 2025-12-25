@@ -145,3 +145,17 @@
     border-color: var(--accent-blue);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
+
+.form-error-message {
+    color: #ef4444 !important;
+    background: rgba(239, 68, 68, 0.1);
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    border-left: 3px solid #ef4444;
+}
+
+.error-input {
+    border-color: #ef4444 !important;
+}

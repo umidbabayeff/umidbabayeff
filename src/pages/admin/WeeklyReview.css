@@ -1,0 +1,144 @@
+.weekly-review-container {
+    padding-bottom: 50px;
+}
+
+.weekly-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.crm-btn-warning {
+    background: #f59e0b;
+    color: #000;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.crm-btn-warning:hover {
+    background: #d97706;
+}
+
+/* Stats Grid Override */
+.stats-grid.three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.project-breakdown h4 {
+    margin: 0 0 10px 0;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.project-breakdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.project-breakdown li {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.project-breakdown li:last-child {
+    border-bottom: none;
+}
+
+/* Review Columns */
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.review-col h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #333;
+}
+
+.icon-success {
+    color: #10b981;
+}
+
+.icon-danger {
+    color: #ef4444;
+}
+
+.icon-primary {
+    color: #3b82f6;
+}
+
+.task-list.condensed {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.review-task-item {
+    background: #1e1e1e;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.review-task-item.done {
+    border-left: 3px solid #10b981;
+}
+
+.review-task-item.overdue {
+    border-left: 3px solid #ef4444;
+}
+
+.review-task-item.future {
+    border-left: 3px solid #3b82f6;
+}
+
+.task-title {
+    font-weight: 500;
+    color: #eee;
+}
+
+.task-project,
+.task-date {
+    font-size: 0.8rem;
+    color: #888;
+    background: #252525;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.empty-msg {
+    color: #666;
+    font-style: italic;
+    text-align: center;
+    margin-top: 20px;
+}
+
+@media (max-width: 1024px) {
+
+    .stats-grid.three-col,
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
+}
