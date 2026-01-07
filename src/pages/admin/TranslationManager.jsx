@@ -97,6 +97,60 @@ const TranslationManager = () => {
         }
     };
 
+    const flattenObject = (obj, prefix = '') => {
+        return Object.keys(obj).reduce((acc, k) => {
+            const pre = prefix.length ? prefix + '.' : '';
+            if (typeof obj[k] === 'object' && obj[k] !== null && !Array.isArray(obj[k])) {
+                Object.assign(acc, flattenObject(obj[k], pre + k));
+            } else {
+                acc[pre + k] = obj[k];
+            }
+            return acc;
+        }, {});
+    };
+
+    const handleSyncFromFiles = async () => {
+        if (!confirm(t('admin.translations.prompts.sync_confirm', 'Are you sure? This will overwrite DB with local JSON files.'))) return;
+        setLoading(true);
+        try {
+            const langs = ['en', 'ru', 'az'];
+            const allUpdates = [];
+
+            for (const lang of langs) {
+                const response = await fetch(`/locales/${lang}/translation.json?v=${new Date().getTime()}`);
+                const json = await response.json();
+                const flattened = flattenObject(json);
+
+                Object.entries(flattened).forEach(([key, value]) => {
+                    allUpdates.push({
+                        key,
+                        language_code: lang,
+                        value: String(value)
+                    });
+                });
+            }
+
+            // Batch upsert (Supabase limits might apply, so maybe chunk it if too huge, but 1000 rows should be fine)
+            // Splitting into chunks of 500 just in case
+            const chunkSize = 500;
+            for (let i = 0; i < allUpdates.length; i += chunkSize) {
+                const chunk = allUpdates.slice(i, i + chunkSize);
+                const { error } = await supabase
+                    .from('translations')
+                    .upsert(chunk, { onConflict: 'key, language_code' });
+                if (error) throw error;
+            }
+
+            alert(t('admin.translations.alerts.sync_success', 'Synced successfully!'));
+            await fetchTranslations();
+        } catch (err) {
+            console.error(err);
+            alert('Error syncing: ' + err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const filteredTranslations = translations.filter(item =>
         item.key.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.en.toLowerCase().includes(searchTerm.toLowerCase())
@@ -115,6 +169,7 @@ const TranslationManager = () => {
                     className="search-input"
                 />
                 <button onClick={handleAddNew} className="btn-primary">{t('admin.translations.add_btn', 'Add New Key')}</button>
+                <button onClick={handleSyncFromFiles} className="btn-secondary" style={{ marginLeft: '10px' }}>Sync JSON to DB</button>
             </div>
 
             {loading ? <p>{t('admin.common.loading', 'Loading...')}</p> : (
