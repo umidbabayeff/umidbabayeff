@@ -169,7 +169,7 @@ const TranslationManager = () => {
                     className="search-input"
                 />
                 <button onClick={handleAddNew} className="btn-primary">{t('admin.translations.add_btn', 'Add New Key')}</button>
-                <button onClick={handleSyncFromFiles} className="btn-secondary" style={{ marginLeft: '10px' }}>Sync JSON to DB</button>
+                <button onClick={() => void handleSyncFromFiles()} className="btn-secondary" style={{ marginLeft: '10px' }}>Sync JSON to DB</button>
             </div>
 
             {loading ? <p>{t('admin.common.loading', 'Loading...')}</p> : (
