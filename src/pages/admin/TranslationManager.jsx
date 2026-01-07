@@ -12,28 +12,42 @@ const TranslationManager = () => {
     const [editingKey, setEditingKey] = useState(null);
     const [editValues, setEditValues] = useState({ en: '', ru: '', az: '' });
 
-    // Fetch all translations
+    // Fetch all translations with pagination
     const fetchTranslations = async () => {
-        // setLoading(true); 
-        const { data, error } = await supabase
-            .from('translations')
-            .select('*')
-            .range(0, 9999)
-            .order('key');
+        let allData = [];
+        let from = 0;
+        const limit = 1000;
+        let hasMore = true;
 
-        if (error) {
-            console.error('Error fetching translations:', error);
-        } else {
-            // Group by key
-            const grouped = {};
-            data.forEach(item => {
-                if (!grouped[item.key]) {
-                    grouped[item.key] = { key: item.key, en: '', ru: '', az: '' };
+        while (hasMore) {
+            const { data, error } = await supabase
+                .from('translations')
+                .select('*')
+                .range(from, from + limit - 1)
+                .order('key');
+
+            if (error) {
+                console.error('Error fetching translations:', error);
+                hasMore = false;
+            } else {
+                allData = [...allData, ...data];
+                if (data.length < limit) {
+                    hasMore = false;
+                } else {
+                    from += limit;
                 }
-                grouped[item.key][item.language_code] = item.value;
-            });
-            setTranslations(Object.values(grouped));
+            }
         }
+
+        // Group by key
+        const grouped = {};
+        allData.forEach(item => {
+            if (!grouped[item.key]) {
+                grouped[item.key] = { key: item.key, en: '', ru: '', az: '' };
+            }
+            grouped[item.key][item.language_code] = item.value;
+        });
+        setTranslations(Object.values(grouped));
         setLoading(false);
     };
 
