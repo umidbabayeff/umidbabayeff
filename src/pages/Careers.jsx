@@ -17,8 +17,8 @@ const Careers = () => {
         full_name: '',
         email: '',
         contact: '',
-        position: 'FlutterFlow / UI Developer',
-        experience: 'Junior',
+        position: 'flutterflow',
+        experience: 'junior',
         tools: [''], // Initialized with string to prevent never[] inference, filtered out later or just ignored
         why_us: ''
     });
@@ -310,16 +310,16 @@ const Careers = () => {
                                 <div className="form-group">
                                     <label>{t('careers.form.fields.position')}</label>
                                     <select name="position" className="form-control" value={formData.position} onChange={handleInputChange}>
-                                        <option>{t('careers.positions.roles.flutterflow.title')}</option>
-                                        <option>{t('careers.positions.roles.designer.title')}</option>
+                                        <option value="flutterflow">{t('careers.positions.roles.flutterflow.title')}</option>
+                                        <option value="designer">{t('careers.positions.roles.designer.title')}</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
                                     <label>{t('careers.form.fields.experience')}</label>
                                     <select name="experience" className="form-control" value={formData.experience} onChange={handleInputChange}>
-                                        <option>{t('careers.form.levels.junior')}</option>
-                                        <option>{t('careers.form.levels.middle')}</option>
-                                        <option>{t('careers.form.levels.senior')}</option>
+                                        <option value="junior">{t('careers.form.levels.junior')}</option>
+                                        <option value="middle">{t('careers.form.levels.middle')}</option>
+                                        <option value="senior">{t('careers.form.levels.senior')}</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
@@ -387,7 +387,7 @@ const Careers = () => {
 
                                 <div className="task-instructions">
                                     <h4>{t('careers.task.label')}</h4>
-                                    {formData.position.includes('FlutterFlow') ? (
+                                    {formData.position === 'flutterflow' ? (
                                         <p>{t('careers.task.instructions.flutterflow')}</p>
                                     ) : (
                                         <p>{t('careers.task.instructions.designer')}</p>
