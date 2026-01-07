@@ -18,6 +18,7 @@ const TranslationManager = () => {
         const { data, error } = await supabase
             .from('translations')
             .select('*')
+            .range(0, 9999)
             .order('key');
 
         if (error) {
