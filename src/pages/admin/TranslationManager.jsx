@@ -160,6 +160,9 @@ const TranslationManager = () => {
     return (
         <div className="translation-manager">
             <h1>{t('admin.translations.title', 'Translation Manager')}</h1>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+                Total Keys Loaded: {translations.length} {loading && '(Loading...)'}
+            </p>
 
             <div className="controls">
                 <input
@@ -186,6 +189,13 @@ const TranslationManager = () => {
                             </tr>
                         </thead>
                         <tbody>
+                            {filteredTranslations.length === 0 && (
+                                <tr>
+                                    <td colSpan="5" style={{ textAlign: 'center', padding: '2rem' }}>
+                                        No translations found matching "{searchTerm}"
+                                    </td>
+                                </tr>
+                            )}
                             {filteredTranslations.map(item => (
                                 <tr key={item.key} className={editingKey === item.key ? 'editing-row' : ''}>
                                     <td>{item.key}</td>
