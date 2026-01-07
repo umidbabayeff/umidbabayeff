@@ -742,5 +742,114 @@
         "new_key": "Enter new translation key (e.g. hero.title):"
       }
     }
+  },
+  "careers": {
+    "hero": {
+      "title": "Join Our Digital Team",
+      "subtitle": "We are building web, mobile, automation and SaaS products using modern tools and AI.",
+      "tech_note": "We work with Antigravity, FlutterFlow, Supabase, Firebase, AI (GPT / Gemini), and modern no-code & low-code solutions."
+    },
+    "positions": {
+      "title": "Open Positions",
+      "responsibilities": "Responsibilities:",
+      "requirements": "Requirements:",
+      "roles": {
+        "flutterflow": {
+          "title": "FlutterFlow / UI Developer",
+          "resp_1": "Build UI screens in FlutterFlow",
+          "resp_2": "Work with adaptive layouts",
+          "resp_3": "Implement designs based on provided structure",
+          "resp_4": "Follow technical tasks and deadlines",
+          "req_1": "Experience with FlutterFlow",
+          "req_2": "Understanding of UI/UX basics",
+          "req_3": "Attention to detail",
+          "req_4": "Ability to work with tasks and instructions"
+        },
+        "designer": {
+          "title": "Designer / Content Assistant",
+          "resp_1": "Create visuals using Stitch and Canva",
+          "resp_2": "Prepare assets for web and mobile projects",
+          "resp_3": "Assist with text formatting and content structure",
+          "req_1": "Basic design sense",
+          "req_2": "Ability to follow brand guidelines",
+          "req_3": "Responsibility and consistency"
+        }
+      }
+    },
+    "process": {
+      "title": "Hiring Process",
+      "steps": {
+        "app": "Application",
+        "test": "Logic Test",
+        "task": "Practical Task",
+        "interview": "Short Interview"
+      }
+    },
+    "form": {
+      "title": "Application Form",
+      "fields": {
+        "name": "Full Name",
+        "email": "Email",
+        "contact": "Telegram / Contact",
+        "position": "Position",
+        "experience": "Experience Level",
+        "tools": "Tools you have worked with",
+        "why_us": "Why do you want to work with us?"
+      },
+      "levels": {
+        "junior": "Junior",
+        "middle": "Middle",
+        "senior": "Senior"
+      },
+      "buttons": {
+        "next": "Next Step",
+        "submit_test": "Submit Test",
+        "submit_app": "Submit Application",
+        "home": "Return to Home"
+      }
+    },
+    "test": {
+      "title": "Logic & Attention Test",
+      "subtitle": "Please answer carefully. Accuracy matches our values.",
+      "questions": {
+        "q1": "If a task description changes after approval, what should you do?",
+        "q1_opt_a": "Continue old version",
+        "q1_opt_b": "Ask for clarification before proceeding",
+        "q2": "What is more important in production work?",
+        "q2_opt_a": "Speed without accuracy",
+        "q2_opt_b": "Accuracy and consistency",
+        "q3": "If you don’t understand a task, what is the correct action?",
+        "q3_opt_a": "Guess",
+        "q3_opt_b": "Ask questions",
+        "q4": "What does responsibility mean in team work?",
+        "q4_opt_a": "Doing only what is interesting",
+        "q4_opt_b": "Completing agreed tasks on time",
+        "q5": "How do you treat feedback?",
+        "q5_opt_a": "Ignore it",
+        "q5_opt_b": "Use it to improve"
+      }
+    },
+    "task": {
+      "pass_title": "Great job! You passed the test.",
+      "pass_subtitle": "One last step: Show us your skills.",
+      "label": "Practical Task:",
+      "instructions": {
+        "flutterflow": "Create a simple 3-screen app layout with responsive design. You can use FlutterFlow or just a design tool, but FF is preferred.",
+        "designer": "Create a simple UI block or visual using Stitch / Canva that represents \"Automation\"."
+      },
+      "upload_instruction": "Please upload a zip file or a PDF with link/screenshots.",
+      "upload_label": "Upload Task Solution"
+    },
+    "success": {
+      "title": "Application Received!",
+      "message": "Thank you for completing the process. We have received your task and details. We will review your submission and contact you soon."
+    },
+    "fail": {
+      "title": "Thank you for applying.",
+      "message": "Unless you'd like to try again, we have received your details. We will contact you if you pass the first stage."
+    },
+    "alerts": {
+      "error_upload": "Error uploading file. Please try again."
+    }
   }
 }
