@@ -138,3 +138,57 @@
 .icon-btn.delete:hover {
     background: rgba(239, 68, 68, 0.1);
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .crm-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .crm-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-bar {
+        max-width: 100%;
+    }
+
+    .filter-group select {
+        width: 100%;
+    }
+
+    .global-task-item {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px;
+    }
+
+    .task-main-info {
+        width: 100%;
+    }
+
+    .task-details {
+        width: 100%;
+    }
+
+    .task-title {
+        white-space: normal;
+        /* Ensure text wraps */
+        word-break: break-word;
+    }
+
+    .task-meta {
+        flex-wrap: wrap;
+        /* Allow tags to wrap */
+    }
+
+    .task-extra-info {
+        width: 100%;
+        justify-content: space-between;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+}

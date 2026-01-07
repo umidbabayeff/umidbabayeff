@@ -5,7 +5,7 @@ import './TechStack.css';
 import { useTranslation } from 'react-i18next';
 
 const TechStack = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [techGroups, setTechGroups] = useState([]);
 
     useEffect(() => {

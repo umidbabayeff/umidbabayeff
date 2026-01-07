@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any, @typescript-eslint/prefer-nullish-coalescing */
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { getIcon, getIconList } from '../../lib/IconMapper';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './ServicesManager.css'; // Reusing styles
 
 const TechnologiesManager = () => {
+    const { t } = useTranslation();
     const [techs, setTechs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState({
@@ -16,9 +20,9 @@ const TechnologiesManager = () => {
 
     const iconList = getIconList();
     const categories = [
-        { key: 'tech.categories.frontend', label: 'Frontend' },
-        { key: 'tech.categories.backend', label: 'Backend' },
-        { key: 'tech.categories.ai', label: 'AI & Automation' }
+        { key: 'tech.categories.frontend', label: t('admin.technologies.categories.frontend', 'Frontend') },
+        { key: 'tech.categories.backend', label: t('admin.technologies.categories.backend', 'Backend') },
+        { key: 'tech.categories.ai', label: t('admin.technologies.categories.ai', 'AI & Automation') }
     ];
 
     const fetchTechs = useCallback(async () => {
@@ -34,7 +38,7 @@ const TechnologiesManager = () => {
     }, []);
 
     useEffect(() => {
-        fetchTechs();
+        void fetchTechs();
     }, [fetchTechs]);
 
     const handleSubmit = async (e) => {
@@ -54,7 +58,7 @@ const TechnologiesManager = () => {
             }
             setFormData({ ...formData, name: '', icon: 'react' });
             setEditingId(null);
-            fetchTechs();
+            void fetchTechs();
         } catch (error) {
             console.error('Error saving tech:', error);
             alert('Error saving tech');
@@ -65,7 +69,7 @@ const TechnologiesManager = () => {
         setFormData({
             name: tech.name,
             category: tech.category,
-            icon: tech.icon || 'react',
+            icon: tech.icon ?? 'react',
             language_code: tech.language_code
         });
         setEditingId(tech.id);
@@ -79,7 +83,7 @@ const TechnologiesManager = () => {
                 .delete()
                 .eq('id', id);
             if (error) throw error;
-            fetchTechs();
+            void fetchTechs();
         } catch (error) {
             console.error('Error deleting tech:', error);
         }
@@ -115,7 +119,7 @@ const TechnologiesManager = () => {
 
             const { error } = await supabase.from('technologies').insert(defaultTechs);
             if (error) throw error;
-            fetchTechs();
+            void fetchTechs();
         } catch (err) {
             console.error(err);
             alert('Failed to restore');
@@ -124,20 +128,24 @@ const TechnologiesManager = () => {
         }
     };
 
+    if (loading) {
+        return <div style={{ color: '#fff', textAlign: 'center', padding: '50px' }}>{t('admin.common.loading', 'Loading...')}</div>;
+    }
+
     return (
         <div className="services-manager">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
-                <h1>Technologies Manager</h1>
-                <button onClick={handleRestoreDefaults} className="btn-secondary" style={{ backgroundColor: '#10b981' }}>
-                    Restore Defaults
+            <div className="technologies-header-row">
+                <h1>{t('admin.technologies.title', 'Technologies Manager')}</h1>
+                <button onClick={() => void handleRestoreDefaults()} className="btn-secondary" style={{ backgroundColor: '#10b981' }}>
+                    {t('admin.common.restore_defaults', 'Restore Defaults')}
                 </button>
             </div>
 
             <div className="service-form-container">
-                <h2>{editingId ? 'Edit Technology' : 'Add New Tech'}</h2>
-                <form onSubmit={handleSubmit} className="service-form">
+                <h2>{editingId ? t('admin.common.edit', 'Edit Technology') : t('admin.technologies.add_new', 'Add New Tech')}</h2>
+                <form onSubmit={(e) => void handleSubmit(e)} className="service-form">
                     <div className="form-group">
-                        <label>Name</label>
+                        <label>{t('admin.technologies.table.name', 'Name')}</label>
                         <input
                             type="text"
                             value={formData.name}
@@ -146,7 +154,7 @@ const TechnologiesManager = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Category</label>
+                        <label>{t('admin.technologies.table.category', 'Category')}</label>
                         <select
                             value={formData.category}
                             onChange={(e) => setFormData({ ...formData, category: e.target.value })}
@@ -155,7 +163,7 @@ const TechnologiesManager = () => {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label>Icon</label>
+                        <label>{t('admin.technologies.table.icon', 'Icon')}</label>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                             <div style={{ fontSize: '1.5rem', color: '#fff' }}>{getIcon(formData.icon)}</div>
                             <select
@@ -169,7 +177,7 @@ const TechnologiesManager = () => {
                     </div>
                     <div className="form-buttons">
                         <button type="submit" className="btn-primary">
-                            {editingId ? 'Update' : 'Add'}
+                            {editingId ? t('admin.common.save', 'Update') : t('admin.common.create', 'Add')}
                         </button>
                         {editingId && (
                             <button
@@ -180,14 +188,14 @@ const TechnologiesManager = () => {
                                     setFormData({ ...formData, name: '', icon: 'react' });
                                 }}
                             >
-                                Cancel
+                                {t('admin.common.cancel', 'Cancel')}
                             </button>
                         )}
                     </div>
                 </form>
             </div>
 
-            <div className="service-list-container">
+            <div className="service-list-container" style={{ marginTop: '40px' }}>
                 {categories.map(cat => (
                     <div key={cat.key} style={{ marginBottom: '40px' }}>
                         <h3 style={{ borderBottom: '1px solid #333', paddingBottom: '15px', marginBottom: '25px', color: '#fff' }}>{cat.label}</h3>
@@ -195,12 +203,16 @@ const TechnologiesManager = () => {
                             {techs.filter(t => t.category === cat.key).map((tech) => (
                                 <div key={tech.id} className="service-card-admin">
                                     <div className="service-header">
-                                        <h4>{tech.name}</h4>
+                                        <h3>{tech.name}</h3>
                                         <span className="icon-badge">{getIcon(tech.icon)}</span>
                                     </div>
                                     <div className="card-actions">
-                                        <button onClick={() => handleEdit(tech)} className="action-btn edit">Edit</button>
-                                        <button onClick={() => handleDelete(tech.id)} className="action-btn delete">Delete</button>
+                                        <button onClick={() => handleEdit(tech)} className="action-btn edit" aria-label="Edit">
+                                            <FaEdit />
+                                        </button>
+                                        <button onClick={() => void handleDelete(tech.id)} className="action-btn delete" aria-label="Delete">
+                                            <FaTrash />
+                                        </button>
                                     </div>
                                 </div>
                             ))}

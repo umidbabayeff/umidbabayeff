@@ -10,14 +10,34 @@
 }
 
 .process-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
+    overflow-x: auto;
     gap: var(--spacing-md);
-    align-items: flex-start;
-    /* Prevent cards from stretching to match tallest sibling */
+    padding-top: var(--spacing-lg);
+    /* Add space for hover lift and visual separation */
+    padding-bottom: var(--spacing-lg);
+    /* Space for scrollbar or shadow */
+    scroll-snap-type: x mandatory;
+
+    /* Hide scrollbar for cleaner look */
+}
+
+.process-grid::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
 }
 
 .process-step {
+    flex: 0 0 320px;
+    /* Fixed width for carousel items */
+    scroll-snap-align: center;
+
+    width: 320px;
+    /* Explicit width */
+    min-height: 320px;
+    /* Instead of strict aspect-ratio, use min-height */
+    /* aspect-ratio: 1 / 1;  <-- Removed to allow vertical growth */
+
     padding: var(--spacing-lg);
     border: 1px solid rgba(255, 255, 255, 0.05);
     background: rgba(10, 10, 10, 0.5);
@@ -25,11 +45,16 @@
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
+    /* Default hidden */
     cursor: pointer;
     border-radius: var(--radius-lg);
     /* 16px */
     display: flex;
     flex-direction: column;
+
+    /* Ensure child elements (header, text) align left */
+    align-items: flex-start;
+    text-align: left;
 }
 
 .process-step:hover,
@@ -39,46 +64,74 @@
     transform: translateY(-5px);
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
     outline: none;
+
+    /* Allow expanding vertically on hover */
+    height: auto;
+    overflow: visible;
+    z-index: 10;
+    /* Pop on top */
 }
 
-.step-header {
+.process-section .step-header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: flex-start;
+    align-items: center;
     margin-bottom: var(--spacing-sm);
+    /* Icon on the left */
+    width: 100%;
+    /* Ensure header takes full width */
 }
 
-.step-number {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-muted);
+.process-section .step-number {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff !important;
+    opacity: 0.5 !important;
+    /* Dimmed by default as per common design, or kept 1 */
     transition: color 0.3s ease;
     line-height: 1;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+
+    /* Absolute positioning to top right */
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
 }
 
 .step-icon {
-    font-size: 2rem;
+    font-size: 1.75rem;
     color: var(--accent-blue);
-    opacity: 0.7;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.process-step:hover .step-icon,
-.process-step:focus .step-icon {
     opacity: 1;
-    transform: scale(1.1) rotate(5deg);
-    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin: 0;
+    /* Ensure no auto margin centers it */
 }
 
-.process-step:hover .step-number,
-.process-step:focus .step-number {
-    color: var(--accent-blue);
+/* Icon Animation on Container Hover */
+.process-step:hover .step-icon {
+    transform: scale(1.2) rotate(5deg);
+    color: var(--accent-neon);
+    /* Optional: Switch color on hover for extra pop */
+    filter: drop-shadow(0 0 8px rgba(var(--accent-blue-rgb), 0.5));
+}
+
+/* Icon Animation on Click relative to the container */
+.process-step:active .step-icon {
+    transform: scale(0.95);
+    transition: transform 0.1s;
 }
 
 .process-step h3 {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     margin-bottom: 0.5rem;
     color: var(--text-primary);
+    text-align: left;
 }
 
 .step-short {
@@ -138,32 +191,67 @@
 
 /* Light Mode Overrides */
 [data-theme="light"] .process-step {
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="light"] .process-step:hover {
-    background: rgba(255, 255, 255, 0.9);
+    background: #ffffff;
     border-color: var(--accent-blue);
     box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="light"] .process-step h3 {
-    color: var(--text-primary);
+    color: #1a202c;
+    /* Darker grey/black for title */
 }
 
 [data-theme="light"] .step-short,
 [data-theme="light"] .step-detail {
-    color: var(--text-secondary);
+    color: #4a5568;
+    /* Medium grey for text */
 }
 
-[data-theme="light"] .step-number {
-    color: rgba(0, 0, 0, 0.2);
+[data-theme="light"] .process-section .step-number {
+    color: #64748b !important;
+    /* Force override with higher specificity */
+    opacity: 1 !important;
+    font-weight: 700;
+    z-index: 5;
 }
 
 [data-theme="light"] .process-step:hover .step-number {
     color: var(--accent-blue);
+}
+
+@media (max-width: 768px) {
+    .process-step {
+        text-align: left !important;
+    }
+
+    .step-content {
+        width: 100% !important;
+    }
+
+    .process-section .step-header {
+        display: flex !important;
+        justify-content: flex-start !important;
+        width: 100% !important;
+    }
+
+    .step-icon {
+        margin-right: auto !important;
+        /* Force margin right to push away if needed, but flex-start should do it */
+        margin-left: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .process-section .step-number {
+        position: absolute !important;
+        top: var(--spacing-md) !important;
+        right: var(--spacing-md) !important;
+        left: auto !important;
+    }
 }

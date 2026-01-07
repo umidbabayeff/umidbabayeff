@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument, @typescript-eslint/prefer-nullish-coalescing */
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { timeTracking } from '../../lib/timeTracking';
 import { Link } from 'react-router-dom';
 import { FaTasks, FaBriefcase, FaInbox, FaClock, FaArrowRight, FaPlay } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './Dashboard.css';
 
 const Dashboard = () => {
+    const { t } = useTranslation();
     const [loading, setLoading] = useState(true);
     const [stats, setStats] = useState({
         todayTasks: [],
@@ -15,7 +18,7 @@ const Dashboard = () => {
     });
 
     useEffect(() => {
-        fetchAllData();
+        void fetchAllData();
     }, []);
 
     const fetchAllData = async () => {
@@ -73,17 +76,17 @@ const Dashboard = () => {
         return `${m}m`;
     };
 
-    if (loading) return <div className="admin-loading">Loading Dashboard...</div>;
+    if (loading) return <div className="admin-loading">{t('admin.common.loading', 'Loading...')}</div>;
 
     return (
         <div className="crm-container">
             <div className="crm-header">
                 <div>
-                    <h1>Dashboard</h1>
-                    <p>Overview of your day</p>
+                    <h1>{t('admin.dashboard.title', 'Dashboard')}</h1>
+                    <p>{t('admin.dashboard.subtitle', 'Overview of your day')}</p>
                 </div>
                 <div className="time-stat-badge">
-                    <FaClock /> <span>{formatTime(stats.timeToday)} tracked today</span>
+                    <FaClock /> <span>{formatTime(stats.timeToday)} {t('admin.dashboard.tracked_today', 'tracked today')}</span>
                 </div>
             </div>
 
@@ -91,12 +94,12 @@ const Dashboard = () => {
                 {/* Block 1: Today's Tasks */}
                 <div className="dash-card">
                     <div className="dash-card-header">
-                        <h2><FaTasks /> Today's Focus</h2>
-                        <Link to="/admin/today" className="view-all-link">View All <FaArrowRight /></Link>
+                        <h2><FaTasks /> {t('admin.dashboard.focus', "Today's Focus")}</h2>
+                        <Link to="/admin/today" className="view-all-link">{t('admin.common.view_all', 'View All')} <FaArrowRight /></Link>
                     </div>
                     <div className="dash-list">
                         {stats.todayTasks.length === 0 ? (
-                            <p className="empty-text">No tasks remaining for today!</p>
+                            <p className="empty-text">{t('admin.dashboard.no_tasks', 'No tasks remaining for today!')}</p>
                         ) : (
                             stats.todayTasks.map(task => (
                                 <div key={task.id} className={`dash-list-item priority-${task.priority}`}>
@@ -116,12 +119,12 @@ const Dashboard = () => {
                 {/* Block 2: Active Projects */}
                 <div className="dash-card">
                     <div className="dash-card-header">
-                        <h2><FaBriefcase /> Active Projects</h2>
-                        <Link to="/admin/projects" className="view-all-link">View All <FaArrowRight /></Link>
+                        <h2><FaBriefcase /> {t('admin.dashboard.active_projects', 'Active Projects')}</h2>
+                        <Link to="/admin/projects" className="view-all-link">{t('admin.common.view_all', 'View All')} <FaArrowRight /></Link>
                     </div>
                     <div className="dash-list">
                         {stats.activeProjects.length === 0 ? (
-                            <p className="empty-text">No active projects.</p>
+                            <p className="empty-text">{t('admin.dashboard.no_projects', 'No active projects.')}</p>
                         ) : (
                             stats.activeProjects.map(proj => (
                                 <Link key={proj.id} to={`/admin/projects/${proj.id}`} className="dash-list-item">
@@ -141,12 +144,12 @@ const Dashboard = () => {
                 {/* Block 3: Inbox */}
                 <div className="dash-card">
                     <div className="dash-card-header">
-                        <h2><FaInbox /> Recent Inbox</h2>
-                        <Link to="/admin/messages" className="view-all-link">View All <FaArrowRight /></Link>
+                        <h2><FaInbox /> {t('admin.dashboard.recent_inbox', 'Recent Inbox')}</h2>
+                        <Link to="/admin/messages" className="view-all-link">{t('admin.common.view_all', 'View All')} <FaArrowRight /></Link>
                     </div>
                     <div className="dash-list">
                         {stats.inbox.length === 0 ? (
-                            <p className="empty-text">Inbox is empty.</p>
+                            <p className="empty-text">{t('admin.dashboard.empty_inbox', 'Inbox is empty.')}</p>
                         ) : (
                             stats.inbox.map(msg => (
                                 <div key={msg.id} className="dash-list-item">
@@ -164,17 +167,17 @@ const Dashboard = () => {
                 {/* Block 4: Quick Actions / Time Summary (Using space for Actions) */}
                 <div className="dash-card actions-card">
                     <div className="dash-card-header">
-                        <h2><FaClock /> Quick Actions</h2>
+                        <h2><FaClock /> {t('admin.dashboard.quick_actions', 'Quick Actions')}</h2>
                     </div>
                     <div className="quick-actions-grid">
                         <Link to="/admin/today" className="quick-action-btn">
-                            <FaPlay /> Start Working
+                            <FaPlay /> {t('admin.dashboard.start_working', 'Start Working')}
                         </Link>
                         <Link to="/admin/tasks" className="quick-action-btn secondary">
-                            <FaTasks /> Manage Tasks
+                            <FaTasks /> {t('admin.dashboard.manage_tasks', 'Manage Tasks')}
                         </Link>
                         <Link to="/admin/messages" className="quick-action-btn secondary">
-                            <FaInbox /> Check Messages
+                            <FaInbox /> {t('admin.dashboard.check_messages', 'Check Messages')}
                         </Link>
                     </div>
                 </div>

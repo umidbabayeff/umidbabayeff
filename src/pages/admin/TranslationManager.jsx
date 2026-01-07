@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/prefer-nullish-coalescing */
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
+import { useTranslation } from 'react-i18next';
 import './TranslationManager.css';
 
 const TranslationManager = () => {
+    const { t } = useTranslation();
     const [translations, setTranslations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -10,8 +13,8 @@ const TranslationManager = () => {
     const [editValues, setEditValues] = useState({ en: '', ru: '', az: '' });
 
     // Fetch all translations
-    const fetchTranslations = useCallback(async () => {
-        // setLoading(true); // avoided to prevent sync setState in effect
+    const fetchTranslations = async () => {
+        // setLoading(true); 
         const { data, error } = await supabase
             .from('translations')
             .select('*')
@@ -31,11 +34,14 @@ const TranslationManager = () => {
             setTranslations(Object.values(grouped));
         }
         setLoading(false);
-    }, []);
+    };
 
     useEffect(() => {
-        fetchTranslations();
-    }, [fetchTranslations]);
+        const loadRequests = async () => {
+            await fetchTranslations();
+        };
+        void loadRequests();
+    }, []);
 
     const handleEditClick = (item) => {
         setEditingKey(item.key);
@@ -69,19 +75,19 @@ const TranslationManager = () => {
 
         if (error) {
             console.error('Error saving translation:', error);
-            alert('Error saving translation');
+            alert(t('admin.translations.errors.save_error', 'Error saving translation'));
         } else {
             setEditingKey(null);
-            fetchTranslations();
+            await fetchTranslations();
         }
     };
 
     const handleAddNew = () => {
-        const newKey = prompt('Enter new translation key (e.g. hero.title):');
+        const newKey = prompt(t('admin.translations.prompts.new_key', 'Enter new translation key (e.g. hero.title):'));
         if (newKey) {
             // Check if exists
             if (translations.find(t => t.key === newKey)) {
-                alert('Key already exists!');
+                alert(t('admin.translations.errors.key_exists', 'Key already exists!'));
                 return;
             }
             // Add locally to list so we can edit it
@@ -91,36 +97,36 @@ const TranslationManager = () => {
         }
     };
 
-    const filteredTranslations = translations.filter(t =>
-        t.key.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        t.en.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredTranslations = translations.filter(item =>
+        item.key.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.en.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
         <div className="translation-manager">
-            <h1>Translation Manager</h1>
+            <h1>{t('admin.translations.title', 'Translation Manager')}</h1>
 
             <div className="controls">
                 <input
                     type="text"
-                    placeholder="Search keys or text..."
+                    placeholder={t('admin.translations.search_placeholder', 'Search keys or text...')}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="search-input"
                 />
-                <button onClick={handleAddNew} className="btn-primary">Add New Key</button>
+                <button onClick={handleAddNew} className="btn-primary">{t('admin.translations.add_btn', 'Add New Key')}</button>
             </div>
 
-            {loading ? <p>Loading...</p> : (
+            {loading ? <p>{t('admin.common.loading', 'Loading...')}</p> : (
                 <div className="table-container">
                     <table className="translation-table">
                         <thead>
                             <tr>
-                                <th>Key</th>
-                                <th>English</th>
-                                <th>Russian</th>
-                                <th>Azerbaijani</th>
-                                <th>Actions</th>
+                                <th>{t('admin.translations.table.key', 'Key')}</th>
+                                <th>{t('admin.translations.table.english', 'English')}</th>
+                                <th>{t('admin.translations.table.russian', 'Russian')}</th>
+                                <th>{t('admin.translations.table.azerbaijani', 'Azerbaijani')}</th>
+                                <th>{t('admin.translations.table.actions', 'Actions')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -130,21 +136,21 @@ const TranslationManager = () => {
 
                                     {editingKey === item.key ? (
                                         <>
-                                            <td><textarea value={editValues.en} onChange={e => setEditValues({ ...editValues, en: e.target.value })} /></td>
-                                            <td><textarea value={editValues.ru} onChange={e => setEditValues({ ...editValues, ru: e.target.value })} /></td>
-                                            <td><textarea value={editValues.az} onChange={e => setEditValues({ ...editValues, az: e.target.value })} /></td>
-                                            <td>
-                                                <button onClick={() => handleSave(item.key)} className="action-btn save">Save</button>
-                                                <button onClick={handleCancel} className="action-btn cancel">Cancel</button>
+                                            <td data-label="English"><textarea value={editValues.en} onChange={e => setEditValues({ ...editValues, en: e.target.value })} /></td>
+                                            <td data-label="Russian"><textarea value={editValues.ru} onChange={e => setEditValues({ ...editValues, ru: e.target.value })} /></td>
+                                            <td data-label="Azerbaijani"><textarea value={editValues.az} onChange={e => setEditValues({ ...editValues, az: e.target.value })} /></td>
+                                            <td data-label="Actions">
+                                                <button onClick={() => void handleSave(item.key)} className="action-btn save">{t('admin.translations.actions.save', 'Save')}</button>
+                                                <button onClick={handleCancel} className="action-btn cancel">{t('admin.translations.actions.cancel', 'Cancel')}</button>
                                             </td>
                                         </>
                                     ) : (
                                         <>
-                                            <td className="cell-content">{item.en}</td>
-                                            <td className="cell-content">{item.ru}</td>
-                                            <td className="cell-content">{item.az}</td>
-                                            <td>
-                                                <button onClick={() => handleEditClick(item)} className="action-btn edit">Edit</button>
+                                            <td className="cell-content" data-label="English">{item.en}</td>
+                                            <td className="cell-content" data-label="Russian">{item.ru}</td>
+                                            <td className="cell-content" data-label="Azerbaijani">{item.az}</td>
+                                            <td data-label="Actions">
+                                                <button onClick={() => handleEditClick(item)} className="action-btn edit">{t('admin.translations.actions.edit', 'Edit')}</button>
                                             </td>
                                         </>
                                     )}

@@ -5,6 +5,7 @@
     "technologies": "Technologies",
     "about": "About",
     "estimate": "Estimate",
+    "careers": "Careers",
     "lets_talk": "Let's Talk"
   },
   "footer": {
@@ -276,6 +277,469 @@
         "title": "Launch",
         "short": "Deployment & support",
         "detail": "Managing the entire deployment process with CI/CD pipelines, ensuring a smooth transition to production with ongoing monitoring."
+      }
+    }
+  },
+  "admin": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "translations": "Translations",
+      "services": "Services",
+      "benefits": "Benefits",
+      "technologies": "Technologies",
+      "socials": "Socials",
+      "today": "Today",
+      "daily_review": "Daily Review",
+      "weekly_review": "Weekly Review",
+      "inbox": "Inbox",
+      "hiring": "Hiring",
+      "clients": "Clients",
+      "projects": "Projects",
+      "templates": "Templates",
+      "tasks": "Tasks"
+    },
+    "common": {
+      "logout": "Logout",
+      "loading": "Loading...",
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "create": "Create New",
+      "view_all": "View All"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Overview of your day",
+      "focus": "Today's Focus",
+      "no_tasks": "No tasks remaining for today!",
+      "active_projects": "Active Projects",
+      "recent_inbox": "Recent Inbox",
+      "quick_actions": "Quick Actions",
+      "start_working": "Start Working",
+      "manage_tasks": "Manage Tasks",
+      "check_messages": "Check Messages"
+    },
+    "services": {
+      "title": "Services",
+      "subtitle": "Manage your service offerings",
+      "add_new": "Add Service",
+      "search_placeholder": "Search services...",
+      "table": {
+        "title": "Title",
+        "desc": "Description",
+        "icon": "Icon",
+        "actions": "Actions"
+      }
+    },
+    "benefits": {
+      "title": "Benefits",
+      "subtitle": "Manage benefits cards",
+      "add_new": "Add Benefit",
+      "table": {
+        "title": "Title",
+        "desc": "Description",
+        "icon": "Icon",
+        "actions": "Actions"
+      }
+    },
+    "technologies": {
+      "title": "Technologies",
+      "subtitle": "Manage tech stack",
+      "add_new": "Add Technology",
+      "table": {
+        "name": "Name",
+        "category": "Category",
+        "icon": "Icon",
+        "actions": "Actions"
+      }
+    },
+    "socials": {
+      "title": "Social Links",
+      "subtitle": "Manage social media links",
+      "add_new": "Add Link",
+      "table": {
+        "platform": "Platform",
+        "url": "URL",
+        "icon": "Icon",
+        "actions": "Actions"
+      }
+    },
+    "today": {
+      "title": "Today's Agenda",
+      "stats": {
+        "total_time": "Total Time Today"
+      },
+      "sections": {
+        "overdue": "Overdue",
+        "morning": "Morning",
+        "afternoon": "Afternoon",
+        "evening": "Evening",
+        "anytime": "Anytime"
+      },
+      "empty": {
+        "title": "All caught up!",
+        "desc": "No pending tasks scheduled for today.",
+        "view_all": "View All Tasks"
+      },
+      "actions": {
+        "start": "Start",
+        "stop": "Stop",
+        "done": "Done",
+        "tomorrow": "Tomorrow"
+      },
+      "running": "Running:",
+      "timer_running": "Timer Running..."
+    },
+    "daily_review": {
+      "title": "Daily Review",
+      "subtitle": "Reflect on your day and prepare for tomorrow",
+      "loading": "Generating report...",
+      "stats": {
+        "completed": "Tasks Completed",
+        "focus_time": "Focus Time"
+      },
+      "cols": {
+        "accomplished": "Accomplished",
+        "unfinished": "Unfinished"
+      },
+      "empty_done": "No tasks completed yet. Keep pushing!",
+      "empty_pending": "All clear! Zero tasks left behind.",
+      "move_all": "Move All to Tomorrow"
+    },
+    "weekly_review": {
+      "title": "Weekly Review",
+      "loading": "Loading Weekly Review...",
+      "actions": {
+        "move_overdue": "Move Overdue to Next Week"
+      },
+      "stats": {
+        "tasks_completed": "Tasks Completed",
+        "estimated_time": "Estimated Time",
+        "time_by_project": "Time by Project"
+      },
+      "cols": {
+        "accomplished": "Accomplished This Week",
+        "overdue": "Overdue / Unfinished",
+        "next_week": "Next Week's Plan"
+      },
+      "empty": {
+        "completed": "No tasks completed yet.",
+        "overdue": "All caught up!",
+        "next_week": "Nothing scheduled yet."
+      },
+      "alerts": {
+        "confirm_move": "Move overdue tasks to next Monday?",
+        "success": "Tasks rescheduled!",
+        "error": "Error updating tasks"
+      }
+    },
+    "inbox": {
+      "title": "Inbox",
+      "subtitle": "Manage inquiries and convert them to projects",
+      "search_placeholder": "Search messages...",
+      "loading": "Loading messages...",
+      "empty": "No messages found.",
+      "converted": "Converted",
+      "convert_btn": "Convert to Project",
+      "undo_btn": "Undo",
+      "delete_title": "Delete Message",
+      "modal": {
+        "title": "Convert Inquiry",
+        "desc": "Create a new client and project for",
+        "client_details": "Client Details",
+        "project_details": "Project Details",
+        "name": "Name",
+        "email": "Email",
+        "company": "Company",
+        "project_title": "Project Title",
+        "type": "Type",
+        "price": "Price Estimate",
+        "cancel": "Cancel",
+        "create_btn": "Create Client & Project"
+      },
+      "alerts": {
+        "success": "Client, Project, and Steps created successfully!",
+        "confirm_undo": "Mark this message as not converted? This won't delete the created project/client.",
+        "confirm_delete": "Are you sure you want to delete this message? This cannot be undone.",
+        "process_error": "Failed to process conversion: ",
+        "undo_error": "Failed to undo",
+        "delete_error": "Failed to delete message"
+      },
+      "defaults": {
+        "web_dev": "Web Development",
+        "project_for": "Project for",
+        "steps": {
+          "discovery": "Discovery & Planning",
+          "design": "Design & Prototyping",
+          "development": "Development",
+          "content": "Content Integration",
+          "testing": "Testing & QA",
+          "deployment": "Deployment"
+        }
+      }
+    },
+    "applications": {
+      "title": "Applications",
+      "subtitle": "Manage and review candidate submissions",
+      "search_placeholder": "Search candidates by name, email...",
+      "loading": "Loading applications...",
+      "empty": "No applications found matching your criteria.",
+      "filters": {
+        "all": "All Statuses",
+        "new": "New Candidate",
+        "passed": "Test Passed",
+        "submitted": "Task Submitted",
+        "approved": "Approved",
+        "rejected": "Rejected"
+      },
+      "table": {
+        "name": "Candidate Name",
+        "position": "Position",
+        "experience": "Experience",
+        "score": "Test Score",
+        "status": "Status",
+        "date": "Applied Date"
+      },
+      "details": {
+        "profile": "Candidate Profile",
+        "email": "Email:",
+        "contact": "Contact:",
+        "why_us": "Why Us:",
+        "stack": "Tech Stack:",
+        "no_tools": "No tools listed",
+        "assessment": "Assessment & Actions",
+        "download_task": "Download Practical Task",
+        "no_task": "No practical task uploaded yet."
+      },
+      "actions": {
+        "approve": "Approve Application",
+        "reject": "Reject",
+        "confirm_update": "Are you sure you want to mark this application as",
+        "update_error": "Error updating status"
+      }
+    },
+    "clients": {
+      "title": "Clients",
+      "subtitle": "Manage your leads and active clients",
+      "add_btn": "Add Client",
+      "search_placeholder": "Search clients...",
+      "loading": "Loading...",
+      "modal": {
+        "edit_title": "Edit Client",
+        "new_title": "New Client",
+        "name": "Name *",
+        "email": "Email",
+        "phone": "Phone",
+        "company": "Company",
+        "status": "Status",
+        "last_contact": "Last Contact Date",
+        "notes": "Internal Notes",
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "status": {
+        "lead": "Lead",
+        "active": "Active",
+        "paused": "Paused",
+        "archived": "Archived"
+      },
+      "card": {
+        "last_contact": "Last Contact:",
+        "notes": "Notes:",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "confirm_delete": "Are you sure?",
+      "save_error": "Error saving client"
+    },
+    "projects": {
+      "title": "Projects",
+      "subtitle": "Track your active work and progress",
+      "new_btn": "New Project",
+      "search_placeholder": "Search projects...",
+      "filter": {
+        "active": "Active",
+        "draft": "Drafts",
+        "paused": "Paused",
+        "archived": "Archived",
+        "all": "All"
+      },
+      "modal": {
+        "title": "New Project",
+        "name_label": "Title *",
+        "client_label": "Client *",
+        "select_client": "Select Client",
+        "type_label": "Type",
+        "status_label": "Status",
+        "start_date": "Start Date",
+        "deadline": "Deadline",
+        "price": "Price",
+        "template_label": "Start from Template (Optional)",
+        "no_template": "No Template (Blank Project)",
+        "template_help": "Selecting a template will auto-generate steps and tasks.",
+        "cancel": "Cancel",
+        "create": "Create"
+      },
+      "status": {
+        "draft": "Draft",
+        "active": "Active",
+        "paused": "Paused",
+        "completed": "Completed"
+      },
+      "card": {
+        "due": "Due",
+        "progress": "Progress"
+      },
+      "create_error": "Error creating project",
+      "loading": "Loading..."
+    },
+    "templates": {
+      "title": "Templates",
+      "subtitle": "Manage project blueprints",
+      "new_btn": "New Template",
+      "back_btn": "Back to List",
+      "loading": "Loading...",
+      "empty": "No templates created.",
+      "editing": "Editing:",
+      "add_step": "Add Step",
+      "empty_steps": "No steps defined. Add one to start.",
+      "step_title_prompt": "Step Title:",
+      "task_title_prompt": "Task Title:",
+      "add_task": "Add Task",
+      "delete_confirm": "Delete this template?",
+      "delete_step_confirm": "Delete step? This will delete all tasks in it.",
+      "create_error": "Error creating template",
+      "modal": {
+        "title": "New Template",
+        "name_label": "Template Name",
+        "type_label": "Default Type",
+        "cancel": "Cancel",
+        "create": "Create"
+      }
+    },
+    "tasks": {
+      "title": "Tasks",
+      "subtitle": "Global view of all tasks across projects",
+      "add_btn": "Add Task",
+      "search_placeholder": "Search tasks or projects...",
+      "filter_all": "All Status",
+      "loading": "Loading tasks...",
+      "empty": "No tasks found.",
+      "delete_confirm": "Delete this task?",
+      "create_error": "Error creating task",
+      "update_error": "Error updating task",
+      "modal": {
+        "edit_title": "Edit Task",
+        "new_title": "New Global Task",
+        "title_label": "Title",
+        "project_label": "Project",
+        "no_project": "No Project (Personal)",
+        "step_label": "Step (Optional)",
+        "no_step": "No Step",
+        "priority_label": "Priority",
+        "status_label": "Status",
+        "date_label": "Date",
+        "cancel": "Cancel",
+        "save": "Save Changes",
+        "create": "Create Task"
+      },
+      "priority": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "urgent": "Urgent"
+      },
+      "status": {
+        "todo": "To Do",
+        "in_progress": "In Progress",
+        "review": "Review",
+        "done": "Done"
+      }
+    },
+    "project_details": {
+      "back_to_projects": "Back to Projects",
+      "project_info": "Project Info",
+      "client": "Client",
+      "type": "Type",
+      "status": "Status",
+      "price": "Price",
+      "timeline": "Timeline",
+      "start": "Start",
+      "deadline": "Deadline",
+      "total_progress": "Total Progress",
+      "status_options": {
+        "not_started": "Not Started",
+        "active": "Active",
+        "done": "Done"
+      },
+      "tabs": {
+        "overview": "Overview",
+        "steps": "Steps",
+        "tasks": "Tasks",
+        "documents": "Documents",
+        "activity": "Activity"
+      },
+      "steps": {
+        "title": "Project Steps",
+        "add_btn": "Add Step",
+        "input_placeholder": "Step title...",
+        "empty": "No steps yet. Add one to get started.",
+        "delete_confirm": "Are you sure? This will delete the step.",
+        "pending_tasks_alert": "Cannot mark as Done. {{count}} tasks are still pending.",
+        "create_error": "Failed to create step"
+      },
+      "tasks": {
+        "title": "Tasks",
+        "add_btn": "Add Task",
+        "input_placeholder": "Task title...",
+        "empty": "No tasks.",
+        "delete_confirm": "Delete this task?",
+        "create_error": "Failed to create task"
+      },
+      "documents": {
+        "title": "Documents",
+        "new_folder": "New Folder",
+        "upload_doc": "Upload Doc",
+        "folder_placeholder": "Folder name...",
+        "empty_folder": "This folder is empty.",
+        "root": "Root",
+        "delete_folder_confirm": "Delete this folder and ALL its contents?",
+        "delete_doc_confirm": "Delete this document?",
+        "upload_success": "File uploaded successfully!",
+        "upload_failed": "Upload failed"
+      },
+      "activity": {
+        "coming_soon": "Activity Log (Coming Soon)"
+      },
+      "actions": {
+        "delete_project": "Delete Project",
+        "delete_project_confirm": "Are you sure you want to delete this project? This action cannot be undone."
+      },
+      "timeline_error": "Failed to update timeline"
+    },
+    "translations": {
+      "title": "Translation Manager",
+      "search_placeholder": "Search keys or text...",
+      "add_btn": "Add New Key",
+      "table": {
+        "key": "Key",
+        "english": "English",
+        "russian": "Russian",
+        "azerbaijani": "Azerbaijani",
+        "actions": "Actions"
+      },
+      "actions": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "edit": "Edit"
+      },
+      "errors": {
+        "save_error": "Error saving translation",
+        "key_exists": "Key already exists!"
+      },
+      "prompts": {
+        "new_key": "Enter new translation key (e.g. hero.title):"
       }
     }
   }

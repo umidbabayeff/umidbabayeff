@@ -56,3 +56,14 @@
 .login-box button {
     width: 100%;
 }
+
+@media (max-width: 768px) {
+    .login-container {
+        padding: 20px;
+    }
+
+    .login-box {
+        padding: 25px;
+        width: 100%;
+    }
+}

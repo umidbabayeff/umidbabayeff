@@ -3,7 +3,7 @@ import './SuccessModal.css';
 import { BiCheck, BiX } from 'react-icons/bi';
 import { createPortal } from 'react-dom';
 
-const SuccessModal = ({ isOpen, onClose, title, message }) => {
+const SuccessModal = ({ isOpen = false, onClose = () => undefined, title = '', message = '' }) => {
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';

@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/prefer-nullish-coalescing, @typescript-eslint/no-unsafe-return */
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { timeTracking } from '../../lib/timeTracking';
 import { Link } from 'react-router-dom';
 import { FaCheck, FaPlay, FaArrowRight, FaStop, FaCalendarDay, FaClock, FaTrophy } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './TodayPage.css';
 
 const TodayPage = () => {
+    const { t, i18n } = useTranslation();
     const [tasks, setTasks] = useState({ overdue: [], morning: [], afternoon: [], evening: [], anytime: [] });
     const [loading, setLoading] = useState(true);
     const [activeTimer, setActiveTimer] = useState(null);
@@ -72,11 +75,11 @@ const TodayPage = () => {
 
     useEffect(() => {
         // eslint-disable-next-line
-        fetchData();
+        void fetchData();
 
         // Refresh active timer and totals every minute to keep UI somewhat updated
         const interval = setInterval(() => {
-            refreshTimerDisplay();
+            void refreshTimerDisplay();
         }, 60000);
 
         return () => clearInterval(interval);
@@ -141,7 +144,7 @@ const TodayPage = () => {
     };
 
     const formatDate = (date) => {
-        return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        return date.toLocaleDateString(i18n.language, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     };
 
     const renderTaskCard = (task, activeTimer, taskDurations, handleStartTask, handleStopTimer, handleMarkDone, handleMoveToTomorrow) => {
@@ -175,7 +178,7 @@ const TodayPage = () => {
 
                     {isRunning && (
                         <div className="active-indicator">
-                            <FaPlay size={10} /> Timer Running...
+                            <FaPlay size={10} /> {t('admin.today.timer_running', 'Timer Running...')}
                         </div>
                     )}
                 </div>
@@ -184,33 +187,33 @@ const TodayPage = () => {
                     {!isRunning ? (
                         <button
                             className="action-btn start-btn"
-                            onClick={() => handleStartTask(task)}
-                            title="Start Task"
+                            onClick={() => void handleStartTask(task)}
+                            title={t('admin.today.actions.start', 'Start Task')}
                         >
-                            <FaPlay /> Start
+                            <FaPlay /> {t('admin.today.actions.start', 'Start')}
                         </button>
                     ) : (
                         <button
                             className="action-btn stop-btn-sm"
-                            onClick={handleStopTimer}
-                            title="Stop Timer"
+                            onClick={() => void handleStopTimer()}
+                            title={t('admin.today.actions.stop', 'Stop Timer')}
                         >
-                            <FaStop /> Stop
+                            <FaStop /> {t('admin.today.actions.stop', 'Stop')}
                         </button>
                     )}
                     <button
                         className="action-btn done-btn"
-                        onClick={() => handleMarkDone(task)}
-                        title="Mark as Done"
+                        onClick={() => void handleMarkDone(task)}
+                        title={t('admin.today.actions.done', 'Mark as Done')}
                     >
-                        <FaCheck /> Done
+                        <FaCheck /> {t('admin.today.actions.done', 'Done')}
                     </button>
                     <button
                         className="action-btn defer-btn"
-                        onClick={() => handleMoveToTomorrow(task)}
-                        title="Move to Tomorrow"
+                        onClick={() => void handleMoveToTomorrow(task)}
+                        title={t('admin.today.actions.tomorrow', 'Move to Tomorrow')}
                     >
-                        <FaArrowRight /> Tomorrow
+                        <FaArrowRight /> {t('admin.today.actions.tomorrow', 'Tomorrow')}
                     </button>
                 </div>
             </div>
@@ -221,17 +224,17 @@ const TodayPage = () => {
         <div className="crm-container">
             <div className="crm-header">
                 <div>
-                    <h1>Today's Agenda</h1>
+                    <h1>{t('admin.today.title', "Today's Agenda")}</h1>
                     <p>{formatDate(new Date())}</p>
                 </div>
                 <div className="today-stats">
                     <div className="stat-card">
-                        <span className="label">Total Time Today</span>
+                        <span className="label">{t('admin.today.stats.total_time', 'Total Time Today')}</span>
                         <span className="value">{formatTime(todayTotal)}</span>
                     </div>
                 </div>
-                <Link to="/admin/daily-review" className="crm-btn-secondary" style={{ marginLeft: '20px' }}>
-                    <FaTrophy /> Review Day
+                <Link to="/admin/daily-review" className="crm-btn-secondary review-day-btn">
+                    <FaTrophy /> {t('admin.daily_review.title', 'Review Day')}
                 </Link>
             </div>
 
@@ -239,21 +242,21 @@ const TodayPage = () => {
                 <div className="active-timer-banner">
                     <div className="timer-info">
                         <span className="pulsing-dot"></span>
-                        <span>Running: <strong>{activeTimer.tasks?.title}</strong></span>
+                        <span>{t('admin.today.running', 'Running:')} <strong>{activeTimer.tasks?.title}</strong></span>
                     </div>
-                    <button className="stop-btn" onClick={handleStopTimer}><FaStop /> Stop</button>
+                    <button className="stop-btn" onClick={() => void handleStopTimer()}><FaStop /> {t('admin.today.actions.stop', 'Stop')}</button>
                 </div>
             )}
 
             <div className="today-tasks-list">
                 {loading ? (
-                    <div className="loading-state">Loading your day...</div>
+                    <div className="loading-state">{t('admin.common.loading', 'Loading your day...')}</div>
                 ) : (
                     <>
                         {/* Overdue Section */}
                         {tasks.overdue?.length > 0 && (
                             <section className="time-group overdue">
-                                <h4>Overdue</h4>
+                                <h4>{t('admin.today.sections.overdue', 'Overdue')}</h4>
                                 {tasks.overdue.map(task => renderTaskCard(task, activeTimer, taskDurations, handleStartTask, handleStopTimer, handleMarkDone, handleMoveToTomorrow))}
                             </section>
                         )}
@@ -261,7 +264,7 @@ const TodayPage = () => {
                         {/* Morning Section */}
                         {tasks.morning?.length > 0 && (
                             <section className="time-group">
-                                <h4>Morning</h4>
+                                <h4>{t('admin.today.sections.morning', 'Morning')}</h4>
                                 {tasks.morning.map(task => renderTaskCard(task, activeTimer, taskDurations, handleStartTask, handleStopTimer, handleMarkDone, handleMoveToTomorrow))}
                             </section>
                         )}
@@ -269,7 +272,7 @@ const TodayPage = () => {
                         {/* Afternoon Section */}
                         {tasks.afternoon?.length > 0 && (
                             <section className="time-group">
-                                <h4>Afternoon</h4>
+                                <h4>{t('admin.today.sections.afternoon', 'Afternoon')}</h4>
                                 {tasks.afternoon.map(task => renderTaskCard(task, activeTimer, taskDurations, handleStartTask, handleStopTimer, handleMarkDone, handleMoveToTomorrow))}
                             </section>
                         )}
@@ -277,7 +280,7 @@ const TodayPage = () => {
                         {/* Evening Section */}
                         {tasks.evening?.length > 0 && (
                             <section className="time-group">
-                                <h4>Evening</h4>
+                                <h4>{t('admin.today.sections.evening', 'Evening')}</h4>
                                 {tasks.evening.map(task => renderTaskCard(task, activeTimer, taskDurations, handleStartTask, handleStopTimer, handleMarkDone, handleMoveToTomorrow))}
                             </section>
                         )}
@@ -285,7 +288,7 @@ const TodayPage = () => {
                         {/* Anytime Section */}
                         {tasks.anytime?.length > 0 && (
                             <section className="time-group">
-                                <h4>Anytime</h4>
+                                <h4>{t('admin.today.sections.anytime', 'Anytime')}</h4>
                                 {tasks.anytime.map(task => renderTaskCard(task, activeTimer, taskDurations, handleStartTask, handleStopTimer, handleMarkDone, handleMoveToTomorrow))}
                             </section>
                         )}
@@ -294,10 +297,10 @@ const TodayPage = () => {
                         {Object.values(tasks).flat().length === 0 && (
                             <div className="empty-state">
                                 <FaCalendarDay size={40} />
-                                <h3>All caught up!</h3>
-                                <p>No pending tasks scheduled for today.</p>
+                                <h3>{t('admin.today.empty.title', 'All caught up!')}</h3>
+                                <p>{t('admin.today.empty.desc', 'No pending tasks scheduled for today.')}</p>
                                 <Link to="/admin/tasks" className="crm-btn-primary" style={{ marginTop: '20px', display: 'inline-flex' }}>
-                                    View All Tasks
+                                    {t('admin.today.empty.view_all', 'View All Tasks')}
                                 </Link>
                             </div>
                         )}

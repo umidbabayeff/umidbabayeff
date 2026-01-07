@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/prefer-nullish-coalescing, @typescript-eslint/no-unsafe-return */
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { useParams, Link } from 'react-router-dom';
-import { FaArrowLeft, FaCheckSquare, FaFileAlt, FaHistory, FaListUl, FaInfoCircle, FaPlus, FaTrash, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
+import { FaArrowLeft, FaCheckSquare, FaFileAlt, FaHistory, FaListUl, FaInfoCircle, FaPlus, FaTrash, FaEdit, FaSave, FaTimes, FaFolder, FaChevronRight } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './ProjectDetails.css';
 
 const ProjectDetails = () => {
+    const { t, i18n } = useTranslation();
     const { id } = useParams();
     const [activeTab, setActiveTab] = useState('overview');
     const [project, setProject] = useState(null);
@@ -23,6 +26,11 @@ const ProjectDetails = () => {
     // Timeline Edit State
     const [isEditingTimeline, setIsEditingTimeline] = useState(false);
     const [timelineForm, setTimelineForm] = useState({ start_date: '', deadline: '' });
+
+    // Folder State
+    const [currentFolderId, setCurrentFolderId] = useState(null);
+    const [showFolderInput, setShowFolderInput] = useState(false);
+    const [newFolderName, setNewFolderName] = useState('');
 
     useEffect(() => {
         const fetchProjectData = async () => {
@@ -57,7 +65,7 @@ const ProjectDetails = () => {
             setLoading(false);
         };
 
-        fetchProjectData();
+        void fetchProjectData();
     }, [id]);
 
     // --- Step Management Functions ---
@@ -80,7 +88,7 @@ const ProjectDetails = () => {
 
         if (error) {
             console.error('Error creating step:', error);
-            alert('Failed to create step');
+            alert(t('admin.project_details.steps.create_error', 'Failed to create step'));
         } else {
             setSteps([...steps, data]);
             setNewStepTitle('');
@@ -89,7 +97,7 @@ const ProjectDetails = () => {
     };
 
     const handleDeleteStep = async (stepId) => {
-        if (!window.confirm('Are you sure? This will delete the step.')) return;
+        if (!window.confirm(t('admin.project_details.steps.delete_confirm', 'Are you sure? This will delete the step.'))) return;
 
         const { error } = await supabase.from('steps').delete().eq('id', stepId);
         if (error) {
@@ -104,7 +112,7 @@ const ProjectDetails = () => {
             const stepTasks = tasks.filter(t => t.step_id === step.id);
             const uncompletedTasks = stepTasks.filter(t => t.status !== 'done');
             if (uncompletedTasks.length > 0) {
-                alert(`Cannot mark as Done. ${uncompletedTasks.length} tasks are still pending.`);
+                alert(t('admin.project_details.steps.pending_tasks_alert', { count: uncompletedTasks.length, defaultValue: `Cannot mark as Done. ${uncompletedTasks.length} tasks are still pending.` }));
                 return;
             }
         }
@@ -158,7 +166,7 @@ const ProjectDetails = () => {
 
         if (error) {
             console.error('Error creating task:', error);
-            alert('Failed to create task');
+            alert(t('admin.project_details.tasks.create_error', 'Failed to create task'));
         } else {
             setTasks([...tasks, data]);
             setNewTaskTitle('');
@@ -167,7 +175,7 @@ const ProjectDetails = () => {
     };
 
     const handleDeleteTask = async (taskId) => {
-        if (!window.confirm('Delete this task?')) return;
+        if (!window.confirm(t('admin.project_details.tasks.delete_confirm', 'Delete this task?'))) return;
         const { error } = await supabase.from('tasks').delete().eq('id', taskId);
         if (!error) {
             setTasks(tasks.filter(t => t.id !== taskId));
@@ -182,7 +190,36 @@ const ProjectDetails = () => {
         return Math.round((doneTasks.length / stepTasks.length) * 100);
     };
 
-    // --- Document Handlers ---
+    // --- Document & Folder Handlers ---
+
+    const handleCreateFolder = async () => {
+        if (!newFolderName.trim()) return;
+
+        console.log('Creating folder:', newFolderName, 'Under parent:', currentFolderId);
+
+        const { data, error } = await supabase
+            .from('documents')
+            .insert([{
+                project_id: id,
+                name: newFolderName,
+                is_folder: true,
+                parent_id: currentFolderId,
+                status: 'active',
+                type: 'folder' // Explicitly set type
+            }])
+            .select()
+            .single();
+
+        if (error) {
+            console.error('Error creating folder:', error);
+            alert(`Failed to create folder: ${error.message || JSON.stringify(error)}`);
+        } else {
+            console.log('Folder created:', data);
+            setDocs([data, ...docs]);
+            setNewFolderName('');
+            setShowFolderInput(false);
+        }
+    };
 
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
@@ -210,9 +247,12 @@ const ProjectDetails = () => {
                 .from('documents')
                 .insert([{
                     project_id: id,
+                    name: file.name, // Use original filename for display
+                    is_folder: false,
+                    parent_id: currentFolderId,
                     type: file.type.includes('pdf') ? 'Invoice' : 'Document',
                     file_url: publicUrl,
-                    status: 'draft'
+                    status: 'active'
                 }])
                 .select()
                 .single();
@@ -221,51 +261,86 @@ const ProjectDetails = () => {
 
             // 4. Update UI
             setDocs([docData, ...docs]);
-            alert('File uploaded successfully!');
+            alert(t('admin.project_details.documents.upload_success', 'File uploaded successfully!'));
 
         } catch (error) {
             console.error('Error uploading file:', error);
-            alert('Upload failed: ' + error.message);
+            alert(t('admin.project_details.documents.upload_failed', 'Upload failed') + ': ' + error.message);
         } finally {
             e.target.value = null; // Reset input
         }
     };
 
-    const handleDeleteDoc = async (docId, fileUrl) => {
-        if (!window.confirm('Delete this document?')) return;
+    const handleDeleteDoc = async (docId, fileUrl, isFolder) => {
+        console.log('Attempting Standard Delete:', { docId, fileUrl, isFolder });
+
+        const msg = isFolder
+            ? t('admin.project_details.documents.delete_folder_confirm', 'Delete this folder and ALL its contents?')
+            : t('admin.project_details.documents.delete_doc_confirm', 'Delete this document?');
+
+        if (!window.confirm(msg)) return;
 
         try {
-            // Extract path from URL. Assuming standard Supabase Storage URL structure.
-            // URL: .../storage/v1/object/public/project-files/PROJECT_ID/FILENAME
-            // We need "PROJECT_ID/FILENAME"
-            const urlParts = fileUrl.split('project-files/');
-            if (urlParts.length < 2) throw new Error('Invalid file URL format');
-            const filePath = urlParts[1];
+            // 1. Try to clean up storage (Client-side Best Effort)
+            // If this fails, we proceed anyway.
+            try {
+                if (isFolder) {
+                    // For folders, we'd ideally list files and delete them.
+                    // To keep it robust, we'll just try to delete the DB record.
+                    // Storage cleanup for folders can be done via a cron job or manual script later if needed.
+                    console.log('Skipping recursive storage delete for folder robustness.');
+                } else if (fileUrl) {
+                    const urlParts = fileUrl.split('project-files/');
+                    if (urlParts.length >= 2) {
+                        const path = urlParts[1];
+                        console.log('Deleting file from storage:', path);
+                        await supabase.storage.from('project-files').remove([path]);
+                    }
+                }
+            } catch (storageErr) {
+                console.warn('Storage cleanup failed (ignoring):', storageErr);
+            }
 
-            // 1. Delete from Storage
-            const { error: storageError } = await supabase.storage
-                .from('project-files')
-                .remove([filePath]);
-
-            if (storageError) console.warn('Storage delete warning:', storageError);
-
-            // 2. Delete from DB
+            // 2. Delete from DB (Relying on ON DELETE CASCADE for folders)
+            console.log('Deleting from DB:', docId);
             const { error: dbError } = await supabase
                 .from('documents')
                 .delete()
                 .eq('id', docId);
 
-            if (dbError) throw dbError;
+            if (dbError) {
+                console.error('DB Delete Error:', dbError);
+                // Throw the error so we see it in the alert
+                throw dbError;
+            }
 
-            setDocs(docs.filter(d => d.id !== docId));
+            console.log('Delete successful');
+            // Update UI
+            setDocs(prev => prev.filter(d => d.id !== docId));
         } catch (error) {
-            console.error('Error deleting document:', error);
-            alert('Delete failed');
+            console.error('Error deleting item:', error);
+            alert(`Delete failed: ${error.message || JSON.stringify(error)}`);
         }
     };
 
-    if (loading) return <div className="p-10 text-white">Loading Project...</div>;
-    if (!project) return <div className="p-10 text-white">Project not found</div>;
+    // Helper to get current folder path
+    const getBreadcrumbs = () => {
+        const path = [];
+        let curr = currentFolderId;
+        while (curr) {
+            const folder = docs.find(d => d.id === curr);
+            if (folder) {
+                path.unshift(folder);
+                curr = folder.parent_id;
+            } else {
+                break;
+            }
+        }
+        return path;
+    };
+
+    if (loading) return <div className="p-10 text-white">{t('admin.common.loading', 'Loading...')}</div>;
+    if (!project) return <div className="p-10 text-white">{t('admin.projects.create_error', 'Project not found')}</div>;
 
     const renderTabContent = () => {
         switch (activeTab) {
@@ -273,23 +348,23 @@ const ProjectDetails = () => {
                 return (
                     <div className="tab-content overview-grid">
                         <div className="info-card">
-                            <h3>Project Info</h3>
-                            <div className="info-row"><span className="label">Client:</span><span className="value">{project.clients?.name}</span></div>
-                            <div className="info-row"><span className="label">Type:</span><span className="value">{project.type}</span></div>
-                            <div className="info-row"><span className="label">Status:</span><span className="status-badge-inline">{project.status}</span></div>
-                            <div className="info-row"><span className="label">Price:</span><span className="value money">${project.price}</span></div>
+                            <h3>{t('admin.project_details.project_info', 'Project Info')}</h3>
+                            <div className="info-row"><span className="label">{t('admin.project_details.client', 'Client')}:</span><span className="value">{project.clients?.name}</span></div>
+                            <div className="info-row"><span className="label">{t('admin.project_details.type', 'Type')}:</span><span className="value">{project.type}</span></div>
+                            <div className="info-row"><span className="label">{t('admin.project_details.status', 'Status')}:</span><span className="status-badge-inline">{t(`admin.projects.status.${project.status}`, project.status)}</span></div>
+                            <div className="info-row"><span className="label">{t('admin.project_details.price', 'Price')}:</span><span className="value money">${project.price}</span></div>
                         </div>
                         <div className="info-card">
                             <div className="card-header-actions">
-                                <h3>Timeline</h3>
+                                <h3>{t('admin.project_details.timeline', 'Timeline')}</h3>
                                 {!isEditingTimeline ? (
-                                    <button className="icon-btn-small" onClick={() => setIsEditingTimeline(true)} title="Edit Timeline">
+                                    <button className="icon-btn-small" onClick={() => setIsEditingTimeline(true)} title={t('admin.common.edit', 'Edit')}>
                                         <FaEdit />
                                     </button>
                                 ) : (
                                     <div className="edit-actions-mini">
-                                        <button className="icon-btn-small save" onClick={handleUpdateTimeline} title="Save"><FaSave /></button>
-                                        <button className="icon-btn-small cancel" onClick={() => setIsEditingTimeline(false)} title="Cancel"><FaTimes /></button>
+                                        <button className="icon-btn-small save" onClick={() => void handleUpdateTimeline()} title={t('admin.common.save', 'Save')}><FaSave /></button>
+                                        <button className="icon-btn-small cancel" onClick={() => setIsEditingTimeline(false)} title={t('admin.common.cancel', 'Cancel')}><FaTimes /></button>
                                     </div>
                                 )}
                             </div>
@@ -297,7 +372,7 @@ const ProjectDetails = () => {
                             {isEditingTimeline ? (
                                 <div className="timeline-edit-form">
                                     <div className="info-row-edit">
-                                        <span className="label">Start:</span>
+                                        <span className="label">{t('admin.project_details.start', 'Start')}:</span>
                                         <input
                                             type="date"
                                             value={timelineForm.start_date || ''}
@@ -305,7 +380,7 @@ const ProjectDetails = () => {
                                         />
                                     </div>
                                     <div className="info-row-edit">
-                                        <span className="label">Deadline:</span>
+                                        <span className="label">{t('admin.project_details.deadline', 'Deadline')}:</span>
                                         <input
                                             type="date"
                                             value={timelineForm.deadline || ''}
@@ -315,13 +390,13 @@ const ProjectDetails = () => {
                                 </div>
                             ) : (
                                 <>
-                                    <div className="info-row"><span className="label">Start:</span><span className="value">{project.start_date ? new Date(project.start_date).toLocaleDateString() : 'Not set'}</span></div>
-                                    <div className="info-row"><span className="label">Deadline:</span><span className="value">{project.deadline ? new Date(project.deadline).toLocaleDateString() : 'Not set'}</span></div>
+                                    <div className="info-row"><span className="label">{t('admin.project_details.start', 'Start')}:</span><span className="value">{project.start_date ? new Date(project.start_date).toLocaleDateString(i18n.language) : t('admin.common.not_set', 'Not set')}</span></div>
+                                    <div className="info-row"><span className="label">{t('admin.project_details.deadline', 'Deadline')}:</span><span className="value">{project.deadline ? new Date(project.deadline).toLocaleDateString(i18n.language) : t('admin.common.not_set', 'Not set')}</span></div>
                                 </>
                             )}
 
                             <div className="progress-section">
-                                <span className="label">Total Progress: {tasks.length ? Math.round(tasks.filter(t => t.status === 'done').length / tasks.length * 100) : 0}%</span>
+                                <span className="label">{t('admin.project_details.total_progress', 'Total Progress')}: {tasks.length ? Math.round(tasks.filter(t => t.status === 'done').length / tasks.length * 100) : 0}%</span>
                                 <div className="progress-bar-wrapper">
                                     <div className="progress-bar" style={{ width: `${tasks.length ? (tasks.filter(t => t.status === 'done').length / tasks.length * 100) : 0}%` }}></div>
                                 </div>
@@ -333,8 +408,8 @@ const ProjectDetails = () => {
                 return (
                     <div className="tab-content">
                         <div className="tab-header-actions">
-                            <h3>Project Steps</h3>
-                            <button className="btn-small" onClick={() => setShowStepInput(true)}><FaPlus /> Add Step</button>
+                            <h3>{t('admin.project_details.steps.title', 'Project Steps')}</h3>
+                            <button className="btn-small" onClick={() => setShowStepInput(true)}><FaPlus /> {t('admin.project_details.steps.add_btn', 'Add Step')}</button>
                         </div>
 
                         {showStepInput && (
@@ -342,18 +417,18 @@ const ProjectDetails = () => {
                                 <input
                                     autoFocus
                                     type="text"
-                                    placeholder="Step title..."
+                                    placeholder={t('admin.project_details.steps.input_placeholder', 'Step title...')}
                                     value={newStepTitle}
                                     onChange={e => setNewStepTitle(e.target.value)}
                                     className="step-input"
                                 />
-                                <button className="btn-save" onClick={handleCreateStep}><FaSave /></button>
+                                <button className="btn-save" onClick={() => void handleCreateStep()}><FaSave /></button>
                                 <button className="btn-cancel" onClick={() => setShowStepInput(false)}><FaTimes /></button>
                             </div>
                         )}
 
                         <ul className="steps-list">
-                            {steps.length === 0 ? <p className="text-gray">No steps yet. Add one to get started.</p> : steps.map(step => (
+                            {steps.length === 0 ? <p className="text-gray">{t('admin.project_details.steps.empty', 'No steps yet. Add one to get started.')}</p> : steps.map(step => (
                                 <li key={step.id} className="step-item">
                                     <div className="step-header">
                                         <div className="step-info">
@@ -362,8 +437,8 @@ const ProjectDetails = () => {
                                                 <input
                                                     className="edit-step-input"
                                                     defaultValue={step.title}
-                                                    onBlur={(e) => handleUpdateStepTitle(step.id, e.target.value)}
-                                                    onKeyDown={(e) => e.key === 'Enter' && handleUpdateStepTitle(step.id, e.currentTarget.value)}
+                                                    onBlur={(e) => void handleUpdateStepTitle(step.id, e.target.value)}
+                                                    onKeyDown={(e) => { if (e.key === 'Enter') void handleUpdateStepTitle(step.id, e.currentTarget.value); }}
                                                     autoFocus
                                                 />
                                             ) : (
@@ -377,15 +452,15 @@ const ProjectDetails = () => {
                                             </div>
                                             <select
                                                 value={step.status}
-                                                onChange={(e) => handleUpdateStepStatus(step, e.target.value)}
+                                                onChange={(e) => void handleUpdateStepStatus(step, e.target.value)}
                                                 className={`status-select ${step.status}`}
                                             >
-                                                <option value="not_started">Not Started</option>
-                                                <option value="active">Active</option>
-                                                <option value="done">Done</option>
+                                                <option value="not_started">{t('admin.project_details.status_options.not_started', 'Not Started')}</option>
+                                                <option value="active">{t('admin.project_details.status_options.active', 'Active')}</option>
+                                                <option value="done">{t('admin.project_details.status_options.done', 'Done')}</option>
                                             </select>
                                             <button className="icon-btn" onClick={() => setEditingStepId(step.id)}><FaEdit /></button>
-                                            <button className="icon-btn delete" onClick={() => handleDeleteStep(step.id)}><FaTrash /></button>
+                                            <button className="icon-btn delete" onClick={() => void handleDeleteStep(step.id)}><FaTrash /></button>
                                         </div>
                                     </div>
                                 </li>
@@ -397,8 +472,8 @@ const ProjectDetails = () => {
                 return (
                     <div className="tab-content">
                         <div className="tab-header-actions">
-                            <h3>Tasks</h3>
-                            <button className="btn-small" onClick={() => setShowTaskInput(true)}><FaPlus /> Add Task</button>
+                            <h3>{t('admin.project_details.tasks.title', 'Tasks')}</h3>
+                            <button className="btn-small" onClick={() => setShowTaskInput(true)}><FaPlus /> {t('admin.project_details.tasks.add_btn', 'Add Task')}</button>
                         </div>
 
                         {showTaskInput && (
@@ -406,32 +481,32 @@ const ProjectDetails = () => {
                                 <input
                                     autoFocus
                                     type="text"
-                                    placeholder="Task title..."
+                                    placeholder={t('admin.project_details.tasks.input_placeholder', 'Task title...')}
                                     value={newTaskTitle}
                                     onChange={e => setNewTaskTitle(e.target.value)}
                                     className="step-input"
-                                    onKeyDown={(e) => e.key === 'Enter' && handleCreateTask()}
+                                    onKeyDown={(e) => { if (e.key === 'Enter') void handleCreateTask(); }}
                                 />
-                                <button className="btn-save" onClick={handleCreateTask}><FaSave /></button>
+                                <button className="btn-save" onClick={() => void handleCreateTask()}><FaSave /></button>
                                 <button className="btn-cancel" onClick={() => setShowTaskInput(false)}><FaTimes /></button>
                             </div>
                         )}
 
                         <div className="tasks-list">
-                            {tasks.length === 0 ? <p className="text-gray">No tasks.</p> : tasks.map(task => (
+                            {tasks.length === 0 ? <p className="text-gray">{t('admin.project_details.tasks.empty', 'No tasks.')}</p> : tasks.map(task => (
                                 <div key={task.id} className="task-item">
                                     <div className="task-left">
                                         <input
                                             type="checkbox"
                                             checked={task.status === 'done'}
-                                            onChange={() => handleToggleTaskStatus(task)}
+                                            onChange={() => void handleToggleTaskStatus(task)}
                                             style={{ cursor: 'pointer' }}
                                         />
                                         <span className={task.status === 'done' ? 'line-through text-gray' : ''}>{task.title}</span>
                                     </div>
                                     <div className="task-right">
                                         <span className={`priority-badge ${task.priority}`}>{task.priority}</span>
-                                        <button className="icon-btn delete" onClick={() => handleDeleteTask(task.id)}>
+                                        <button className="icon-btn delete" onClick={() => void handleDeleteTask(task.id)}>
                                             <FaTrash />
                                         </button>
                                     </div>
@@ -441,53 +516,127 @@ const ProjectDetails = () => {
                     </div>
                 );
 
-            case 'documents':
+            case 'documents': {
+                const filteredDocs = docs.filter(d => (d.parent_id || null) === currentFolderId);
+                const breadcrumbs = getBreadcrumbs();
+
                 return (
                     <div className="tab-content">
                         <div className="tab-header-actions">
-                            <h3>Documents</h3>
-                            <label className="btn-small crm-btn-primary" style={{ cursor: 'pointer' }}>
-                                <FaPlus /> Upload Doc
-                                <input
-                                    type="file"
-                                    style={{ display: 'none' }}
-                                    accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
-                                    onChange={handleFileUpload}
-                                />
-                            </label>
+                            <h3>{t('admin.project_details.documents.title', 'Documents')}</h3>
+                            <div className="doc-actions">
+                                <button className="btn-small" onClick={() => setShowFolderInput(true)}>
+                                    <FaPlus /> {t('admin.project_details.documents.new_folder', 'New Folder')}
+                                </button>
+                                <label className="btn-small crm-btn-primary" style={{ cursor: 'pointer' }}>
+                                    <FaPlus /> {t('admin.project_details.documents.upload_doc', 'Upload Doc')}
+                                    <input
+                                        type="file"
+                                        style={{ display: 'none' }}
+                                        accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                                        onChange={(e) => void handleFileUpload(e)}
+                                    />
+                                </label>
+                            </div>
                         </div>
-                        <div className="docs-list">
-                            {docs.length === 0 ? <p className="text-gray">No documents attached.</p> : docs.map(doc => (
-                                <div key={doc.id} className="doc-item">
-                                    <div className="doc-info-main">
-                                        <FaFileAlt className="doc-icon" />
-                                        <div className="doc-text">
-                                            <a href={doc.file_url} target="_blank" rel="noopener noreferrer" className="doc-link">
-                                                {doc.type} <span className="doc-date">({new Date(doc.created_at).toLocaleDateString()})</span>
-                                            </a>
-                                            <span className="doc-url-preview">{doc.file_url.split('/').pop()}</span>
-                                        </div>
-                                    </div>
-                                    <button className="icon-btn delete" onClick={() => handleDeleteDoc(doc.id, doc.file_url)}>
-                                        <FaTrash />
-                                    </button>
-                                </div>
+
+                        {/* Breadcrumbs */}
+                        <div className="breadcrumbs">
+                            <span
+                                className={`breadcrumb-item ${!currentFolderId ? 'active' : ''}`}
+                                onClick={() => setCurrentFolderId(null)}
+                            >
+                                {t('admin.project_details.documents.root', 'Root')}
+                            </span>
+                            {breadcrumbs.map(folder => (
+                                <React.Fragment key={folder.id}>
+                                    <FaChevronRight className="breadcrumb-prop" />
+                                    <span
+                                        className={`breadcrumb-item ${currentFolderId === folder.id ? 'active' : ''}`}
+                                        onClick={() => setCurrentFolderId(folder.id)}
+                                    >
+                                        {folder.name}
+                                    </span>
+                                </React.Fragment>
                             ))}
+                        </div>
+
+                        {showFolderInput && (
+                            <div className="new-step-input">
+                                <FaFolder className="text-gray" style={{ fontSize: '1.2rem' }} />
+                                <input
+                                    autoFocus
+                                    type="text"
+                                    placeholder={t('admin.project_details.documents.folder_placeholder', 'Folder name...')}
+                                    value={newFolderName}
+                                    onChange={e => setNewFolderName(e.target.value)}
+                                    className="step-input"
+                                    onKeyDown={e => { if (e.key === 'Enter') void handleCreateFolder(); }}
+                                />
+                                <button className="btn-save" onClick={() => void handleCreateFolder()}><FaSave /></button>
+                                <button className="btn-cancel" onClick={() => setShowFolderInput(false)}><FaTimes /></button>
+                            </div>
+                        )}
+
+                        <div className="docs-list">
+                            {filteredDocs.length === 0 ? (
+                                <p className="text-gray" style={{ gridColumn: '1/-1', textAlign: 'center', padding: '2rem' }}>
+                                    {t('admin.project_details.documents.empty_folder', 'This folder is empty.')}
+                                </p>
+                            ) : (
+                                filteredDocs
+                                    .sort((a, b) => (a.is_folder === b.is_folder ? 0 : a.is_folder ? -1 : 1)) // Folders first
+                                    .map(doc => (
+                                        <div
+                                            key={doc.id}
+                                            className={`doc-item ${doc.is_folder ? 'is-folder' : ''}`}
+                                            onClick={() => doc.is_folder && setCurrentFolderId(doc.id)}
+                                            style={{ cursor: doc.is_folder ? 'pointer' : 'default' }}
+                                        >
+                                            <div className="doc-info-main">
+                                                {doc.is_folder ? (
+                                                    <FaFolder className="doc-icon folder" style={{ color: '#fbbf24' }} />
+                                                ) : (
+                                                    <FaFileAlt className="doc-icon" />
+                                                )}
+                                                <div className="doc-text">
+                                                    {doc.is_folder ? (
+                                                        <span className="doc-name">{doc.name}</span>
+                                                    ) : (
+                                                        <a href={doc.file_url} target="_blank" rel="noopener noreferrer" className="doc-link" onClick={e => e.stopPropagation()}>
+                                                            {doc.name || doc.type}
+                                                        </a>
+                                                    )}
+                                                    <span className="doc-date">
+                                                        {new Date(doc.created_at).toLocaleDateString(i18n.language)}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <button
+                                                className="icon-btn delete"
+                                                onClick={(e) => { e.stopPropagation(); void handleDeleteDoc(doc.id, doc.file_url, doc.is_folder); }}
+                                            >
+                                                <FaTrash />
+                                            </button>
+                                        </div>
+                                    ))
+                            )}
                         </div>
                     </div>
                 );
-            case 'activity': return <div className="tab-content"><p>Activity Log (Coming Soon)</p></div>;
+            }
+            case 'activity': return <div className="tab-content"><p>{t('admin.project_details.activity.coming_soon', 'Activity Log (Coming Soon)')}</p></div>;
             default: return null;
         }
     };
 
     const handleDeleteProject = async () => {
-        if (!window.confirm('Are you sure you want to delete this project? This action cannot be undone.')) return;
+        if (!window.confirm(t('admin.project_details.actions.delete_project_confirm', 'Are you sure you want to delete this project? This action cannot be undone.'))) return;
 
         const { error } = await supabase.from('projects').delete().eq('id', id);
         if (error) {
             console.error('Error deleting project:', error);
-            alert('Failed to delete project');
+            alert(t('admin.common.delete_error', 'Failed to delete project'));
         } else {
             window.location.href = '/admin/projects';
         }
@@ -497,7 +646,7 @@ const ProjectDetails = () => {
         const { error } = await supabase.from('projects').update({ status: newStatus }).eq('id', id);
         if (error) {
             console.error('Error updating status:', error);
-            alert('Failed to update status');
+            alert(t('admin.common.update_error', 'Failed to update status'));
         } else {
             setProject({ ...project, status: newStatus });
         }
@@ -514,7 +663,7 @@ const ProjectDetails = () => {
 
         if (error) {
             console.error('Error updating timeline:', error);
-            alert('Failed to update timeline');
+            alert(t('admin.project_details.timeline_error', 'Failed to update timeline'));
         } else {
             setProject({
                 ...project,
@@ -528,33 +677,33 @@ const ProjectDetails = () => {
     return (
         <div className="project-details-page">
             <div className="details-header">
-                <Link to="/admin/projects" className="back-link"><FaArrowLeft /> Back to Projects</Link>
+                <Link to="/admin/projects" className="back-link"><FaArrowLeft /> {t('admin.project_details.back_to_projects', 'Back to Projects')}</Link>
                 <div className="title-section">
                     <h1>{project.title}</h1>
                     <div className="header-actions">
                         <select
                             value={project.status}
-                            onChange={(e) => handleUpdateStatus(e.target.value)}
+                            onChange={(e) => void handleUpdateStatus(e.target.value)}
                             className={`status-select-lg ${project.status}`}
                         >
-                            <option value="draft">Draft</option>
-                            <option value="active">Active</option>
-                            <option value="paused">Paused</option>
-                            <option value="completed">Completed (Archived)</option>
+                            <option value="draft">{t('admin.projects.status.draft', 'Draft')}</option>
+                            <option value="active">{t('admin.projects.status.active', 'Active')}</option>
+                            <option value="paused">{t('admin.projects.status.paused', 'Paused')}</option>
+                            <option value="completed">{t('admin.projects.status.completed', 'Completed')}</option>
                         </select>
-                        <button className="btn-danger-outline" onClick={handleDeleteProject}>
-                            <FaTrash /> Delete Project
+                        <button className="btn-danger-outline" onClick={() => void handleDeleteProject()}>
+                            <FaTrash /> {t('admin.project_details.actions.delete_project', 'Delete Project')}
                         </button>
                     </div>
                 </div>
             </div>
 
             <div className="project-tabs">
-                <button className={`tab-btn ${activeTab === 'overview' ? 'active' : ''}`} onClick={() => setActiveTab('overview')}><FaInfoCircle /> Overview</button>
-                <button className={`tab-btn ${activeTab === 'steps' ? 'active' : ''}`} onClick={() => setActiveTab('steps')}><FaListUl /> Steps</button>
-                <button className={`tab-btn ${activeTab === 'tasks' ? 'active' : ''}`} onClick={() => setActiveTab('tasks')}><FaCheckSquare /> Tasks</button>
-                <button className={`tab-btn ${activeTab === 'documents' ? 'active' : ''}`} onClick={() => setActiveTab('documents')}><FaFileAlt /> Documents</button>
-                <button className={`tab-btn ${activeTab === 'activity' ? 'active' : ''}`} onClick={() => setActiveTab('activity')}><FaHistory /> Activity</button>
+                <button className={`tab-btn ${activeTab === 'overview' ? 'active' : ''}`} onClick={() => setActiveTab('overview')}><FaInfoCircle /> {t('admin.project_details.tabs.overview', 'Overview')}</button>
+                <button className={`tab-btn ${activeTab === 'steps' ? 'active' : ''}`} onClick={() => setActiveTab('steps')}><FaListUl /> {t('admin.project_details.tabs.steps', 'Steps')}</button>
+                <button className={`tab-btn ${activeTab === 'tasks' ? 'active' : ''}`} onClick={() => setActiveTab('tasks')}><FaCheckSquare /> {t('admin.project_details.tabs.tasks', 'Tasks')}</button>
+                <button className={`tab-btn ${activeTab === 'documents' ? 'active' : ''}`} onClick={() => setActiveTab('documents')}><FaFileAlt /> {t('admin.project_details.tabs.documents', 'Documents')}</button>
+                <button className={`tab-btn ${activeTab === 'activity' ? 'active' : ''}`} onClick={() => setActiveTab('activity')}><FaHistory /> {t('admin.project_details.tabs.activity', 'Activity')}</button>
             </div>
 
             <div className="tab-container">

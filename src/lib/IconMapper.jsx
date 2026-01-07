@@ -1,7 +1,7 @@
-import React from 'react';
 import {
     FaLaptopCode, FaMobileAlt, FaDatabase, FaRobot, FaBrain, FaPalette,
-    FaSearch, FaShapes, FaCogs, FaNetworkWired, FaLayerGroup, FaCode
+    FaSearch, FaShapes, FaCogs, FaNetworkWired, FaLayerGroup, FaCode,
+    FaBuilding, FaChartLine, FaRocket, FaLock, FaGlobe
 } from 'react-icons/fa';
 import {
     SiReact, SiVite, SiFlutter, SiSupabase, SiFirebase, SiNodedotjs,
@@ -21,6 +21,13 @@ export const iconMap = {
     'search': <FaSearch />,
     'shapes': <FaShapes />,
     'cogs': <FaCogs />,
+    'building': <FaBuilding />,
+    'chart-line': <FaChartLine />,
+    'rocket': <FaRocket />,
+    'lock': <FaLock />,
+    'globe': <FaGlobe />,
+    'network': <FaNetworkWired />,
+    'layer': <FaLayerGroup />,
 
     // Tech Stack
     'react': <SiReact />,
@@ -36,16 +43,16 @@ export const iconMap = {
     'typescript': <SiTypescript />,
     'tailwind': <SiTailwindcss />,
     'google-cloud': <SiGooglecloud />,
-    'postgresql': <SiPostgresql />,
-    'network': <FaNetworkWired />,
-    'layer': <FaLayerGroup />
+    'postgresql': <SiPostgresql />
 };
 
 export const getIcon = (iconName) => {
-    if (!iconName) return <FaCode />; // Default
+    if (!iconName || typeof iconName !== 'string') return <FaCode />; // Default
     // Normalize: lowercase and remove spaces
     const key = iconName.toLowerCase().replace(/\s+/g, '-');
-    return iconMap[key] || <FaCode />;
+    // @ts-expect-error: Implicit any on iconMap access using string key
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return iconMap[key] ?? <FaCode />;
 };
 
 export const getIconList = () => Object.keys(iconMap).sort();

@@ -5,6 +5,7 @@
         "technologies": "Texnologiyalar",
         "about": "Haqqımızda",
         "estimate": "Qiymətləndirmə",
+        "careers": "Karyera",
         "lets_talk": "Əlaqə"
     },
     "footer": {
@@ -278,5 +279,468 @@
                 "answer": "Gələcəyə hazır həllər qurmaq üçün React, Next.js, Node.js, Flutter, Supabase və OpenAI kimi Sİ inteqrasiyaları daxil olmaqla müasir, miqyaslana bilən texnologiya steklərindən istifadə edirik."
             }
         ]
+    },
+    "admin": {
+        "nav": {
+            "dashboard": "İdarə Paneli",
+            "translations": "Tərcümələr",
+            "services": "Xidmətlər",
+            "benefits": "Üstünlüklər",
+            "technologies": "Texnologiyalar",
+            "socials": "Sosiallar",
+            "today": "Bu gün",
+            "daily_review": "Gündəlik İcmal",
+            "weekly_review": "Həftəlik İcmal",
+            "inbox": "Gələnlər",
+            "hiring": "İşə Qəbul",
+            "clients": "Müştərilər",
+            "projects": "Layihələr",
+            "templates": "Şablonlar",
+            "tasks": "Tapşırıqlar"
+        },
+        "common": {
+            "logout": "Çıxış",
+            "loading": "Yüklənir...",
+            "save": "Yadda saxla",
+            "cancel": "Ləğv et",
+            "edit": "Düzəliş et",
+            "delete": "Sil",
+            "create": "Yeni Yarat",
+            "view_all": "Hamısına bax"
+        },
+        "dashboard": {
+            "title": "İdarə Paneli",
+            "subtitle": "Günün icmalı",
+            "focus": "Günün Fokusu",
+            "no_tasks": "Bu gün üçün tapşırıq yoxdur!",
+            "active_projects": "Aktiv Layihələr",
+            "recent_inbox": "Son Mesajlar",
+            "quick_actions": "Sürətli Əməliyyatlar",
+            "start_working": "İşə Başla",
+            "manage_tasks": "Tapşırıqları İdarə Et",
+            "check_messages": "Mesajları Yoxla"
+        },
+        "services": {
+            "title": "Xidmətlər",
+            "subtitle": "Xidmət təkliflərinizi idarə edin",
+            "add_new": "Xidmət əlavə et",
+            "search_placeholder": "Xidmətləri axtar...",
+            "table": {
+                "title": "Başlıq",
+                "desc": "Təsvir",
+                "icon": "İkon",
+                "actions": "Əməliyyatlar"
+            }
+        },
+        "benefits": {
+            "title": "Üstünlüklər",
+            "subtitle": "Üstünlük kartlarını idarə edin",
+            "add_new": "Üstünlük əlavə et",
+            "table": {
+                "title": "Başlıq",
+                "desc": "Təsvir",
+                "icon": "İkon",
+                "actions": "Əməliyyatlar"
+            }
+        },
+        "technologies": {
+            "title": "Texnologiyalar",
+            "subtitle": "Texnologiya stekini idarə edin",
+            "add_new": "Texnologiya əlavə et",
+            "table": {
+                "name": "Ad",
+                "category": "Kateqoriya",
+                "icon": "İkon",
+                "actions": "Əməliyyatlar"
+            }
+        },
+        "socials": {
+            "title": "Sosial Linklər",
+            "subtitle": "Sosial media linklərini idarə edin",
+            "add_new": "Link əlavə et",
+            "table": {
+                "platform": "Platforma",
+                "url": "URL",
+                "icon": "İkon",
+                "actions": "Əməliyyatlar"
+            }
+        },
+        "today": {
+            "title": "Bugünkü Gündəm",
+            "stats": {
+                "total_time": "Bugünkü Ümumi Vaxt"
+            },
+            "sections": {
+                "overdue": "Gecikmiş",
+                "morning": "Səhər",
+                "afternoon": "Günorta",
+                "evening": "Axşam",
+                "anytime": "İstənilən vaxt"
+            },
+            "empty": {
+                "title": "Hər şey hazırdır!",
+                "desc": "Bu gün üçün planlaşdırılmış tapşırıq yoxdur.",
+                "view_all": "Bütün Tapşırıqlar"
+            },
+            "actions": {
+                "start": "Başla",
+                "stop": "Dayandır",
+                "done": "Hazır",
+                "tomorrow": "Sabah"
+            },
+            "running": "İşləyir:",
+            "timer_running": "Timer işləyir..."
+        },
+        "daily_review": {
+            "title": "Günlük İcmal",
+            "subtitle": "Günə nəzər salın və sabaha hazırlıq görün",
+            "loading": "Hesabat hazırlanır...",
+            "stats": {
+                "completed": "Tamamlanmış Tapşırıqlar",
+                "focus_time": "Fokus Vaxtı"
+            },
+            "cols": {
+                "accomplished": "Tamamlandı",
+                "unfinished": "Tamamlanmadı"
+            },
+            "empty_done": "Hələ heç nə tamamlanmayıb. Davam edin!",
+            "empty_pending": "Hər şey təmizdir! Geridə qalan tapşırıq yoxdur.",
+            "move_all": "Hamısını Sabaha Keçir"
+        },
+        "weekly_review": {
+            "title": "Həftəlik İcmal",
+            "loading": "Həftəlik icmal yüklənir...",
+            "actions": {
+                "move_overdue": "Gecikmişləri gələn həftəyə keçir"
+            },
+            "stats": {
+                "tasks_completed": "Tamamlanmış Tapşırıqlar",
+                "estimated_time": "Təxmini Vaxt",
+                "time_by_project": "Layihə üzrə Vaxt"
+            },
+            "cols": {
+                "accomplished": "Bu Həftə Tamamlandı",
+                "overdue": "Gecikmiş / Tamamlanmamış",
+                "next_week": "Gələn Həftənin Planı"
+            },
+            "empty": {
+                "completed": "Hələ heç nə tamamlanmayıb.",
+                "overdue": "Hər şey təmizdir!",
+                "next_week": "Hələ heç nə planlaşdırılmayıb."
+            },
+            "alerts": {
+                "confirm_move": "Gecikmiş tapşırıqları gələn birinci günə keçir?",
+                "success": "Tapşırıqların vaxtı dəyişdirildi!",
+                "error": "Xəta baş verdi"
+            }
+        },
+        "inbox": {
+            "title": "Gələnlər qutusu",
+            "subtitle": "Sorğuları idarə edin və layihələrə çevirin",
+            "search_placeholder": "Mesajları axtar...",
+            "loading": "Mesajlar yüklənir...",
+            "empty": "Mesaj tapılmadı.",
+            "converted": "Komvertasiya edilib",
+            "convert_btn": "Layihəyə Çevir",
+            "undo_btn": "Geri qaytar",
+            "delete_title": "Mesajı sil",
+            "modal": {
+                "title": "Sorğunu Çevir",
+                "desc": "Yeni müştəri və layihə yarat:",
+                "client_details": "Müştəri Məlumatları",
+                "project_details": "Layihə Məlumatları",
+                "name": "Ad",
+                "email": "Email",
+                "company": "Şirkət",
+                "project_title": "Layihə Adı",
+                "type": "Növ",
+                "price": "Qiymət Təxmini",
+                "cancel": "Ləğv et",
+                "create_btn": "Müştəri və Layihə Yarat"
+            },
+            "alerts": {
+                "success": "Müştəri, Layihə və Mərhələlər uğurla yaradıldı!",
+                "confirm_undo": "Bu mesajı çevrilməmiş kimi işarələmək istəyirsiniz? Bu, yaradılmış layihəni/müştərini silməyəcək.",
+                "confirm_delete": "Bu mesajı silmək istədiyinizə əminsiniz? Bu əməliyyat geri qaytarıla bilməz.",
+                "process_error": "Çevrilmə xətası: ",
+                "undo_error": "Geri qaytarmaq mümkün olmadı",
+                "delete_error": "Mesajı silmək mümkün olmadı"
+            },
+            "defaults": {
+                "web_dev": "Veb İnkişafı",
+                "project_for": "Üçün layihə",
+                "steps": {
+                    "discovery": "Kəşfiyyat və Planlaşdırma",
+                    "design": "Dizayn və Prototip",
+                    "development": "İnkişaf",
+                    "content": "Məzmun İnteqrasiyası",
+                    "testing": "Test və QA",
+                    "deployment": "Yerləşdirmə"
+                }
+            }
+        },
+        "applications": {
+            "title": "Müraciətlər",
+            "subtitle": "Namizəd müraciətlərini idarə et və nəzərdən keçir",
+            "search_placeholder": "Ad, email üzrə axtarış...",
+            "loading": "Müraciətlər yüklənir...",
+            "empty": "Meyarlarınıza uyğun müraciət tapılmadı.",
+            "filters": {
+                "all": "Bütün Statuslar",
+                "new": "Yeni Namizəd",
+                "passed": "Testi Keçdi",
+                "submitted": "Tapşırıq Göndərildi",
+                "approved": "Təsdiqləndi",
+                "rejected": "Rədd edildi"
+            },
+            "table": {
+                "name": "Namizəd Adı",
+                "position": "Vəzifə",
+                "experience": "Təcrübə",
+                "score": "Test Balı",
+                "status": "Status",
+                "date": "Tarix"
+            },
+            "details": {
+                "profile": "Namizəd Profili",
+                "email": "Email:",
+                "contact": "Əlaqə:",
+                "why_us": "Niyə Biz:",
+                "stack": "Texnologiyalar:",
+                "no_tools": "Alətlər qeyd olunmayıb",
+                "assessment": "Qiymətləndirmə və Hərəkətlər",
+                "download_task": "Praktik Tapşırığı Yüklə",
+                "no_task": "Hələ praktik tapşırıq yüklənməyib."
+            },
+            "actions": {
+                "approve": "Müraciəti Təsdiqlə",
+                "reject": "Rədd et",
+                "confirm_update": "Bu müraciəti bu statusa dəyişmək istədiyinizə əminsiniz:",
+                "update_error": "Status yeniləmə xətası"
+            }
+        },
+        "clients": {
+            "title": "Müştərilər",
+            "subtitle": "Potensial və aktiv müştəriləri idarə et",
+            "add_btn": "Müştəri Əlavə et",
+            "search_placeholder": "Müştəri axtar...",
+            "loading": "Yüklənir...",
+            "modal": {
+                "edit_title": "Müştərini Düzəlt",
+                "new_title": "Yeni Müştəri",
+                "name": "Ad *",
+                "email": "Email",
+                "phone": "Telefon",
+                "company": "Şirkət",
+                "status": "Status",
+                "last_contact": "Son Əlaqə Tarixi",
+                "notes": "Daxili Qeydlər",
+                "cancel": "Ləğv et",
+                "save": "Yadda saxla"
+            },
+            "status": {
+                "lead": "Namizəd",
+                "active": "Aktiv",
+                "paused": "Dayandırılıb",
+                "archived": "Arxiv"
+            },
+            "card": {
+                "last_contact": "Son Əlaqə:",
+                "notes": "Qeydlər:",
+                "edit": "Düzəlt",
+                "delete": "Sil"
+            },
+            "confirm_delete": "Əminsiniz?",
+            "save_error": "Müştəri yadda saxlanılarkən xəta"
+        },
+        "projects": {
+            "title": "Layihələr",
+            "subtitle": "Aktiv işləri və inkişafı izlə",
+            "new_btn": "Yeni Layihə",
+            "search_placeholder": "Layihə axtar...",
+            "filter": {
+                "active": "Aktiv",
+                "draft": "Qaralamalar",
+                "paused": "Dayandırılıb",
+                "archived": "Arxiv",
+                "all": "Hamısı"
+            },
+            "modal": {
+                "title": "Yeni Layihə",
+                "name_label": "Başlıq *",
+                "client_label": "Müştəri *",
+                "select_client": "Müştəri Seç",
+                "type_label": "Növ",
+                "status_label": "Status",
+                "start_date": "Başlama Tarixi",
+                "deadline": "Son Tarix",
+                "price": "Qiymət",
+                "template_label": "Şablondan başla (İstəyə bağlı)",
+                "no_template": "Şablonsuz (Boş layihə)",
+                "template_help": "Şablon seçimi avtomatik mərhələlər və tapşırıqlar yaradacaq.",
+                "cancel": "Ləğv et",
+                "create": "Yarat"
+            },
+            "status": {
+                "draft": "Qaralama",
+                "active": "Aktiv",
+                "paused": "Dayandırılıb",
+                "completed": "Tamamlandı"
+            },
+            "card": {
+                "due": "Son gün",
+                "progress": "İnkişaf"
+            },
+            "create_error": "Layihə yaradılarkən xəta",
+            "loading": "Yüklənir..."
+        },
+        "templates": {
+            "title": "Şablonlar",
+            "subtitle": "Layihə planlarını idarə et",
+            "new_btn": "Yeni Şablon",
+            "back_btn": "Siyahıya qayıt",
+            "loading": "Yüklənir...",
+            "empty": "Şablon yaradılmayıb.",
+            "editing": "Düzəliş edilir:",
+            "add_step": "Mərhələ əlavə et",
+            "empty_steps": "Mərhələ yoxdur. Başlamaq üçün birini əlavə edin.",
+            "step_title_prompt": "Mərhələ başlığı:",
+            "task_title_prompt": "Tapşırıq başlığı:",
+            "add_task": "Tapşırıq əlavə et",
+            "delete_confirm": "Bu şablon silinsin?",
+            "delete_step_confirm": "Mərhələ silinsin? Bu, onun içindəki bütün tapşırıqları siləcək.",
+            "create_error": "Şablon yaradılarkən xəta",
+            "modal": {
+                "title": "Yeni Şablon",
+                "name_label": "Şablon Adı",
+                "type_label": "Varsayılan Növ",
+                "cancel": "Ləğv et",
+                "create": "Yarat"
+            }
+        },
+        "tasks": {
+            "title": "Tapşırıqlar",
+            "subtitle": "Bütün layihələr üzrə tapşırıqların icmalı",
+            "add_btn": "Tapşırıq əlavə et",
+            "search_placeholder": "Tapşırıq və ya layihə axtar...",
+            "filter_all": "Bütün Statuslar",
+            "loading": "Tapşırıqlar yüklənir...",
+            "empty": "Tapşırıq tapılmadı.",
+            "delete_confirm": "Bu tapşırıq silinsin?",
+            "create_error": "Tapşırıq yaradılarkən xəta",
+            "update_error": "Tapşırıq yenilənərkən xəta",
+            "modal": {
+                "edit_title": "Tapşırığı Düzəlt",
+                "new_title": "Yeni Qlobal Tapşırıq",
+                "title_label": "Başlıq",
+                "project_label": "Layihə",
+                "no_project": "Layihəsiz (Şəxsi)",
+                "step_label": "Mərhələ (İstəyə bağlı)",
+                "no_step": "Mərhələ yoxdur",
+                "priority_label": "Prioritet",
+                "status_label": "Status",
+                "date_label": "Tarix",
+                "cancel": "Ləğv et",
+                "save": "Yadda saxla",
+                "create": "Yarat"
+            },
+            "priority": {
+                "low": "Aşağı",
+                "medium": "Orta",
+                "high": "Yüksək",
+                "urgent": "Təcili"
+            },
+            "status": {
+                "todo": "Ediləcək",
+                "in_progress": "İcrada",
+                "review": "Yoxlanışda",
+                "done": "Hazırdır"
+            }
+        },
+        "project_details": {
+            "back_to_projects": "Layihələrə qayıt",
+            "project_info": "Layihə Məlumatı",
+            "client": "Müştəri",
+            "type": "Növ",
+            "status": "Status",
+            "price": "Qiymət",
+            "timeline": "Zaman çizelgesi",
+            "start": "Başlanğıc",
+            "deadline": "Son Tarix",
+            "total_progress": "Ümumi İnkişaf",
+            "status_options": {
+                "not_started": "Başlanmayıb",
+                "active": "Aktiv",
+                "done": "Hazır"
+            },
+            "tabs": {
+                "overview": "İcmal",
+                "steps": "Mərhələlər",
+                "tasks": "Tapşırıqlar",
+                "documents": "Sənədlər",
+                "activity": "Fəaliyyət"
+            },
+            "steps": {
+                "title": "Layihə Mərhələləri",
+                "add_btn": "Mərhələ əlavə et",
+                "input_placeholder": "Mərhələ adı...",
+                "empty": "Hələ mərhələ yoxdur. Başlamaq üçün birini əlavə edin.",
+                "delete_confirm": "Əminsiniz? Bu, mərhələni siləcək.",
+                "pending_tasks_alert": "Hazır kimi qeyd edilə bilməz. {{count}} tapşırıq hələ tamamlanmayıb.",
+                "create_error": "Mərhələ yaradıla bilmədi"
+            },
+            "tasks": {
+                "title": "Tapşırıqlar",
+                "add_btn": "Tapşırıq əlavə et",
+                "input_placeholder": "Tapşırıq adı...",
+                "empty": "Tapşırıq yoxdur.",
+                "delete_confirm": "Bu tapşırıq silinsin?",
+                "create_error": "Tapşırıq yaradıla bilmədi"
+            },
+            "documents": {
+                "title": "Sənədlər",
+                "new_folder": "Yeni Qovluq",
+                "upload_doc": "Sənəd Yüklə",
+                "folder_placeholder": "Qovluq adı...",
+                "empty_folder": "Bu qovluq boşdur.",
+                "root": "Kök",
+                "delete_folder_confirm": "Bu qovluğu və ONUN BÜTÜN məzmununu silmək istəyirsiniz?",
+                "delete_doc_confirm": "Bu sənədi silmək istəyirsiniz?",
+                "upload_success": "Fayl uğurla yükləndi!",
+                "upload_failed": "Yükləmə xətası"
+            },
+            "activity": {
+                "coming_soon": "Fəaliyyət Jurnalı (Tezliklə)"
+            },
+            "actions": {
+                "delete_project": "Layihəni sil",
+                "delete_project_confirm": "Bu layihəni silmək istədiyinizə əminsiniz? Bu əməliyyat geri qaytarıla bilməz."
+            },
+            "timeline_error": "Zaman çizelgesi yenilənə bilmədi"
+        },
+        "translations": {
+            "title": "Tərcümə İdarəçisi",
+            "search_placeholder": "Açar sözləri və ya mətni axtarın...",
+            "add_btn": "Yeni Açar Əlavə Et",
+            "table": {
+                "key": "Açar",
+                "english": "İngilis",
+                "russian": "Rus",
+                "azerbaijani": "Azərbaycan",
+                "actions": "Əməliyyatlar"
+            },
+            "actions": {
+                "save": "Yadda saxla",
+                "cancel": "Ləğv et",
+                "edit": "Düzəliş et"
+            },
+            "errors": {
+                "save_error": "Tərcümə yadda saxlanılarkən xəta baş verdi",
+                "key_exists": "Açar artıq mövcuddur!"
+            },
+            "prompts": {
+                "new_key": "Yeni tərcümə açarını daxil edin (məsələn, hero.title):"
+            }
+        }
     }
 }

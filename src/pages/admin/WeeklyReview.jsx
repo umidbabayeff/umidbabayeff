@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument */
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { FaCalendarWeek, FaCheckCircle, FaExclamationTriangle, FaHourglassHalf, FaForward } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './WeeklyReview.css';
 
 // Helper to calculate date ranges (pure function)
@@ -27,6 +29,7 @@ const getWeekRanges = () => {
 };
 
 const WeeklyReview = () => {
+    const { t, i18n } = useTranslation();
     const [stats, setStats] = useState({
         completedCount: 0,
         hoursSpent: 0,
@@ -71,22 +74,22 @@ const WeeklyReview = () => {
         const { completed, overdue, nextWeek } = results;
 
         // Process Stats
-        const completedCount = completed?.length || 0;
+        const completedCount = completed?.length ?? 0;
         const totalMinutes = completedCount * 30; // 30 mins per task
         const hoursSpent = (totalMinutes / 60).toFixed(1);
 
         const projectBreakdown = {};
         completed?.forEach(t => {
-            const pTitle = t.projects?.title || 'No Project';
-            if (!projectBreakdown[pTitle]) projectBreakdown[pTitle] = 0;
+            const pTitle = t.projects?.title ?? t('admin.common.no_project', 'No Project');
+            projectBreakdown[pTitle] ??= 0;
             projectBreakdown[pTitle] += 30; // Add 30 mins
         });
 
         setStats({ completedCount, hoursSpent, projectBreakdown });
         setLists({
-            completed: completed || [],
-            overdue: overdue || [],
-            nextWeek: nextWeek || []
+            completed: completed ?? [],
+            overdue: overdue ?? [],
+            nextWeek: nextWeek ?? []
         });
         setLoading(false);
     }, []);
@@ -102,12 +105,12 @@ const WeeklyReview = () => {
                 if (mounted) setLoading(false);
             }
         };
-        load();
+        void load();
         return () => { mounted = false; };
     }, [queryWeeklyData, processAndSetData]);
 
     const handleMoveOverdueToNextWeek = async () => {
-        if (!confirm(`Move ${lists.overdue.length} overdue tasks to next Monday?`)) return;
+        if (!window.confirm(t('admin.weekly_review.alerts.confirm_move', 'Move overdue tasks to next Monday?'))) return;
 
         const { nextWeekStart } = getWeekRanges();
         const nextMonday = nextWeekStart.toISOString().split('T')[0];
@@ -119,16 +122,16 @@ const WeeklyReview = () => {
             .in('id', overdueIds);
 
         if (!error) {
-            alert('Tasks rescheduled!');
+            alert(t('admin.weekly_review.alerts.success', 'Tasks rescheduled!'));
             setLoading(true);
             const data = await queryWeeklyData();
             processAndSetData(data);
         } else {
-            alert('Error updating tasks');
+            alert(t('admin.weekly_review.alerts.error', 'Error updating tasks'));
         }
     };
 
-    if (loading) return <div className="admin-loading">Loading Weekly Review...</div>;
+    if (loading) return <div className="admin-loading">{t('admin.weekly_review.loading', 'Loading Weekly Review...')}</div>;
 
     const { startOfWeek, endOfWeek } = getWeekRanges();
 
@@ -136,13 +139,13 @@ const WeeklyReview = () => {
         <div className="crm-container weekly-review-container">
             <div className="crm-header">
                 <div>
-                    <h1>Weekly Review</h1>
-                    <p>{startOfWeek.toLocaleDateString()} - {endOfWeek.toLocaleDateString()}</p>
+                    <h1>{t('admin.weekly_review.title', 'Weekly Review')}</h1>
+                    <p>{startOfWeek.toLocaleDateString(i18n.language)} - {endOfWeek.toLocaleDateString(i18n.language)}</p>
                 </div>
                 <div className="weekly-actions">
                     {lists.overdue.length > 0 && (
-                        <button className="crm-btn-warning" onClick={handleMoveOverdueToNextWeek}>
-                            <FaForward /> Move Overdue to Next Week
+                        <button className="crm-btn-warning" onClick={() => void handleMoveOverdueToNextWeek()}>
+                            <FaForward /> {t('admin.weekly_review.actions.move_overdue', 'Move Overdue to Next Week')}
                         </button>
                     )}
                 </div>
@@ -154,18 +157,18 @@ const WeeklyReview = () => {
                     <div className="stat-icon purple"><FaCheckCircle /></div>
                     <div className="stat-info">
                         <h3>{stats.completedCount}</h3>
-                        <p>Tasks Completed</p>
+                        <p>{t('admin.weekly_review.stats.tasks_completed', 'Tasks Completed')}</p>
                     </div>
                 </div>
                 <div className="stat-card">
                     <div className="stat-icon blue"><FaHourglassHalf /></div>
                     <div className="stat-info">
                         <h3>{stats.hoursSpent}h</h3>
-                        <p>Estimated Time</p>
+                        <p>{t('admin.weekly_review.stats.estimated_time', 'Estimated Time')}</p>
                     </div>
                 </div>
                 <div className="stat-card project-breakdown">
-                    <h4>Time by Project</h4>
+                    <h4>{t('admin.weekly_review.stats.time_by_project', 'Time by Project')}</h4>
                     <ul>
                         {Object.entries(stats.projectBreakdown).map(([proj, mins]) => (
                             <li key={proj}>
@@ -180,9 +183,9 @@ const WeeklyReview = () => {
             <div className="review-grid">
                 {/* Column 1: Accomplished */}
                 <div className="review-col">
-                    <h3><FaCheckCircle className="icon-success" /> Accomplished This Week</h3>
+                    <h3><FaCheckCircle className="icon-success" /> {t('admin.weekly_review.cols.accomplished', 'Accomplished This Week')}</h3>
                     <div className="task-list condensed">
-                        {lists.completed.length === 0 ? <p className="empty-msg">No tasks completed yet.</p> : (
+                        {lists.completed.length === 0 ? <p className="empty-msg">{t('admin.weekly_review.empty.completed', 'No tasks completed yet.')}</p> : (
                             lists.completed.map(task => (
                                 <div key={task.id} className="review-task-item done">
                                     <span className="task-title">{task.title}</span>
@@ -195,13 +198,13 @@ const WeeklyReview = () => {
 
                 {/* Column 2: Overdue / Issues */}
                 <div className="review-col">
-                    <h3><FaExclamationTriangle className="icon-danger" /> Overdue / Unfinished</h3>
+                    <h3><FaExclamationTriangle className="icon-danger" /> {t('admin.weekly_review.cols.overdue', 'Overdue / Unfinished')}</h3>
                     <div className="task-list condensed">
-                        {lists.overdue.length === 0 ? <p className="empty-msg">All caught up!</p> : (
+                        {lists.overdue.length === 0 ? <p className="empty-msg">{t('admin.weekly_review.empty.overdue', 'All caught up!')}</p> : (
                             lists.overdue.map(task => (
                                 <div key={task.id} className="review-task-item overdue">
                                     <span className="task-title">{task.title}</span>
-                                    <span className="task-date">{new Date(task.scheduled_date).toLocaleDateString()}</span>
+                                    <span className="task-date">{new Date(task.scheduled_date).toLocaleDateString(i18n.language)}</span>
                                 </div>
                             ))
                         )}
@@ -210,13 +213,13 @@ const WeeklyReview = () => {
 
                 {/* Column 3: Next Week Plan */}
                 <div className="review-col">
-                    <h3><FaCalendarWeek className="icon-primary" /> Next Week's Plan</h3>
+                    <h3><FaCalendarWeek className="icon-primary" /> {t('admin.weekly_review.cols.next_week', "Next Week's Plan")}</h3>
                     <div className="task-list condensed">
-                        {lists.nextWeek.length === 0 ? <p className="empty-msg">Nothing scheduled yet.</p> : (
+                        {lists.nextWeek.length === 0 ? <p className="empty-msg">{t('admin.weekly_review.empty.next_week', 'Nothing scheduled yet.')}</p> : (
                             lists.nextWeek.map(task => (
                                 <div key={task.id} className="review-task-item future">
                                     <span className="task-title">{task.title}</span>
-                                    <span className="task-date">{new Date(task.scheduled_date).toLocaleDateString()}</span>
+                                    <span className="task-date">{new Date(task.scheduled_date).toLocaleDateString(i18n.language)}</span>
                                 </div>
                             ))
                         )}

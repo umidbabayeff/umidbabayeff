@@ -1,3 +1,4 @@
+import React, { Suspense } from 'react';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles/global.css'
@@ -7,6 +8,8 @@ import './i18n'; // Import i18n config
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <Suspense fallback="Loading...">
+      <App />
+    </Suspense>
   </StrictMode>,
 )

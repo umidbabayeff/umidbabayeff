@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return */
 import React, { useState } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 
@@ -77,7 +78,7 @@ const MigrationTool = () => {
             <p><strong>Warning:</strong> This will overwrite existing keys in the database.</p>
 
             <button
-                onClick={runMigration}
+                onClick={() => void runMigration()}
                 disabled={status === 'running'}
                 className="btn-primary"
                 style={{ marginTop: '20px' }}

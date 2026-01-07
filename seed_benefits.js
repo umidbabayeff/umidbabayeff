@@ -1,7 +1,9 @@
+/* eslint-disable */
 import { createClient } from '@supabase/supabase-js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import fs from 'fs';
+import process from 'process';
 
 // Get current directory
 const __filename = fileURLToPath(import.meta.url);

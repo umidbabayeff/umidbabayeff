@@ -8,10 +8,20 @@ import StarBackground from './common/StarBackground';
 import ThemeToggle from './common/ThemeToggle';
 import LanguageSwitcher from './common/LanguageSwitcher';
 import VideoWidget from './common/VideoWidget';
+import logo from '../assets/logo.png';
+import logoLight from '../assets/logo-light.png';
 import './Layout.css';
 
 const Layout = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    /** 
+     * @typedef {Object} Social
+     * @property {number} id
+     * @property {string} url
+     * @property {string} icon
+     * @property {string} platform
+     */
+    /** @type {[Social[], React.Dispatch<React.SetStateAction<Social[]>>]} */
     const [socials, setSocials] = useState([]);
     const { t } = useTranslation();
 
@@ -23,7 +33,7 @@ const Layout = () => {
             const { data } = await supabase.from('social_links').select('*').order('id', { ascending: true });
             if (data) setSocials(data);
         };
-        fetchSocials();
+        fetchSocials().catch(console.error);
     }, []);
 
     const iconMap = {
@@ -40,7 +50,8 @@ const Layout = () => {
             <header className="navbar">
                 <div className="container navbar-content">
                     <Link to="/" className="logo" onClick={closeMenu}>
-                        <span className="logo-text">UMIDBABAYEFF</span>
+                        <img src={logo} alt="UMIDBABAYEFF" className="logo-img logo-dark-mode" />
+                        <img src={logoLight} alt="UMIDBABAYEFF" className="logo-img logo-light-mode" />
                     </Link>
 
                     <nav className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
@@ -49,15 +60,22 @@ const Layout = () => {
                         <NavLink to="/technologies" onClick={closeMenu}>{t('nav.technologies')}</NavLink>
                         <NavLink to="/about" onClick={closeMenu}>{t('nav.about')}</NavLink>
                         <NavLink to="/calculator" onClick={closeMenu}>{t('nav.estimate')}</NavLink>
+                        <NavLink to="/careers" onClick={closeMenu}>{t('nav.careers') || 'Careers'}</NavLink>
                         <Link to="/contact" className="btn btn-primary btn-sm" onClick={closeMenu}>{t('nav.lets_talk')}</Link>
-                        <div className="mobile-lang-switch">
+                        <div className="mobile-menu-controls">
                             <LanguageSwitcher />
+                            <ThemeToggle />
                         </div>
                     </nav>
 
                     <div className="navbar-actions">
-                        <LanguageSwitcher />
-                        <ThemeToggle />
+                        <div className="desktop-controls">
+                            <LanguageSwitcher />
+                            <ThemeToggle />
+                        </div>
+                        <div className="mobile-header-lang">
+                            <LanguageSwitcher />
+                        </div>
                         <button className="mobile-menu-btn" onClick={toggleMenu}>
                             {isMenuOpen ? <BiX /> : <BiMenu />}
                         </button>
@@ -73,7 +91,8 @@ const Layout = () => {
                 <div className="container footer-content-wrapper">
                     <div className="footer-content">
                         <div className="footer-col">
-                            <h3>UMIDBABAYEFF</h3>
+                            <img src={logo} alt="UMIDBABAYEFF" className="logo-img footer-logo logo-dark-mode" />
+                            <img src={logoLight} alt="UMIDBABAYEFF" className="logo-img footer-logo logo-light-mode" />
                             <p>{t('footer.tagline')}</p>
                         </div>
                         <div className="footer-col">
@@ -91,7 +110,7 @@ const Layout = () => {
                                 {socials.map(social => (
                                     <li key={social.id}>
                                         <a href={social.url} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                            {iconMap[social.icon] || <FaEnvelope />} {social.platform.charAt(0).toUpperCase() + social.platform.slice(1)}
+                                            {iconMap[social.icon] ?? <FaEnvelope />} {social.platform.charAt(0).toUpperCase() + social.platform.slice(1)}
                                         </a>
                                     </li>
                                 ))}

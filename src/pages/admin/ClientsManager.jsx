@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/prefer-nullish-coalescing */
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { FaPlus, FaSearch, FaPhone, FaEnvelope, FaBuilding } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './ClientsManager.css';
 
 const ClientsManager = () => {
+    const { t, i18n } = useTranslation();
     const [clients, setClients] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('');
@@ -22,7 +25,7 @@ const ClientsManager = () => {
     const [editingId, setEditingId] = useState(null);
 
     useEffect(() => {
-        fetchClients();
+        void fetchClients();
     }, []);
 
     const fetchClients = async () => {
@@ -33,7 +36,7 @@ const ClientsManager = () => {
             .order('created_at', { ascending: false });
 
         if (error) console.error(error);
-        else setClients(data);
+        else setClients(data || []);
         setLoading(false);
     };
 
@@ -50,9 +53,9 @@ const ClientsManager = () => {
             setShowForm(false);
             setEditingId(null);
             setFormData({ name: '', email: '', phone: '', company: '', status: 'lead', internal_notes: '', last_contact_date: '' });
-            fetchClients();
+            void fetchClients();
         } catch (error) {
-            alert('Error saving client');
+            alert(t('admin.clients.save_error', 'Error saving client'));
             console.error(error);
         }
     };
@@ -72,9 +75,9 @@ const ClientsManager = () => {
     };
 
     const handleDelete = async (id) => {
-        if (!confirm('Are you sure?')) return;
+        if (!confirm(t('admin.clients.confirm_delete', 'Are you sure?'))) return;
         const { error } = await supabase.from('clients').delete().eq('id', id);
-        if (!error) fetchClients();
+        if (!error) void fetchClients();
     };
 
     const filteredClients = clients.filter(c =>
@@ -82,19 +85,29 @@ const ClientsManager = () => {
         c.company?.toLowerCase().includes(filter.toLowerCase())
     );
 
+    const getStatusLabel = (status) => {
+        switch (status) {
+            case 'lead': return t('admin.clients.status.lead', 'Lead');
+            case 'active': return t('admin.clients.status.active', 'Active');
+            case 'paused': return t('admin.clients.status.paused', 'Paused');
+            case 'archived': return t('admin.clients.status.archived', 'Archived');
+            default: return status;
+        }
+    };
+
     return (
         <div className="crm-container">
             <div className="crm-header">
                 <div>
-                    <h1>Clients</h1>
-                    <p>Manage your leads and active clients</p>
+                    <h1>{t('admin.clients.title', 'Clients')}</h1>
+                    <p>{t('admin.clients.subtitle', 'Manage your leads and active clients')}</p>
                 </div>
                 <button className="crm-btn-primary" onClick={() => {
                     setEditingId(null);
                     setFormData({ name: '', email: '', phone: '', company: '', status: 'lead', internal_notes: '', last_contact_date: '' });
                     setShowForm(true);
                 }}>
-                    <FaPlus /> Add Client
+                    <FaPlus /> {t('admin.clients.add_btn', 'Add Client')}
                 </button>
             </div>
 
@@ -103,7 +116,7 @@ const ClientsManager = () => {
                     <FaSearch />
                     <input
                         type="text"
-                        placeholder="Search clients..."
+                        placeholder={t('admin.clients.search_placeholder', 'Search clients...')}
                         value={filter}
                         onChange={e => setFilter(e.target.value)}
                     />
@@ -113,45 +126,45 @@ const ClientsManager = () => {
             {showForm && (
                 <div className="crm-modal-overlay">
                     <div className="crm-modal">
-                        <h2>{editingId ? 'Edit Client' : 'New Client'}</h2>
-                        <form onSubmit={handleSubmit}>
+                        <h2>{editingId ? t('admin.clients.modal.edit_title', 'Edit Client') : t('admin.clients.modal.new_title', 'New Client')}</h2>
+                        <form onSubmit={(e) => void handleSubmit(e)}>
                             <div className="form-group">
-                                <label>Name *</label>
+                                <label>{t('admin.clients.modal.name', 'Name *')}</label>
                                 <input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
                             </div>
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label>Email</label>
+                                    <label>{t('admin.clients.modal.email', 'Email')}</label>
                                     <input type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
                                 </div>
                                 <div className="form-group">
-                                    <label>Phone</label>
+                                    <label>{t('admin.clients.modal.phone', 'Phone')}</label>
                                     <input value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label>Company</label>
+                                    <label>{t('admin.clients.modal.company', 'Company')}</label>
                                     <input value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} />
                                 </div>
                                 <div className="form-group">
-                                    <label>Status</label>
+                                    <label>{t('admin.clients.modal.status', 'Status')}</label>
                                     <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value })}>
-                                        <option value="lead">Lead</option>
-                                        <option value="active">Active</option>
-                                        <option value="paused">Paused</option>
-                                        <option value="archived">Archived</option>
+                                        <option value="lead">{t('admin.clients.status.lead', 'Lead')}</option>
+                                        <option value="active">{t('admin.clients.status.active', 'Active')}</option>
+                                        <option value="paused">{t('admin.clients.status.paused', 'Paused')}</option>
+                                        <option value="archived">{t('admin.clients.status.archived', 'Archived')}</option>
                                     </select>
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label>Last Contact Date</label>
+                                    <label>{t('admin.clients.modal.last_contact', 'Last Contact Date')}</label>
                                     <input type="date" value={formData.last_contact_date} onChange={e => setFormData({ ...formData, last_contact_date: e.target.value })} />
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label>Internal Notes</label>
+                                <label>{t('admin.clients.modal.notes', 'Internal Notes')}</label>
                                 <textarea
                                     className="modal-textarea"
                                     rows="3"
@@ -160,8 +173,8 @@ const ClientsManager = () => {
                                 />
                             </div>
                             <div className="modal-actions">
-                                <button type="button" onClick={() => setShowForm(false)}>Cancel</button>
-                                <button type="submit" className="crm-btn-primary">Save</button>
+                                <button type="button" onClick={() => setShowForm(false)}>{t('admin.clients.modal.cancel', 'Cancel')}</button>
+                                <button type="submit" className="crm-btn-primary">{t('admin.clients.modal.save', 'Save')}</button>
                             </div>
                         </form>
                     </div>
@@ -169,11 +182,11 @@ const ClientsManager = () => {
             )}
 
             <div className="clients-grid">
-                {loading ? <p>Loading...</p> : filteredClients.map(client => (
+                {loading ? <p>{t('admin.clients.loading', 'Loading...')}</p> : filteredClients.map(client => (
                     <div key={client.id} className={`client-card status-${client.status}`}>
                         <div className="client-header">
                             <h3>{client.name}</h3>
-                            <span className={`status-badge ${client.status}`}>{client.status}</span>
+                            <span className={`status-badge ${client.status}`}>{getStatusLabel(client.status)}</span>
                         </div>
                         {client.company && <div className="client-detail"><FaBuilding /> {client.company}</div>}
                         {client.email && <div className="client-detail"><FaEnvelope /> {client.email}</div>}
@@ -181,18 +194,18 @@ const ClientsManager = () => {
 
                         {client.last_contact_date && (
                             <div className="client-detail highlight-yellow">
-                                <span className="label">Last Contact:</span> {new Date(client.last_contact_date).toLocaleDateString()}
+                                <span className="label">{t('admin.clients.card.last_contact', 'Last Contact:')}</span> {new Date(client.last_contact_date).toLocaleDateString(i18n.language)}
                             </div>
                         )}
                         {client.internal_notes && (
                             <div className="client-notes-preview">
-                                <strong>Notes:</strong> {client.internal_notes}
+                                <strong>{t('admin.clients.card.notes', 'Notes:')}</strong> {client.internal_notes}
                             </div>
                         )}
 
                         <div className="card-footer">
-                            <button onClick={() => handleEdit(client)}>Edit</button>
-                            <button onClick={() => handleDelete(client.id)} className="text-red">Delete</button>
+                            <button onClick={() => handleEdit(client)}>{t('admin.clients.card.edit', 'Edit')}</button>
+                            <button onClick={() => { void handleDelete(client.id); }} className="text-red">{t('admin.clients.card.delete', 'Delete')}</button>
                         </div>
                     </div>
                 ))}

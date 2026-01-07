@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
@@ -23,7 +24,7 @@ const LoginPage = () => {
         if (error) {
             setError(error.message);
         } else {
-            navigate('/admin/dashboard');
+            void navigate('/admin/dashboard');
         }
         setLoading(false);
     };
@@ -32,7 +33,7 @@ const LoginPage = () => {
         <div className="login-container">
             <div className="login-box">
                 <h2>Admin Login</h2>
-                <form onSubmit={handleLogin}>
+                <form onSubmit={(e) => void handleLogin(e)}>
                     <div className="form-group">
                         <label>Email</label>
                         <input

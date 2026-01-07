@@ -1,11 +1,10 @@
-import React, { useState, useMemo } from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-argument */
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { services, types, features } from '../data/calculatorData';
-import { BiChevronRight, BiChevronLeft, BiCheck, BiRefresh } from 'react-icons/bi';
+import { BiChevronRight, BiChevronLeft, BiCheck, BiRefresh, BiBriefcase, BiStats, BiListCheck, BiDollar } from 'react-icons/bi';
 import FinalCTA from '../components/home/FinalCTA';
 import './Calculator.css';
-
-import { useTranslation } from 'react-i18next';
-// ... imports
 
 const Calculator = () => {
     const { t } = useTranslation();
@@ -13,10 +12,38 @@ const Calculator = () => {
     const [selectedService, setSelectedService] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
     const [selectedFeatures, setSelectedFeatures] = useState([]);
-    const [totalPrice, setTotalPrice] = useState(0);
+    // Remove state for derived value
+    // const [totalPrice, setTotalPrice] = useState(0);
 
-    // Calculate total price effect
-    useMemo(() => {
+    const scrollRef = useRef(null);
+    const isPaused = useRef(false);
+
+    // Auto-scroll effect
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (isPaused.current) return;
+
+            const container = scrollRef.current;
+            if (!container) return;
+
+            // Use simple property access to avoid linter confusion
+            const currentLeft = container.scrollLeft;
+            const maxScroll = container.scrollWidth;
+            const visibleWidth = container.clientWidth;
+
+            // Loop logic (Tolerance 10px)
+            if ((currentLeft + visibleWidth) >= (maxScroll - 10)) {
+                container.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: 300, behavior: 'smooth' });
+            }
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    // Derived state calculation (replaces useEffect)
+    const totalPrice = useMemo(() => {
         let price = 0;
         if (selectedService) {
             const service = services.find(s => s.id === selectedService);
@@ -33,7 +60,7 @@ const Calculator = () => {
             if (feature) price += feature.price;
         });
 
-        setTotalPrice(Math.round(price));
+        return Math.round(price);
     }, [selectedService, selectedType, selectedFeatures]);
 
     const toggleFeature = (id) => {
@@ -57,7 +84,7 @@ const Calculator = () => {
         setSelectedService(null);
         setSelectedType(null);
         setSelectedFeatures([]);
-        setTotalPrice(0);
+        // setTotalPrice(0); -> Removed as it is now derived
     };
 
     return (
@@ -70,20 +97,35 @@ const Calculator = () => {
 
                 <div className="calculator-container">
                     {/* Progress Bar */}
-                    <div className="progress-bar">
-                        <div className={`progress-step ${step >= 1 ? 'active' : ''}`}>{t('calc.steps.service')}</div>
+                    <div className="calc-progress-bar">
+                        <div className={`progress-step ${step >= 1 ? 'active' : ''}`}>
+                            <BiBriefcase /> {t('calc.steps.service')}
+                        </div>
                         <div className={`progress-line ${step >= 2 ? 'filled' : ''}`}></div>
-                        <div className={`progress-step ${step >= 2 ? 'active' : ''}`}>{t('calc.steps.scale')}</div>
+                        <div className={`progress-step ${step >= 2 ? 'active' : ''}`}>
+                            <BiStats /> {t('calc.steps.scale')}
+                        </div>
                         <div className={`progress-line ${step >= 3 ? 'filled' : ''}`}></div>
-                        <div className={`progress-step ${step >= 3 ? 'active' : ''}`}>{t('calc.steps.features')}</div>
+                        <div className={`progress-step ${step >= 3 ? 'active' : ''}`}>
+                            <BiListCheck /> {t('calc.steps.features')}
+                        </div>
                         <div className={`progress-line ${step >= 4 ? 'filled' : ''}`}></div>
-                        <div className={`progress-step ${step >= 4 ? 'active' : ''}`}>{t('calc.steps.estimate')}</div>
+                        <div className={`progress-step ${step >= 4 ? 'active' : ''}`}>
+                            <BiDollar /> {t('calc.steps.estimate')}
+                        </div>
                     </div>
 
                     <div className="calculator-content">
                         {/* Step 1: Services */}
                         {step === 1 && (
-                            <div className="step-grid">
+                            <div
+                                className="step-grid"
+                                ref={scrollRef}
+                                onMouseEnter={() => isPaused.current = true}
+                                onMouseLeave={() => isPaused.current = false}
+                                onTouchStart={() => isPaused.current = true}
+                                onTouchEnd={() => isPaused.current = false}
+                            >
                                 {services.map(s => (
                                     <div
                                         key={s.id}
@@ -101,7 +143,14 @@ const Calculator = () => {
 
                         {/* Step 2: Types */}
                         {step === 2 && (
-                            <div className="step-grid">
+                            <div
+                                className="step-grid"
+                                ref={scrollRef}
+                                onMouseEnter={() => isPaused.current = true}
+                                onMouseLeave={() => isPaused.current = false}
+                                onTouchStart={() => isPaused.current = true}
+                                onTouchEnd={() => isPaused.current = false}
+                            >
                                 {types.map(typeItem => (
                                     <div
                                         key={typeItem.id}

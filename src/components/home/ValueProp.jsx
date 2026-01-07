@@ -7,7 +7,7 @@ import './ValueProp.css';
 const ValueProp = () => {
     const { t, i18n } = useTranslation();
     const [benefits, setBenefits] = useState([]);
-    const [loading, setLoading] = useState(true);
+
 
     // Map string icon names to React Components
     const iconMap = {
@@ -24,7 +24,7 @@ const ValueProp = () => {
 
     useEffect(() => {
         const fetchBenefits = async () => {
-            setLoading(true);
+
             try {
                 // Get current language code (e.g., 'en', 'ru')
                 const lang = i18n.language || 'en';
@@ -45,8 +45,6 @@ const ValueProp = () => {
                 }
             } catch (err) {
                 console.error('Unexpected error:', err);
-            } finally {
-                setLoading(false);
             }
         };
 

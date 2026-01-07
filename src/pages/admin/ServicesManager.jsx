@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any, @typescript-eslint/prefer-nullish-coalescing */
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../lib/supabaseClient';
+import { getIcon } from '../../lib/IconMapper';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './ServicesManager.css';
 
 const ServicesManager = () => {
+    const { t } = useTranslation();
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [language, setLanguage] = useState('en');
@@ -29,7 +34,7 @@ const ServicesManager = () => {
     }, [language]);
 
     useEffect(() => {
-        fetchServices();
+        void fetchServices();
     }, [fetchServices]);
 
     const handleSubmit = async (e) => {
@@ -49,7 +54,7 @@ const ServicesManager = () => {
             }
             setFormData({ title: '', description: '', icon: 'code' });
             setEditingId(null);
-            fetchServices();
+            await fetchServices();
         } catch (error) {
             console.error('Error saving service:', error);
             alert('Error saving service');
@@ -60,7 +65,7 @@ const ServicesManager = () => {
         setFormData({
             title: service.title,
             description: service.description,
-            icon: service.icon || 'code'
+            icon: service.icon ?? 'code'
         });
         setEditingId(service.id);
     };
@@ -73,7 +78,7 @@ const ServicesManager = () => {
                 .delete()
                 .eq('id', id);
             if (error) throw error;
-            fetchServices();
+            await fetchServices();
         } catch (error) {
             console.error('Error deleting service:', error);
         }
@@ -113,7 +118,7 @@ const ServicesManager = () => {
             if (error) throw error;
 
             alert('Services restored!');
-            fetchServices();
+            await fetchServices();
         } catch (error) {
             console.error(error);
             alert('Failed to restore services');
@@ -124,15 +129,15 @@ const ServicesManager = () => {
 
     return (
         <div className="services-manager">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h1>Services Manager</h1>
-                <button onClick={handleRestoreDefaults} className="btn-secondary" style={{ backgroundColor: '#10b981' }}>
-                    Restore Defaults
+            <div className="services-header-row">
+                <h1>{t('admin.services.title', 'Services Manager')}</h1>
+                <button onClick={() => void handleRestoreDefaults()} className="btn-secondary" style={{ backgroundColor: '#10b981' }}>
+                    {t('admin.common.restore_defaults', 'Restore Defaults')}
                 </button>
             </div>
 
             <div className="language-selector">
-                <label>Language: </label>
+                <label>{t('admin.common.language', 'Language')}: </label>
                 <select value={language} onChange={(e) => setLanguage(e.target.value)}>
                     <option value="en">English</option>
                     <option value="ru">Russian</option>
@@ -141,10 +146,10 @@ const ServicesManager = () => {
             </div>
 
             <div className="service-form-container">
-                <h2>{editingId ? 'Edit Service' : 'Add New Service'}</h2>
-                <form onSubmit={handleSubmit} className="service-form">
+                <h2>{editingId ? t('admin.common.edit', 'Edit') : t('admin.services.add_new', 'Add New Service')}</h2>
+                <form onSubmit={(e) => void handleSubmit(e)} className="service-form">
                     <div className="form-group">
-                        <label>Title</label>
+                        <label>{t('admin.services.table.title', 'Title')}</label>
                         <input
                             type="text"
                             value={formData.title}
@@ -153,7 +158,7 @@ const ServicesManager = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Icon</label>
+                        <label>{t('admin.services.table.icon', 'Icon')}</label>
                         <select
                             value={formData.icon}
                             onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
@@ -162,7 +167,7 @@ const ServicesManager = () => {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label>Description</label>
+                        <label>{t('admin.services.table.desc', 'Description')}</label>
                         <textarea
                             value={formData.description}
                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -171,7 +176,7 @@ const ServicesManager = () => {
                     </div>
                     <div className="form-buttons">
                         <button type="submit" className="btn-primary">
-                            {editingId ? 'Update' : 'Add'}
+                            {editingId ? t('admin.common.save', 'Save') : t('admin.common.create', 'Add')}
                         </button>
                         {editingId && (
                             <button
@@ -182,33 +187,37 @@ const ServicesManager = () => {
                                     setFormData({ title: '', description: '', icon: 'code' });
                                 }}
                             >
-                                Cancel
+                                {t('admin.common.cancel', 'Cancel')}
                             </button>
                         )}
                     </div>
                 </form>
             </div>
 
-            <div className="service-list-container">
-                <h2>Existing Services ({language.toUpperCase()})</h2>
+            <div className="service-list-container" style={{ marginTop: '40px' }}>
+                <h2>{t('admin.services.existing_services', 'Existing Services')} ({language.toUpperCase()})</h2>
                 {loading ? (
-                    <p>Loading...</p>
+                    <p>{t('admin.common.loading', 'Loading...')}</p>
                 ) : (
                     <div className="service-grid">
                         {services.map((service) => (
                             <div key={service.id} className="service-card-admin">
                                 <div className="service-header">
                                     <h3>{service.title}</h3>
-                                    <span className="icon-badge">{service.icon}</span>
+                                    <span className="icon-badge">{getIcon(service.icon) ?? service.icon}</span>
                                 </div>
                                 <p>{service.description}</p>
                                 <div className="card-actions">
-                                    <button onClick={() => handleEdit(service)} className="action-btn edit">Edit</button>
-                                    <button onClick={() => handleDelete(service.id)} className="action-btn delete">Delete</button>
+                                    <button onClick={() => handleEdit(service)} className="action-btn edit" aria-label="Edit">
+                                        <FaEdit />
+                                    </button>
+                                    <button onClick={() => void handleDelete(service.id)} className="action-btn delete" aria-label="Delete">
+                                        <FaTrash />
+                                    </button>
                                 </div>
                             </div>
                         ))}
-                        {services.length === 0 && <p>No services found.</p>}
+                        {services.length === 0 && <p>{t('admin.services.no_services', 'No services found.')}</p>}
                     </div>
                 )}
             </div>

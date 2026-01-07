@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument, @typescript-eslint/prefer-nullish-coalescing */
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { timeTracking } from '../../lib/timeTracking';
 import { FaCheckCircle, FaClock, FaCalendarTimes, FaArrowRight, FaTrophy } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './DailyReview.css';
 
 const DailyReview = () => {
+    const { t } = useTranslation();
     const [loading, setLoading] = useState(true);
     const [completedTasks, setCompletedTasks] = useState([]);
     const [pendingTasks, setPendingTasks] = useState([]);
@@ -50,7 +53,7 @@ const DailyReview = () => {
             setLoading(false);
         };
 
-        fetchDailyData();
+        void fetchDailyData();
     }, []);
 
     const handleMoveAllToTomorrow = async () => {
@@ -85,13 +88,13 @@ const DailyReview = () => {
         <div className="crm-container">
             <div className="crm-header">
                 <div>
-                    <h1>Daily Review</h1>
-                    <p>Reflect on your day and prepare for tomorrow</p>
+                    <h1>{t('admin.daily_review.title', 'Daily Review')}</h1>
+                    <p>{t('admin.daily_review.subtitle', 'Reflect on your day and prepare for tomorrow')}</p>
                 </div>
             </div>
 
             {loading ? (
-                <div className="loading-state">Generating report...</div>
+                <div className="loading-state">{t('admin.daily_review.loading', 'Generating report...')}</div>
             ) : (
                 <div className="daily-review-grid">
                     {/* Stats Row */}
@@ -100,14 +103,14 @@ const DailyReview = () => {
                             <div className="stat-icon"><FaTrophy /></div>
                             <div className="stat-info">
                                 <span className="value">{completedTasks.length}</span>
-                                <span className="label">Tasks Completed</span>
+                                <span className="label">{t('admin.daily_review.stats.completed', 'Tasks Completed')}</span>
                             </div>
                         </div>
                         <div className="stat-card focus">
                             <div className="stat-icon"><FaClock /></div>
                             <div className="stat-info">
                                 <span className="value">{formatTime(totalTime)}</span>
-                                <span className="label">Focus Time</span>
+                                <span className="label">{t('admin.daily_review.stats.focus_time', 'Focus Time')}</span>
                             </div>
                         </div>
                     </div>
@@ -116,12 +119,12 @@ const DailyReview = () => {
                         {/* Accomplished Column */}
                         <div className="review-column attempted">
                             <div className="col-header">
-                                <h2><FaCheckCircle className="icon-success" /> Accomplished</h2>
+                                <h2><FaCheckCircle className="icon-success" /> {t('admin.daily_review.cols.accomplished', 'Accomplished')}</h2>
                                 <span className="count-badge">{completedTasks.length}</span>
                             </div>
                             <div className="review-list">
                                 {completedTasks.length === 0 ? (
-                                    <p className="empty-msg">No tasks completed yet. Keep pushing!</p>
+                                    <p className="empty-msg">{t('admin.daily_review.empty_done', 'No tasks completed yet. Keep pushing!')}</p>
                                 ) : (
                                     completedTasks.map(task => (
                                         <div key={task.id} className="review-item done">
@@ -137,14 +140,14 @@ const DailyReview = () => {
                         {/* Rollover Column */}
                         <div className="review-column pending">
                             <div className="col-header">
-                                <h2><FaCalendarTimes className="icon-warn" /> Unfinished</h2>
+                                <h2><FaCalendarTimes className="icon-warn" /> {t('admin.daily_review.cols.unfinished', 'Unfinished')}</h2>
                                 <span className="count-badge">{pendingTasks.length}</span>
                             </div>
                             <div className="review-list">
                                 {pendingTasks.length === 0 ? (
                                     <div className="all-clear">
                                         <FaCheckCircle size={40} />
-                                        <p>All clear! Zero tasks left behind.</p>
+                                        <p>{t('admin.daily_review.empty_pending', 'All clear! Zero tasks left behind.')}</p>
                                     </div>
                                 ) : (
                                     <>
@@ -155,8 +158,8 @@ const DailyReview = () => {
                                                 <span className={`priority-tag ${task.priority}`}>{task.priority}</span>
                                             </div>
                                         ))}
-                                        <button className="move-all-btn" onClick={handleMoveAllToTomorrow}>
-                                            <FaArrowRight /> Move All to Tomorrow
+                                        <button className="move-all-btn" onClick={() => void handleMoveAllToTomorrow()}>
+                                            <FaArrowRight /> {t('admin.daily_review.move_all', 'Move All to Tomorrow')}
                                         </button>
                                     </>
                                 )}

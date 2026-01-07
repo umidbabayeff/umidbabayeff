@@ -636,3 +636,223 @@
     border-color: #3b82f6;
     outline: none;
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .project-details-page {
+        padding: 15px;
+    }
+
+    .title-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .header-actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .status-select-lg {
+        width: 100%;
+    }
+
+    .project-tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 5px;
+        /* Hide scrollbar but keep functionality */
+        -ms-overflow-style: none;
+    }
+
+    .project-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-btn {
+        flex-shrink: 0;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .step-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .step-info {
+        width: 100%;
+    }
+
+    .step-actions {
+        width: 100%;
+        justify-content: space-between;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .timeline-edit-form {
+        width: 100%;
+    }
+
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .task-right {
+        width: 100%;
+        justify-content: space-between;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.02);
+    }
+}
+
+/* Documents Management */
+.docs-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.doc-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.doc-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.doc-info-main {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+    overflow: hidden;
+}
+
+.doc-icon {
+    font-size: 2rem;
+    color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.doc-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow: hidden;
+}
+
+.doc-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.doc-link:hover {
+    color: #60a5fa;
+    text-decoration: underline;
+}
+
+.doc-date {
+    color: #6b7280;
+    font-size: 0.85rem;
+    font-weight: 400;
+    margin-left: 5px;
+}
+
+.doc-url-preview {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.crm-btn-primary {
+    background: #3b82f6;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.doc-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.breadcrumb-item {
+    color: #9ca3af;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.breadcrumb-item:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: #fff;
+    font-weight: 600;
+    cursor: default;
+    text-decoration: none;
+}
+
+.breadcrumb-prop {
+    color: #4b5563;
+    font-size: 0.8rem;
+}
+
+.doc-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.doc-item.is-folder:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+}

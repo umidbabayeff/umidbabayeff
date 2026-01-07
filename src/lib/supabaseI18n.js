@@ -1,7 +1,17 @@
 import { supabase } from './supabaseClient';
 
+/**
+ * @returns {Promise<Record<string, { translation: Record<string, any> }>>}
+ */
 export const fetchSupabaseTranslations = async () => {
     try {
+        /** 
+         * @typedef {Object} TranslationItem
+         * @property {string} key
+         * @property {string} language_code
+         * @property {string} value
+         */
+
         const { data, error } = await supabase
             .from('translations')
             .select('*');
@@ -11,13 +21,13 @@ export const fetchSupabaseTranslations = async () => {
             return {};
         }
 
-        // Transform flat list to nested object for i18next
-        // data: [{ key: 'hero.title', language_code: 'en', value: 'Hello' }, ...]
-        // output: { en: { translation: { hero: { title: 'Hello' } } }, ... }
-
+        /** @type {Record<string, { translation: Record<string, any> }>} */
         const resources = {};
 
-        data.forEach(item => {
+        /** @type {TranslationItem[]} */
+        const translations = data || [];
+
+        translations.forEach(item => {
             const { key, language_code, value } = item;
 
             if (!resources[language_code]) {
@@ -33,8 +43,12 @@ export const fetchSupabaseTranslations = async () => {
                 if (i === keys.length - 1) {
                     current[k] = value;
                 } else {
-                    current[k] = current[k] || {};
-                    current = current[k];
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                    current[k] = current[k] ?? {};
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                    const next = current[k];
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                    current = next;
                 }
             }
         });

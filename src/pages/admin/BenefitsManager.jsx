@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../lib/supabaseClient';
+import { getIcon } from '../../lib/IconMapper';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './BenefitsManager.css';
 
 const BenefitsManager = () => {
+    const { t } = useTranslation();
     const [benefits, setBenefits] = useState([]);
     const [loading, setLoading] = useState(true);
     const [language, setLanguage] = useState('en');
@@ -34,7 +39,7 @@ const BenefitsManager = () => {
     }, [language]);
 
     useEffect(() => {
-        fetchBenefits();
+        void fetchBenefits();
     }, [fetchBenefits]);
 
     const handleSubmit = async (e) => {
@@ -54,7 +59,7 @@ const BenefitsManager = () => {
             }
             setFormData({ title: '', description: '', icon: 'building' });
             setEditingId(null);
-            fetchBenefits();
+            void fetchBenefits();
         } catch (error) {
             console.error('Error saving benefit:', error);
             alert('Error saving benefit');
@@ -65,7 +70,7 @@ const BenefitsManager = () => {
         setFormData({
             title: item.title,
             description: item.description,
-            icon: item.icon || 'building'
+            icon: item.icon ?? 'building'
         });
         setEditingId(item.id);
     };
@@ -78,7 +83,7 @@ const BenefitsManager = () => {
                 .delete()
                 .eq('id', id);
             if (error) throw error;
-            fetchBenefits();
+            void fetchBenefits();
         } catch (error) {
             console.error('Error deleting benefit:', error);
         }
@@ -112,7 +117,7 @@ const BenefitsManager = () => {
             if (error) throw error;
 
             alert('Benefits restored!');
-            fetchBenefits();
+            void fetchBenefits();
         } catch (error) {
             console.error(error);
             alert('Failed to restore benefits. Make sure the "benefits" table exists in Supabase.');
@@ -123,15 +128,15 @@ const BenefitsManager = () => {
 
     return (
         <div className="benefits-manager">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
-                <h1>Benefits Manager</h1>
-                <button onClick={handleRestoreDefaults} className="btn-secondary" style={{ backgroundColor: '#10b981' }}>
-                    Restore Defaults
+            <div className="benefits-header-row">
+                <h1>{t('admin.benefits.title', 'Benefits Manager')}</h1>
+                <button onClick={() => void handleRestoreDefaults()} className="btn-secondary" style={{ backgroundColor: '#10b981' }}>
+                    {t('admin.common.restore_defaults', 'Restore Defaults')}
                 </button>
             </div>
 
             <div className="language-selector">
-                <label>Language:</label>
+                <label>{t('admin.common.language', 'Language')}:</label>
                 <select value={language} onChange={(e) => setLanguage(e.target.value)}>
                     <option value="en">English</option>
                     <option value="ru">Russian</option>
@@ -140,10 +145,10 @@ const BenefitsManager = () => {
             </div>
 
             <div className="benefit-form-container">
-                <h2>{editingId ? 'Edit Benefit' : 'Add New Benefit'}</h2>
-                <form onSubmit={handleSubmit} className="benefit-form">
+                <h2>{editingId ? t('admin.common.edit', 'Edit Benefit') : t('admin.benefits.add_new', 'Add New Benefit')}</h2>
+                <form onSubmit={(e) => void handleSubmit(e)} className="benefit-form">
                     <div className="form-group">
-                        <label>Title</label>
+                        <label>{t('admin.benefits.table.title', 'Title')}</label>
                         <input
                             type="text"
                             value={formData.title}
@@ -153,7 +158,7 @@ const BenefitsManager = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>Icon</label>
+                        <label>{t('admin.benefits.table.icon', 'Icon')}</label>
                         <select
                             value={formData.icon}
                             onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
@@ -163,7 +168,7 @@ const BenefitsManager = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>Description</label>
+                        <label>{t('admin.benefits.table.desc', 'Description')}</label>
                         <textarea
                             value={formData.description}
                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -173,7 +178,7 @@ const BenefitsManager = () => {
 
                     <div className="form-buttons">
                         <button type="submit" className="btn-primary">
-                            {editingId ? 'Update' : 'Add'}
+                            {editingId ? t('admin.common.save', 'Update') : t('admin.common.create', 'Add')}
                         </button>
                         {editingId && (
                             <button
@@ -184,33 +189,37 @@ const BenefitsManager = () => {
                                     setFormData({ title: '', description: '', icon: 'building' });
                                 }}
                             >
-                                Cancel
+                                {t('admin.common.cancel', 'Cancel')}
                             </button>
                         )}
                     </div>
                 </form>
             </div>
 
-            <div className="benefit-list-container">
-                <h2>Existing Benefits ({language.toUpperCase()})</h2>
+            <div className="benefit-list-container" style={{ marginTop: '40px' }}>
+                <h2>{t('admin.benefits.existing_benefits', 'Existing Benefits')} ({language.toUpperCase()})</h2>
                 {loading ? (
-                    <p>Loading...</p>
+                    <p>{t('admin.common.loading', 'Loading...')}</p>
                 ) : (
                     <div className="benefit-grid">
                         {benefits.map((benefit) => (
                             <div key={benefit.id} className="benefit-card-admin">
                                 <div className="benefit-header">
                                     <h3>{benefit.title}</h3>
-                                    <span className="icon-badge">{benefit.icon}</span>
+                                    <span className="icon-badge">{getIcon(benefit.icon) ?? benefit.icon}</span>
                                 </div>
                                 <p>{benefit.description}</p>
                                 <div className="card-actions">
-                                    <button onClick={() => handleEdit(benefit)} className="action-btn edit">Edit</button>
-                                    <button onClick={() => handleDelete(benefit.id)} className="action-btn delete">Delete</button>
+                                    <button onClick={() => handleEdit(benefit)} className="action-btn edit" aria-label="Edit">
+                                        <FaEdit />
+                                    </button>
+                                    <button onClick={() => void handleDelete(benefit.id)} className="action-btn delete" aria-label="Delete">
+                                        <FaTrash />
+                                    </button>
                                 </div>
                             </div>
                         ))}
-                        {benefits.length === 0 && <p>No benefits found.</p>}
+                        {benefits.length === 0 && <p>{t('admin.benefits.no_benefits', 'No benefits found.')}</p>}
                     </div>
                 )}
             </div>

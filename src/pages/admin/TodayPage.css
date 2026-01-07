@@ -1,8 +1,15 @@
-/* Add to c:\Users\Acer\Desktop\umidbabayeff\src\pages\admin\TodayPage.css */
+.crm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
 
 .today-stats {
     display: flex;
     gap: 20px;
+    margin-left: auto;
+    /* Push stats to the right, next to button */
 }
 
 .stat-card {
@@ -12,7 +19,8 @@
     border: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
+    /* Left align for consistency */
 }
 
 .stat-card .label {
@@ -338,4 +346,101 @@
 
 .time-group.overdue .time-display {
     color: #f87171;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .crm-header {
+        flex-direction: column;
+        align-items: stretch;
+        /* Full width items */
+        gap: 15px;
+    }
+
+    .today-stats {
+        flex-direction: row;
+        /* Keep stats side by side if possible, or stacked if too many */
+        align-self: flex-start;
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .stat-card {
+        flex: 1;
+        /* Equal width stats */
+        padding: 15px;
+    }
+
+    .review-day-btn {
+        width: 100%;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 12px;
+        border-radius: 8px;
+        color: #fff;
+        font-weight: 500;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .today-task-card {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .task-time-col {
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding-right: 0;
+        padding-bottom: 10px;
+        width: 100%;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .time-line {
+        display: none;
+    }
+
+    .task-content-col {
+        padding: 0;
+    }
+
+    .task-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .time-badge {
+        margin-left: 0;
+    }
+
+    .task-actions-col {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding-top: 15px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .action-btn {
+        width: auto;
+        flex: 1;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .active-timer-banner {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .timer-info {
+        justify-content: center;
+    }
 }

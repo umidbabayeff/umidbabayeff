@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/prefer-nullish-coalescing, @typescript-eslint/no-unsafe-return */
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import { Link } from 'react-router-dom';
-import { FaTasks, FaSearch, FaFilter, FaCheckSquare, FaEdit, FaTrash, FaClock, FaPlus } from 'react-icons/fa';
+import { FaSearch, FaEdit, FaTrash, FaClock, FaPlus } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './TasksManager.css';
 
 const TasksManager = () => {
+    const { t, i18n } = useTranslation();
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -44,7 +47,7 @@ const TasksManager = () => {
             setLoading(false);
         };
 
-        fetchTasksAndProjects();
+        void fetchTasksAndProjects();
     }, []);
 
     // Fetch steps when project is selected in modal
@@ -57,12 +60,8 @@ const TasksManager = () => {
             const { data } = await supabase.from('steps').select('id, title').eq('project_id', newTaskForm.project_id).order('order');
             setSelectedProjectSteps(data || []);
         };
-        fetchSteps();
+        void fetchSteps();
     }, [newTaskForm.project_id]);
-
-    // ... (useEffect for projects/tasks)
-
-    // ... (useEffect for steps)
 
     const handleCreateOrUpdateTask = async (e) => {
         e.preventDefault();
@@ -89,7 +88,7 @@ const TasksManager = () => {
                 .single();
 
             if (error) {
-                alert('Error updating task');
+                alert(t('admin.tasks.update_error', 'Error updating task'));
                 console.error(error);
             } else {
                 setTasks(tasks.map(t => t.id === editingId ? data : t));
@@ -104,7 +103,7 @@ const TasksManager = () => {
                 .single();
 
             if (error) {
-                alert('Error creating task');
+                alert(t('admin.tasks.create_error', 'Error creating task'));
                 console.error(error);
             } else {
                 setTasks([data, ...tasks]);
@@ -156,7 +155,7 @@ const TasksManager = () => {
     };
 
     const handleDelete = async (id) => {
-        if (!window.confirm('Delete this task?')) return;
+        if (!window.confirm(t('admin.tasks.delete_confirm', 'Delete this task?'))) return;
         const { error } = await supabase.from('tasks').delete().eq('id', id);
         if (!error) {
             setTasks(tasks.filter(t => t.id !== id));
@@ -174,8 +173,8 @@ const TasksManager = () => {
         <div className="crm-container">
             <div className="crm-header">
                 <div>
-                    <h1>Tasks</h1>
-                    <p>Global view of all tasks across projects</p>
+                    <h1>{t('admin.tasks.title', 'Tasks')}</h1>
+                    <p>{t('admin.tasks.subtitle', 'Global view of all tasks across projects')}</p>
                 </div>
                 <button className="crm-btn-primary" onClick={() => {
                     setEditingId(null);
@@ -185,7 +184,7 @@ const TasksManager = () => {
                     });
                     setShowModal(true);
                 }}>
-                    <FaPlus /> Add Task
+                    <FaPlus /> {t('admin.tasks.add_btn', 'Add Task')}
                 </button>
             </div>
 
@@ -194,31 +193,30 @@ const TasksManager = () => {
                     <FaSearch />
                     <input
                         type="text"
-                        placeholder="Search tasks or projects..."
+                        placeholder={t('admin.tasks.search_placeholder', 'Search tasks or projects...')}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
                 <div className="filter-group">
                     <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-                        <option value="all">All Status</option>
-                        <option value="todo">To Do</option>
-                        <option value="in_progress">In Progress</option>
-                        <option value="review">Review</option>
-                        <option value="done">Done</option>
+                        <option value="all">{t('admin.tasks.filter_all', 'All Status')}</option>
+                        <option value="todo">{t('admin.tasks.status.todo', 'To Do')}</option>
+                        <option value="in_progress">{t('admin.tasks.status.in_progress', 'In Progress')}</option>
+                        <option value="review">{t('admin.tasks.status.review', 'Review')}</option>
+                        <option value="done">{t('admin.tasks.status.done', 'Done')}</option>
                     </select>
                 </div>
             </div>
 
             <div className="tasks-manager-list">
-                {loading ? <p>Loading tasks...</p> : filteredTasks.length === 0 ? <p>No tasks found.</p> : filteredTasks.map(task => (
+                {loading ? <p>{t('admin.tasks.loading', 'Loading tasks...')}</p> : filteredTasks.length === 0 ? <p>{t('admin.tasks.empty', 'No tasks found.')}</p> : filteredTasks.map(task => (
                     <div key={task.id} className={`global-task-item status-${task.status}`}>
                         <div className="task-main-info">
-                            {/* ... (Checkbox and Details) */}
                             <input
                                 type="checkbox"
                                 checked={task.status === 'done'}
-                                onChange={() => handleToggleStatus(task)}
+                                onChange={() => void handleToggleStatus(task)}
                             />
                             <div className="task-details">
                                 <span className="task-title">{task.title}</span>
@@ -234,16 +232,16 @@ const TasksManager = () => {
                         </div>
 
                         <div className="task-extra-info">
-                            <span className={`priority-badge ${task.priority}`}>{task.priority}</span>
+                            <span className={`priority-badge ${task.priority}`}>{t(`admin.tasks.priority.${task.priority}`, task.priority)}</span>
                             {task.scheduled_date && (
                                 <span className="deadline-tag">
-                                    <FaClock /> {new Date(task.scheduled_date).toLocaleDateString()}
+                                    <FaClock /> {new Date(task.scheduled_date).toLocaleDateString(i18n.language)}
                                 </span>
                             )}
-                            <button className="icon-btn" onClick={() => openEditModal(task)} title="Edit Task">
+                            <button className="icon-btn" onClick={() => openEditModal(task)} title={t('admin.tasks.modal.edit_title', 'Edit Task')}>
                                 <FaEdit />
                             </button>
-                            <button className="icon-btn delete" onClick={() => handleDelete(task.id)} title="Delete Task">
+                            <button className="icon-btn delete" onClick={() => void handleDelete(task.id)} title="Delete Task">
                                 <FaTrash />
                             </button>
                         </div>
@@ -255,57 +253,56 @@ const TasksManager = () => {
             {showModal && (
                 <div className="crm-modal-overlay">
                     <div className="crm-modal">
-                        <h2>{editingId ? 'Edit Task' : 'New Global Task'}</h2>
-                        <form onSubmit={handleCreateOrUpdateTask}>
+                        <h2>{editingId ? t('admin.tasks.modal.edit_title', 'Edit Task') : t('admin.tasks.modal.new_title', 'New Global Task')}</h2>
+                        <form onSubmit={(e) => void handleCreateOrUpdateTask(e)}>
                             <div className="form-group">
-                                <label>Title</label>
+                                <label>{t('admin.tasks.modal.title_label', 'Title')}</label>
                                 <input required value={newTaskForm.title} onChange={e => setNewTaskForm({ ...newTaskForm, title: e.target.value })} />
                             </div>
                             <div className="form-group">
-                                <label>Project</label>
+                                <label>{t('admin.tasks.modal.project_label', 'Project')}</label>
                                 <select value={newTaskForm.project_id} onChange={e => setNewTaskForm({ ...newTaskForm, project_id: e.target.value, step_id: '' })}>
-                                    <option value="">No Project (Personal)</option>
+                                    <option value="">{t('admin.tasks.modal.no_project', 'No Project (Personal)')}</option>
                                     {projects.map(p => <option key={p.id} value={p.id}>{p.title}</option>)}
                                 </select>
                             </div>
                             {newTaskForm.project_id && (
                                 <div className="form-group">
-                                    <label>Step (Optional)</label>
+                                    <label>{t('admin.tasks.modal.step_label', 'Step (Optional)')}</label>
                                     <select value={newTaskForm.step_id} onChange={e => setNewTaskForm({ ...newTaskForm, step_id: e.target.value })}>
-                                        <option value="">No Step</option>
+                                        <option value="">{t('admin.tasks.modal.no_step', 'No Step')}</option>
                                         {selectedProjectSteps.map(s => <option key={s.id} value={s.id}>{s.title}</option>)}
                                     </select>
                                 </div>
                             )}
-                            {/* ... (Priority, Status, Date) */}
                             <div className="form-row">
                                 <div className="form-group">
-                                    <label>Priority</label>
+                                    <label>{t('admin.tasks.modal.priority_label', 'Priority')}</label>
                                     <select value={newTaskForm.priority} onChange={e => setNewTaskForm({ ...newTaskForm, priority: e.target.value })}>
-                                        <option value="low">Low</option>
-                                        <option value="medium">Medium</option>
-                                        <option value="high">High</option>
-                                        <option value="urgent">Urgent</option>
+                                        <option value="low">{t('admin.tasks.priority.low', 'Low')}</option>
+                                        <option value="medium">{t('admin.tasks.priority.medium', 'Medium')}</option>
+                                        <option value="high">{t('admin.tasks.priority.high', 'High')}</option>
+                                        <option value="urgent">{t('admin.tasks.priority.urgent', 'Urgent')}</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
-                                    <label>Status</label>
+                                    <label>{t('admin.tasks.modal.status_label', 'Status')}</label>
                                     <select value={newTaskForm.status} onChange={e => setNewTaskForm({ ...newTaskForm, status: e.target.value })}>
-                                        <option value="todo">To Do</option>
-                                        <option value="in_progress">In Progress</option>
-                                        <option value="review">Review</option>
-                                        <option value="done">Done</option>
+                                        <option value="todo">{t('admin.tasks.status.todo', 'To Do')}</option>
+                                        <option value="in_progress">{t('admin.tasks.status.in_progress', 'In Progress')}</option>
+                                        <option value="review">{t('admin.tasks.status.review', 'Review')}</option>
+                                        <option value="done">{t('admin.tasks.status.done', 'Done')}</option>
                                     </select>
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label>Date</label>
+                                <label>{t('admin.tasks.modal.date_label', 'Date')}</label>
                                 <input type="date" value={newTaskForm.scheduled_date} onChange={e => setNewTaskForm({ ...newTaskForm, scheduled_date: e.target.value })} />
                             </div>
 
                             <div className="modal-actions">
-                                <button type="button" onClick={closeModal}>Cancel</button>
-                                <button type="submit" className="crm-btn-primary">{editingId ? 'Save Changes' : 'Create Task'}</button>
+                                <button type="button" onClick={closeModal}>{t('admin.tasks.modal.cancel', 'Cancel')}</button>
+                                <button type="submit" className="crm-btn-primary">{editingId ? t('admin.tasks.modal.save', 'Save Changes') : t('admin.tasks.modal.create', 'Create Task')}</button>
                             </div>
                         </form>
                     </div>

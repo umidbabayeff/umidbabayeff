@@ -1,16 +1,19 @@
 .calculator-page {
-    padding-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    /* Reduced from md */
     min-height: 100vh;
 }
 
 .calculator-header {
     text-align: center;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    /* Reduced from lg */
 }
 
 .calculator-header h1 {
-    font-size: var(--text-lg);
-    margin-bottom: var(--spacing-xs);
+    font-size: 1.8rem;
+    /* Slightly smaller title */
+    margin-bottom: 0;
     background: linear-gradient(to right, #fff, #a0a0a0);
     -webkit-background-clip: text;
     background-clip: text;
@@ -26,6 +29,8 @@
 
 .calculator-header p {
     color: var(--text-secondary);
+    font-size: 0.9rem;
+    /* Compact subtitle */
 }
 
 /* Ensure step titles are visible */
@@ -39,8 +44,10 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    min-height: 400px;
+    padding: var(--spacing-md);
+    /* Reduced from lg */
+    min-height: 0;
+    /* Allow shrinking */
 }
 
 [data-theme="light"] .calculator-content {
@@ -54,18 +61,20 @@
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    max-width: 900px;
-    margin: 0 auto var(--spacing-xl);
+    padding: var(--spacing-md);
+    /* Reduced from lg */
+    max-width: 1200px;
+    margin: 0 auto;
+    /* Removed bottom margin */
     box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
 }
 
 /* Progress Bar */
-.progress-bar {
+.calc-progress-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
     position: relative;
     padding: 0 var(--spacing-md);
 }
@@ -79,6 +88,13 @@
     z-index: 2;
     transition: all 0.3s ease;
     border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.progress-step svg {
+    font-size: 1.1rem;
 }
 
 .progress-step.active {
@@ -89,8 +105,9 @@
 }
 
 [data-theme="light"] .progress-step.active {
-    color: #ffffff !important;
-    /* Force white text on blue background */
+    color: var(--accent-blue) !important;
+    background: transparent;
+    border: 1px solid var(--accent-blue);
 }
 
 .progress-line {
@@ -106,14 +123,33 @@
 }
 
 /* Step Grids */
+/* Step Grids - Transformed to Horizontal Carousel */
 .step-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    overflow-x: auto;
     gap: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    /* Reduced from lg */
+    padding-top: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+    scroll-snap-type: x mandatory;
+
+    /* Hide scrollbar for cleaner look */
+}
+
+.step-grid::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
 }
 
 .calc-card {
+    flex: 0 0 280px;
+    /* Fixed width for carousel items */
+    min-height: 240px;
+    /* Reduced from 280px to compact height */
+    /* Make them square-ish */
+    scroll-snap-align: center;
+
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
     padding: var(--spacing-md);
@@ -121,6 +157,11 @@
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .calc-card:hover {
@@ -313,7 +354,7 @@
 .calculator-footer {
     display: flex;
     align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: none;
     padding-top: var(--spacing-md);
 }
 
@@ -393,7 +434,7 @@
         /* Reduce internal padding */
     }
 
-    .progress-bar {
+    .calc-progress-bar {
         font-size: 0.75rem;
         padding: 0;
         gap: 0.5rem;
@@ -414,45 +455,80 @@
         display: none;
     }
 
-    .step-grid,
+    .step-grid {
+        display: grid;
+        /* Switch back to grid for mobile info density */
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 columns side-by-side */
+        overflow-x: visible;
+        /* Disable scroll */
+        scroll-snap-type: none;
+        gap: 0.5rem;
+        /* Tighter gap */
+        padding-bottom: 0;
+    }
+
     .features-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
 
     .calc-card {
-        width: 100%;
-        /* Force full width */
-        max-width: 100%;
-        /* Ensure no weird constraints */
+        width: auto;
+        /* Let grid define width */
+        max-width: none;
+        min-height: 0;
+        /* Allow flexible height */
+        flex: none;
+        /* Disable flex sizing */
+        padding: 1rem;
+        /* Compact padding */
     }
 
     .total-price {
         font-size: 2rem;
     }
-}
 
-/* Light mode overrides for the mobile steps */
-[data-theme="light"] .progress-step {
-    border-color: rgba(0, 0, 0, 0.1);
-    background: #fff;
-    color: var(--text-secondary);
-    /* Ensure inactive text is visible */
-}
-
-[data-theme="light"] .progress-step.active {
-    background: var(--accent-blue);
-    color: #ffffff;
-    border-color: var(--accent-blue);
-}
-
-@media (max-width: 480px) {
-    .progress-bar {
-        gap: 0.25rem;
+    /* Fix footer buttons on mobile */
+    .calculator-footer {
+        gap: 1rem;
     }
 
-    .progress-step {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.7rem;
+    .calculator-footer .spacer {
+        display: none;
+        /* Remove spacer to rely on flex-grow */
+    }
+
+    .calculator-footer .btn {
+        flex: 1;
+        /* Make buttons equal width */
+        min-width: 0;
+        /* Allow shrinking if needed */
+        justify-content: center;
+    }
+
+    /* Light mode overrides for the mobile steps */
+    [data-theme="light"] .progress-step {
+        border-color: rgba(0, 0, 0, 0.1);
+        background: #fff;
+        color: var(--text-secondary);
+        /* Ensure inactive text is visible */
+    }
+
+    [data-theme="light"] .progress-step.active {
+        background: transparent;
+        color: var(--accent-blue);
+        border-color: var(--accent-blue);
+    }
+
+    @media (max-width: 480px) {
+        .calc-progress-bar {
+            gap: 0.25rem;
+        }
+
+        .progress-step {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.7rem;
+        }
     }
 }

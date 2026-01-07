@@ -7,6 +7,43 @@
     gap: 10px;
 }
 
+.weekly-review-container .stat-card {
+    background: rgba(30, 30, 30, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Left align */
+    text-align: left;
+    width: 100%;
+}
+
+.stat-info h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.stat-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
 .crm-btn-warning {
     background: #f59e0b;
     color: #000;
@@ -141,4 +178,14 @@
     .review-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Remove backgrounds from weekly stats icons as requested */
+.stat-icon {
+    background: transparent !important;
+}
+
+.stat-icon.purple,
+.stat-icon.blue {
+    background: transparent !important;
 }

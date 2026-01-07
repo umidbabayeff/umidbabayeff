@@ -191,3 +191,30 @@
 .quick-action-btn.secondary:hover {
     background: rgba(255, 255, 255, 0.1);
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .crm-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .dash-list-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .item-content {
+        width: 100%;
+    }
+
+    .action-icon {
+        align-self: flex-end;
+    }
+}

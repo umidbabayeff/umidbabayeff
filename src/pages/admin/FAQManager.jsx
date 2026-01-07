@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../lib/supabaseClient';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import './FAQManager.css';
 
 const FAQManager = () => {
@@ -23,7 +25,7 @@ const FAQManager = () => {
     }, [language]);
 
     useEffect(() => {
-        fetchFaqs();
+        void fetchFaqs();
     }, [fetchFaqs]);
 
     const handleSubmit = async (e) => {
@@ -43,7 +45,7 @@ const FAQManager = () => {
             }
             setFormData({ question: '', answer: '' });
             setEditingId(null);
-            fetchFaqs();
+            await fetchFaqs();
         } catch (error) {
             console.error('Error saving FAQ:', error);
             alert('Error saving FAQ');
@@ -63,7 +65,7 @@ const FAQManager = () => {
                 .delete()
                 .eq('id', id);
             if (error) throw error;
-            fetchFaqs();
+            await fetchFaqs();
         } catch (error) {
             console.error('Error deleting FAQ:', error);
         }
@@ -117,7 +119,7 @@ const FAQManager = () => {
                 if (insertError) throw insertError;
 
                 alert(`SUCCESS! Imported ${allFaqs.length} FAQs.\nRefresh the page if you don't see them immediately.`);
-                fetchFaqs(); // Refresh list
+                await fetchFaqs(); // Refresh list
             } else {
                 alert('No FAQs found to import.\nLog:\n' + debugLog);
             }
@@ -132,9 +134,9 @@ const FAQManager = () => {
 
     return (
         <div className="faq-manager">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="faq-header-row">
                 <h1>FAQ Manager</h1>
-                <button onClick={handleImport} className="btn-secondary" style={{ backgroundColor: '#6366f1' }}>
+                <button onClick={() => void handleImport()} className="btn-secondary" style={{ backgroundColor: '#6366f1' }}>
                     Import from JSON
                 </button>
             </div>
@@ -157,7 +159,7 @@ const FAQManager = () => {
 
             <div className="faq-form-container">
                 <h2>{editingId ? 'Edit FAQ' : 'Add New FAQ'}</h2>
-                <form onSubmit={handleSubmit} className="faq-form">
+                <form onSubmit={(e) => void handleSubmit(e)} className="faq-form">
                     <div className="form-group">
                         <label>Question</label>
                         <input
@@ -195,7 +197,7 @@ const FAQManager = () => {
                 </form>
             </div>
 
-            <div className="faq-list-container">
+            <div className="faq-list-container" style={{ marginTop: '40px' }}>
                 <h2>Existing FAQs ({language.toUpperCase()})</h2>
                 {loading ? (
                     <p>Loading...</p>
@@ -211,11 +213,15 @@ const FAQManager = () => {
                         <tbody>
                             {faqs.map((faq) => (
                                 <tr key={faq.id}>
-                                    <td>{faq.question}</td>
-                                    <td>{faq.answer.substring(0, 50)}...</td>
-                                    <td>
-                                        <button onClick={() => handleEdit(faq)} className="action-btn edit">Edit</button>
-                                        <button onClick={() => handleDelete(faq.id)} className="action-btn delete">Delete</button>
+                                    <td data-label="Question">{faq.question}</td>
+                                    <td data-label="Answer">{faq.answer.substring(0, 50)}...</td>
+                                    <td data-label="Actions">
+                                        <button onClick={() => handleEdit(faq)} className="action-btn edit" aria-label="Edit">
+                                            <FaEdit />
+                                        </button>
+                                        <button onClick={() => void handleDelete(faq.id)} className="action-btn delete" aria-label="Delete">
+                                            <FaTrash />
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
