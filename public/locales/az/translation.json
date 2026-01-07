@@ -742,5 +742,114 @@
                 "new_key": "Yeni tərcümə açarını daxil edin (məsələn, hero.title):"
             }
         }
+    },
+    "careers": {
+        "hero": {
+            "title": "Rəqəmsal Komandamıza Qoşulun",
+            "subtitle": "Biz müasir alətlər və Sİ istifadə edərək veb, mobil, avtomatlaşdırma və SaaS məhsulları qururuq.",
+            "tech_note": "Biz Antigravity, FlutterFlow, Supabase, Firebase, Sİ (GPT / Gemini) və müasir kodsuz & az-kodlu həllərlə işləyirik."
+        },
+        "positions": {
+            "title": "Açıq Vakansiyalar",
+            "responsibilities": "Öhdəliklər:",
+            "requirements": "Tələblər:",
+            "roles": {
+                "flutterflow": {
+                    "title": "FlutterFlow / UI Developer",
+                    "resp_1": "FlutterFlow-da UI ekranları qurmaq",
+                    "resp_2": "Adaptiv layout-larla işləmək",
+                    "resp_3": "Təqdim olunan struktura əsasən dizaynları tətbiq etmək",
+                    "resp_4": "Texniki tapşırıqlara və müddətlərə riayət etmək",
+                    "req_1": "FlutterFlow ilə təcrübə",
+                    "req_2": "UI/UX əsasları anlayışı",
+                    "req_3": "Detallara diqqət",
+                    "req_4": "Tapşırıqlar və təlimatlarla işləmək bacarığı"
+                },
+                "designer": {
+                    "title": "Dizayner / Məzmun Assistenti",
+                    "resp_1": "Stitch və Canva istifadə edərək vizuallar yaratmaq",
+                    "resp_2": "Veb və mobil layihələr üçün aktivlər hazırlamaq",
+                    "resp_3": "Mətn formatlaşdırma və məzmun strukturuna kömək etmək",
+                    "req_1": "Baza dizayn anlayışı",
+                    "req_2": "Brend qaydalarına riayət etmək bacarığı",
+                    "req_3": "Məsuliyyət və ardıcıllıq"
+                }
+            }
+        },
+        "process": {
+            "title": "İşə Qəbul Prosesi",
+            "steps": {
+                "app": "Müraciət",
+                "test": "Məntiq Testi",
+                "task": "Praktik Tapşırıq",
+                "interview": "Qısa Müsahibə"
+            }
+        },
+        "form": {
+            "title": "Müraciət Forması",
+            "fields": {
+                "name": "Ad Soyad",
+                "email": "E-poçt",
+                "contact": "Telegram / Əlaqə",
+                "position": "Vəzifə",
+                "experience": "Təcrübə Səviyyəsi",
+                "tools": "İşlədiyiniz alətlər",
+                "why_us": "Niyə bizimlə işləmək istəyirsiniz?"
+            },
+            "levels": {
+                "junior": "Junior",
+                "middle": "Middle",
+                "senior": "Senior"
+            },
+            "buttons": {
+                "next": "Növbəti Addım",
+                "submit_test": "Testi Göndər",
+                "submit_app": "Müraciəti Göndər",
+                "home": "Ana Səhifəyə Qayıt"
+            }
+        },
+        "test": {
+            "title": "Məntiq və Diqqət Testi",
+            "subtitle": "Zəhmət olmasa diqqətlə cavab verin. Dəqiqlik dəyərlərimizə uyğundur.",
+            "questions": {
+                "q1": "Təsdiqdən sonra tapşırıq təsviri dəyişərsə, nə etməlisiniz?",
+                "q1_opt_a": "Köhnə versiyanı davam etdirmək",
+                "q1_opt_b": "Davam etməzdən əvvəl dəqiqləşdirmək",
+                "q2": "İstehsalat işində nə daha vacibdir?",
+                "q2_opt_a": "Dəqiqlik olmadan sürət",
+                "q2_opt_b": "Dəqiqlik və ardıcıllıq",
+                "q3": "Tapşırığı başa düşmürsünüzsə, doğru hərəkət nədir?",
+                "q3_opt_a": "Təxmin etmək",
+                "q3_opt_b": "Sual vermək",
+                "q4": "Komanda işində məsuliyyət nə deməkdir?",
+                "q4_opt_a": "Yalnız maraqlı olanı etmək",
+                "q4_opt_b": "Razılaşdırılmış tapşırıqları vaxtında yerinə yetirmək",
+                "q5": "Rəylərə (feedback) necə yanaşırsınız?",
+                "q5_opt_a": "Məhəl qoymuram",
+                "q5_opt_b": "İnkişaf üçün istifadə edirəm"
+            }
+        },
+        "task": {
+            "pass_title": "Əla iş! Testi keçdiniz.",
+            "pass_subtitle": "Son bir addım: Bacarıqlarınızı bizə göstərin.",
+            "label": "Praktik Tapşırıq:",
+            "instructions": {
+                "flutterflow": "Adaptiv dizaynlı sadə 3 ekranlı tətbiq planı yaradın. FlutterFlow və ya sadəcə dizayn aləti istifadə edə bilərsiniz, lakin FF üstünlük verilir.",
+                "designer": "\"Avtomatlaşdırma\"nı təmsil edən sadə UI bloku və ya vizual yaradın (Stitch / Canva istifadə edərək)."
+            },
+            "upload_instruction": "Zəhmət olmasa zip faylı və ya link/skrinşotları olan PDF yükləyin.",
+            "upload_label": "Tapşırıq Həllini Yüklə"
+        },
+        "success": {
+            "title": "Müraciət Qəbul Edildi!",
+            "message": "Prosesi tamamladığınız üçün təşəkkür edirik. Tapşırıq və məlumatlarınızı aldıq. Müraciətinizi nəzərdən keçirib tezliklə sizinlə əlaqə saxlayacağıq."
+        },
+        "fail": {
+            "title": "Müraciət üçün təşəkkürlər.",
+            "message": "Yenidən cəhd etmək istəməsəniz, məlumatlarınızı aldıq. Birinci mərhələni keçsəniz sizinlə əlaqə saxlayacağıq."
+        },
+        "alerts": {
+            "error_upload": "Fayl yüklənərkən xəta baş verdi. Zəhmət olmasa yenidən cəhd edin."
+        }
     }
 }

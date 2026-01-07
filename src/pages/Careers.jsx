@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { BiChevronDown, BiCodeAlt, BiPaint, BiCheckCircle, BiXCircle, BiUpload, BiLoaderAlt } from 'react-icons/bi';
 import { supabase } from '../lib/supabaseClient';
 import './Careers.css';
+import { useTranslation } from 'react-i18next';
 
 const Careers = () => {
+    const { t } = useTranslation();
     const [expandedPos, setExpandedPos] = useState(null);
     const [step, setStep] = useState(1); // 1: Form, 2: Test, 3: Task (if passed), 4: Success/Fail
     const [loading, setLoading] = useState(false);
@@ -31,34 +33,34 @@ const Careers = () => {
     const positions = [
         {
             id: 1,
-            title: "FlutterFlow / UI Developer",
+            title: t('careers.positions.roles.flutterflow.title'),
             icon: <BiCodeAlt />,
             responsibilities: [
-                "Build UI screens in FlutterFlow",
-                "Work with adaptive layouts",
-                "Implement designs based on provided structure",
-                "Follow technical tasks and deadlines"
+                t('careers.positions.roles.flutterflow.resp_1'),
+                t('careers.positions.roles.flutterflow.resp_2'),
+                t('careers.positions.roles.flutterflow.resp_3'),
+                t('careers.positions.roles.flutterflow.resp_4')
             ],
             requirements: [
-                "Experience with FlutterFlow",
-                "Understanding of UI/UX basics",
-                "Attention to detail",
-                "Ability to work with tasks and instructions"
+                t('careers.positions.roles.flutterflow.req_1'),
+                t('careers.positions.roles.flutterflow.req_2'),
+                t('careers.positions.roles.flutterflow.req_3'),
+                t('careers.positions.roles.flutterflow.req_4')
             ]
         },
         {
             id: 2,
-            title: "Designer / Content Assistant",
+            title: t('careers.positions.roles.designer.title'),
             icon: <BiPaint />,
             responsibilities: [
-                "Create visuals using Stitch and Canva",
-                "Prepare assets for web and mobile projects",
-                "Assist with text formatting and content structure"
+                t('careers.positions.roles.designer.resp_1'),
+                t('careers.positions.roles.designer.resp_2'),
+                t('careers.positions.roles.designer.resp_3'),
             ],
             requirements: [
-                "Basic design sense",
-                "Ability to follow brand guidelines",
-                "Responsibility and consistency"
+                t('careers.positions.roles.designer.req_1'),
+                t('careers.positions.roles.designer.req_2'),
+                t('careers.positions.roles.designer.req_3'),
             ]
         }
     ];
@@ -68,42 +70,42 @@ const Careers = () => {
     const questions = [
         {
             id: 1,
-            text: "If a task description changes after approval, what should you do?",
+            text: t('careers.test.questions.q1'),
             options: [
-                { id: 'A', text: "Continue old version" },
-                { id: 'B', text: "Ask for clarification before proceeding", correct: true }
+                { id: 'A', text: t('careers.test.questions.q1_opt_a') },
+                { id: 'B', text: t('careers.test.questions.q1_opt_b'), correct: true }
             ]
         },
         {
             id: 2,
-            text: "What is more important in production work?",
+            text: t('careers.test.questions.q2'),
             options: [
-                { id: 'A', text: "Speed without accuracy" },
-                { id: 'B', text: "Accuracy and consistency", correct: true }
+                { id: 'A', text: t('careers.test.questions.q2_opt_a') },
+                { id: 'B', text: t('careers.test.questions.q2_opt_b'), correct: true }
             ]
         },
         {
             id: 3,
-            text: "If you don’t understand a task, what is the correct action?",
+            text: t('careers.test.questions.q3'),
             options: [
-                { id: 'A', text: "Guess" },
-                { id: 'B', text: "Ask questions", correct: true }
+                { id: 'A', text: t('careers.test.questions.q3_opt_a') },
+                { id: 'B', text: t('careers.test.questions.q3_opt_b'), correct: true }
             ]
         },
         {
             id: 4,
-            text: "What does responsibility mean in team work?",
+            text: t('careers.test.questions.q4'),
             options: [
-                { id: 'A', text: "Doing only what is interesting" },
-                { id: 'B', text: "Completing agreed tasks on time", correct: true }
+                { id: 'A', text: t('careers.test.questions.q4_opt_a') },
+                { id: 'B', text: t('careers.test.questions.q4_opt_b'), correct: true }
             ]
         },
         {
             id: 5,
-            text: "How do you treat feedback?",
+            text: t('careers.test.questions.q5'),
             options: [
-                { id: 'A', text: "Ignore it" },
-                { id: 'B', text: "Use it to improve", correct: true }
+                { id: 'A', text: t('careers.test.questions.q5_opt_a') },
+                { id: 'B', text: t('careers.test.questions.q5_opt_b'), correct: true }
             ]
         }
     ];
@@ -214,7 +216,7 @@ const Careers = () => {
             setStep(5); // Success Task Submitted
         } catch (err) {
             console.error(err);
-            alert('Error uploading file. Please try again.');
+            alert(t('careers.alerts.error_upload'));
         } finally {
             setLoading(false);
         }
@@ -225,16 +227,16 @@ const Careers = () => {
             {/* Hero */}
             <section className="careers-hero">
                 <div className="container">
-                    <h1>Join Our Digital Team</h1>
-                    <h4>We are building web, mobile, automation and SaaS products using modern tools and AI.</h4>
-                    <p className="tech-note">We work with Antigravity, FlutterFlow, Supabase, Firebase, AI (GPT / Gemini), and modern no-code & low-code solutions.</p>
+                    <h1>{t('careers.hero.title')}</h1>
+                    <h4>{t('careers.hero.subtitle')}</h4>
+                    <p className="tech-note">{t('careers.hero.tech_note')}</p>
                 </div>
             </section>
 
             {/* Positions */}
             <section className="careers-section">
                 <div className="container">
-                    <h2 className="section-title">Open Positions</h2>
+                    <h2 className="section-title">{t('careers.positions.title')}</h2>
                     <div className="positions-grid">
                         {positions.map(pos => (
                             <div key={pos.id} className={`position-card ${expandedPos === pos.id ? 'expanded' : ''}`}>
@@ -247,11 +249,11 @@ const Careers = () => {
                                 </div>
                                 {expandedPos === pos.id && (
                                     <div className="position-content">
-                                        <h4>Responsibilities:</h4>
+                                        <h4>{t('careers.positions.responsibilities')}</h4>
                                         <ul>
                                             {pos.responsibilities.map((r, i) => <li key={i}>{r}</li>)}
                                         </ul>
-                                        <h4>Requirements:</h4>
+                                        <h4>{t('careers.positions.requirements')}</h4>
                                         <ul>
                                             {pos.requirements.map((r, i) => <li key={i}>{r}</li>)}
                                         </ul>
@@ -266,13 +268,13 @@ const Careers = () => {
             {/* Process */}
             <section className="careers-section">
                 <div className="container">
-                    <h2 className="section-title">Hiring Process</h2>
+                    <h2 className="section-title">{t('careers.process.title')}</h2>
                     <div className="hiring-steps">
                         {[
-                            { step: 1, title: 'Application' },
-                            { step: 2, title: 'Logic Test' },
-                            { step: 3, title: 'Practical Task' },
-                            { step: 4, title: 'Short Interview' }
+                            { step: 1, title: t('careers.process.steps.app') },
+                            { step: 2, title: t('careers.process.steps.test') },
+                            { step: 3, title: t('careers.process.steps.task') },
+                            { step: 4, title: t('careers.process.steps.interview') }
                         ].map(s => (
                             <div key={s.step} className="hiring-step">
                                 <div className="step-number">{s.step}</div>
@@ -291,37 +293,37 @@ const Careers = () => {
                         {/* Step 1: Form */}
                         {step === 1 && (
                             <form onSubmit={handleFormSubmit}>
-                                <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>Application Form</h3>
+                                <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>{t('careers.form.title')}</h3>
 
                                 <div className="form-group">
-                                    <label>Full Name</label>
+                                    <label>{t('careers.form.fields.name')}</label>
                                     <input required name="full_name" className="form-control" value={formData.full_name} onChange={handleInputChange} />
                                 </div>
                                 <div className="form-group">
-                                    <label>Email</label>
+                                    <label>{t('careers.form.fields.email')}</label>
                                     <input required type="email" name="email" className="form-control" value={formData.email} onChange={handleInputChange} />
                                 </div>
                                 <div className="form-group">
-                                    <label>Telegram / Contact</label>
+                                    <label>{t('careers.form.fields.contact')}</label>
                                     <input required name="contact" className="form-control" value={formData.contact} onChange={handleInputChange} />
                                 </div>
                                 <div className="form-group">
-                                    <label>Position</label>
+                                    <label>{t('careers.form.fields.position')}</label>
                                     <select name="position" className="form-control" value={formData.position} onChange={handleInputChange}>
-                                        <option>FlutterFlow / UI Developer</option>
-                                        <option>Designer / Content Assistant</option>
+                                        <option>{t('careers.positions.roles.flutterflow.title')}</option>
+                                        <option>{t('careers.positions.roles.designer.title')}</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
-                                    <label>Experience Level</label>
+                                    <label>{t('careers.form.fields.experience')}</label>
                                     <select name="experience" className="form-control" value={formData.experience} onChange={handleInputChange}>
-                                        <option>Junior</option>
-                                        <option>Middle</option>
-                                        <option>Senior</option>
+                                        <option>{t('careers.form.levels.junior')}</option>
+                                        <option>{t('careers.form.levels.middle')}</option>
+                                        <option>{t('careers.form.levels.senior')}</option>
                                     </select>
                                 </div>
                                 <div className="form-group">
-                                    <label>Tools you have worked with</label>
+                                    <label>{t('careers.form.fields.tools')}</label>
                                     <div className="checkbox-group">
                                         {toolsList.map(tool => (
                                             <label key={tool} className="checkbox-label">
@@ -332,12 +334,12 @@ const Careers = () => {
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <label>Why do you want to work with us?</label>
+                                    <label>{t('careers.form.fields.why_us')}</label>
                                     <textarea required name="why_us" className="form-control" rows="3" value={formData.why_us} onChange={handleInputChange}></textarea>
                                 </div>
 
                                 <div className="form-actions">
-                                    <button type="submit" className="btn-primary">Next Step</button>
+                                    <button type="submit" className="btn-primary">{t('careers.form.buttons.next')}</button>
                                 </div>
                             </form>
                         )}
@@ -345,8 +347,8 @@ const Careers = () => {
                         {/* Step 2: Test */}
                         {step === 2 && (
                             <div>
-                                <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>Logic & Attention Test</h3>
-                                <p style={{ marginBottom: '2rem', color: 'var(--text-secondary)', textAlign: 'center' }}>Please answer carefully. Accuracy matches our values.</p>
+                                <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>{t('careers.test.title')}</h3>
+                                <p style={{ marginBottom: '2rem', color: 'var(--text-secondary)', textAlign: 'center' }}>{t('careers.test.subtitle')}</p>
 
                                 {questions.map((q, idx) => (
                                     <div key={q.id} className="test-question">
@@ -371,7 +373,7 @@ const Careers = () => {
                                         onClick={() => void handleTestSubmit()}
                                         disabled={loading || Object.keys(testAnswers).length < 5}
                                     >
-                                        {loading ? <BiLoaderAlt className="animate-spin" /> : "Submit Test"}
+                                        {loading ? <BiLoaderAlt className="animate-spin" /> : t('careers.form.buttons.submit_test')}
                                     </button>
                                 </div>
                             </div>
@@ -380,21 +382,21 @@ const Careers = () => {
                         {/* Step 3: Practical Task */}
                         {step === 3 && (
                             <div>
-                                <h3 style={{ marginBottom: '1rem', textAlign: 'center' }}>Great job! You passed the test.</h3>
-                                <p style={{ marginBottom: '2rem', textAlign: 'center', color: 'var(--accent-blue)' }}>One last step: Show us your skills.</p>
+                                <h3 style={{ marginBottom: '1rem', textAlign: 'center' }}>{t('careers.task.pass_title')}</h3>
+                                <p style={{ marginBottom: '2rem', textAlign: 'center', color: 'var(--accent-blue)' }}>{t('careers.task.pass_subtitle')}</p>
 
                                 <div className="task-instructions">
-                                    <h4>Practical Task:</h4>
+                                    <h4>{t('careers.task.label')}</h4>
                                     {formData.position.includes('FlutterFlow') ? (
-                                        <p>Create a simple 3-screen app layout with responsive design. You can use FlutterFlow or just a design tool, but FF is preferred.</p>
+                                        <p>{t('careers.task.instructions.flutterflow')}</p>
                                     ) : (
-                                        <p>Create a simple UI block or visual using Stitch / Canva that represents "Automation".</p>
+                                        <p>{t('careers.task.instructions.designer')}</p>
                                     )}
-                                    <p style={{ marginTop: '1rem', fontSize: '0.9rem', opacity: 0.8 }}>Please upload a zip file or a PDF with link/screenshots.</p>
+                                    <p style={{ marginTop: '1rem', fontSize: '0.9rem', opacity: 0.8 }}>{t('careers.task.upload_instruction')}</p>
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Upload Task Solution</label>
+                                    <label>{t('careers.task.upload_label')}</label>
                                     <div style={{ border: '2px dashed rgba(255,255,255,0.2)', padding: '2rem', textAlign: 'center', borderRadius: '8px' }}>
                                         <BiUpload style={{ fontSize: '2rem', marginBottom: '1rem' }} />
                                         <input type="file" onChange={(e) => setTaskFile(e.target.files[0])} style={{ display: 'block', margin: '0 auto' }} />
@@ -407,7 +409,7 @@ const Careers = () => {
                                         onClick={() => void handleTaskUpload()}
                                         disabled={loading || !taskFile}
                                     >
-                                        {loading ? <BiLoaderAlt className="animate-spin" /> : "Submit Application"}
+                                        {loading ? <BiLoaderAlt className="animate-spin" /> : t('careers.form.buttons.submit_app')}
                                     </button>
                                 </div>
                             </div>
@@ -421,21 +423,21 @@ const Careers = () => {
                                     {step === 5 ? (
                                         <>
                                             <BiCheckCircle className="status-icon" style={{ color: 'var(--accent-blue)' }} />
-                                            <h3>Application Received!</h3>
-                                            <p>Thank you for completing the process. We have received your task and details. We will review your submission and contact you soon.</p>
+                                            <h3>{t('careers.success.title')}</h3>
+                                            <p>{t('careers.success.message')}</p>
                                         </>
                                     ) : (
                                         <>
                                             <BiXCircle className="status-icon" style={{ color: 'var(--text-secondary)' }} />
-                                            <h3>Thank you for applying.</h3>
-                                            <p>Unless you'd like to try again, we have received your details. We will contact you if you pass the first stage.</p>
+                                            <h3>{t('careers.fail.title')}</h3>
+                                            <p>{t('careers.fail.message')}</p>
                                         </>
                                     )}
                                     <button
                                         className="btn-primary"
                                         onClick={() => window.location.href = '/'}
                                     >
-                                        Return to Home
+                                        {t('careers.form.buttons.home')}
                                     </button>
                                 </div>
                             </div>
