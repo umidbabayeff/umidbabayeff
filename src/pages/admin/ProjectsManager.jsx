@@ -59,11 +59,14 @@ const ProjectsManager = () => {
 
     const generateProjectFromTemplate = async (projectId, templateId) => {
         // 1. Fetch Template Steps
-        const { data: steps } = await supabase.from('template_steps').select('*').eq('template_id', templateId).order('order');
-        if (!steps || steps.length === 0) return;
+        const { data: stepsData } = await supabase.from('template_steps').select('*').eq('template_id', templateId).order('order');
+        if (!stepsData || stepsData.length === 0) return;
+        /** @type {{id: number, title: string, order: number}[]} */
+        const steps = stepsData;
 
         // 2. Fetch Template Tasks
         const { data: tasks } = await supabase.from('template_tasks').select('*').in('template_step_id', steps.map(s => s.id));
+        /** @type {Record<string, any[]>} */
         const tasksMap = {};
         tasks?.forEach(t => {
             if (!tasksMap[t.template_step_id]) tasksMap[t.template_step_id] = [];

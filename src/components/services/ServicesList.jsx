@@ -21,7 +21,7 @@ const ServicesList = () => {
             if (error) {
                 console.error('Error fetching services:', error);
             } else if (data && data.length > 0) {
-                setServices(data);
+                setServices(/** @type {any[]} */(data));
             } else {
                 // Define fallback if needed, or leave empty to show nothing
                 setServices([]);
@@ -29,7 +29,7 @@ const ServicesList = () => {
             setLoading(false);
         };
 
-        fetchServices();
+        void fetchServices();
     }, [i18n.language]);
 
     if (loading) return null; // Or a skeleton loader

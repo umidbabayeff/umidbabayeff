@@ -4,12 +4,22 @@ import { useTranslation } from 'react-i18next';
 import { supabase } from '../../lib/supabaseClient';
 import './ValueProp.css';
 
+/**
+ * @typedef {Object} Benefit
+ * @property {number} id
+ * @property {string} title
+ * @property {string} description
+ * @property {string} icon
+ * @property {string} language_code
+ */
+
 const ValueProp = () => {
     const { t, i18n } = useTranslation();
-    const [benefits, setBenefits] = useState([]);
+    const [benefits, setBenefits] = useState(/** @type {Benefit[]} */([]));
 
 
     // Map string icon names to React Components
+    /** @type {Record<string, JSX.Element>} */
     const iconMap = {
         'building': <BiBuildings />,
         'cogs': <BiCog />,
@@ -38,7 +48,7 @@ const ValueProp = () => {
                 if (error) {
                     console.error('Error fetching benefits:', error);
                 } else if (data && data.length > 0) {
-                    setBenefits(data);
+                    setBenefits(/** @type {Benefit[]} */(data));
                 } else {
                     // Fallback or empty
                     setBenefits([]);
@@ -48,7 +58,7 @@ const ValueProp = () => {
             }
         };
 
-        fetchBenefits();
+        void fetchBenefits();
     }, [i18n.language]);
 
     // If loading or no dynamic data, fall back to hardcoded existing logic? 
@@ -68,7 +78,7 @@ const ValueProp = () => {
                         benefits.map((benefit) => (
                             <div key={benefit.id} className="value-card">
                                 <div className="value-icon">
-                                    {iconMap[benefit.icon] || <BiBuildings />}
+                                    {iconMap[benefit.icon] ?? <BiBuildings />}
                                 </div>
                                 <h3>{benefit.title}</h3>
                                 <p>{benefit.description}</p>

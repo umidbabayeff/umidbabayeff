@@ -5,8 +5,9 @@ import './LanguageSwitcher.css';
 const LanguageSwitcher = () => {
     const { i18n } = useTranslation();
 
-    const changeLanguage = (e) => {
-        i18n.changeLanguage(e.target.value);
+    const changeLanguage = (/** @type {any} */ e) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
+        void i18n.changeLanguage(/** @type {string} */(e.target.value));
     };
 
     return (

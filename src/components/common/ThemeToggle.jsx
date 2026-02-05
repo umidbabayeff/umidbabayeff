@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './ThemeToggle.css';
 
 const SunIcon = () => (
@@ -44,13 +44,11 @@ const MoonIcon = () => (
 );
 
 const ThemeToggle = () => {
-    const [theme, setTheme] = useState('dark');
-
-    useEffect(() => {
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        setTheme(savedTheme);
+    const [theme, setTheme] = useState(() => {
+        const savedTheme = localStorage.getItem('theme') ?? 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
-    }, []);
+        return savedTheme;
+    });
 
     const toggleTheme = () => {
         const newTheme = theme === 'dark' ? 'light' : 'dark';

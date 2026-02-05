@@ -16,13 +16,14 @@ const Rocket = () => {
             { threshold: 0.1 } // Trigger when 10% visible
         );
 
-        if (rocketRef.current) {
-            observer.observe(rocketRef.current);
+        const currentRef = rocketRef.current;
+        if (currentRef) {
+            observer.observe(currentRef);
         }
 
         return () => {
-            if (rocketRef.current) {
-                observer.unobserve(rocketRef.current);
+            if (currentRef) {
+                observer.unobserve(currentRef);
             }
         };
     }, []);

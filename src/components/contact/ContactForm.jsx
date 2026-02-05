@@ -19,6 +19,9 @@ const ContactForm = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [showModal, setShowModal] = useState(false);
 
+    /**
+     * @param {{ target: { name: string, value: string } }} e
+     */
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -28,18 +31,21 @@ const ContactForm = () => {
     };
 
     const validateForm = () => {
-        if (!formData.name.trim()) return t('contact.errors.name_required') || 'Name is required';
-        if (!formData.email.trim()) return t('contact.errors.email_required') || 'Email is required';
+        if (!formData.name.trim()) return t('contact.errors.name_required') ?? 'Name is required';
+        if (!formData.email.trim()) return t('contact.errors.email_required') ?? 'Email is required';
 
         // Simple email regex for validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) return t('contact.errors.email_invalid') || 'Please enter a valid email';
+        if (!emailRegex.test(formData.email)) return t('contact.errors.email_invalid') ?? 'Please enter a valid email';
 
-        if (!formData.message.trim()) return t('contact.errors.message_required') || 'Message is required';
+        if (!formData.message.trim()) return t('contact.errors.message_required') ?? 'Message is required';
 
         return null;
     };
 
+    /**
+     * @param {{ preventDefault: () => void }} e
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrorMessage('');
@@ -89,7 +95,7 @@ const ContactForm = () => {
 
         } catch (error) {
             console.error('Error sending message:', error);
-            setErrorMessage(t('contact.errors.generic_error') || 'Failed to send message. Please try again later.');
+            setErrorMessage(t('contact.errors.generic_error') ?? 'Failed to send message. Please try again later.');
             setStatus('error');
         }
     };
@@ -123,7 +129,7 @@ const ContactForm = () => {
                 </div>
 
                 <div className="contact-form-wrapper">
-                    <form onSubmit={handleSubmit} className="contact-form">
+                    <form onSubmit={(e) => void handleSubmit(e)} className="contact-form">
                         <div className="form-group">
                             <label htmlFor="name">{t('contact.form.name')}</label>
                             <input

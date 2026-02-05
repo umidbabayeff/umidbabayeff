@@ -4,16 +4,24 @@ import { getIcon } from '../../lib/IconMapper';
 import './TechStack.css';
 import { useTranslation } from 'react-i18next';
 
+/**
+ * @typedef {Object} TechItem
+ * @property {number} id
+ * @property {string} name
+ * @property {string} category
+ * @property {string} icon
+ */
+
 const TechStack = () => {
     const { t } = useTranslation();
-    const [techGroups, setTechGroups] = useState([]);
+    const [techGroups, setTechGroups] = useState(/** @type {{ category: string, items: TechItem[] }[]} */([]));
 
     useEffect(() => {
         const fetchTechs = async () => {
             // We can use 'en' for all since tech names usually don't change, 
             // but if we supported translated categories via DB, we'd use lang.
             // For now, let's just fetch all and group them.
-            const { data, error } = await supabase
+            const { data: rawData, error } = await supabase
                 .from('technologies')
                 .select('*')
                 .order('id', { ascending: true });
@@ -23,7 +31,11 @@ const TechStack = () => {
                 return;
             }
 
+            /** @type {TechItem[]} */
+            const data = rawData;
+
             // Group by category
+            /** @type {Record<string, TechItem[]>} */
             const groups = {
                 'tech.categories.frontend': [],
                 'tech.categories.backend': [],
@@ -44,7 +56,7 @@ const TechStack = () => {
             setTechGroups(formattedGroups);
         };
 
-        fetchTechs();
+        void fetchTechs();
     }, []);
 
     return (

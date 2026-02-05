@@ -10,13 +10,34 @@ const generateSnow = (count) => {
     return shadow.slice(0, -2); // Remove last comma
 };
 
+/**
+ * @typedef {Object} Star
+ * @property {number} id
+ * @property {string} top
+ * @property {string} left
+ * @property {string} size
+ * @property {string} animationDuration
+ * @property {string} animationDelay
+ */
+
+/**
+ * @typedef {Object} ShootingStar
+ * @property {number} id
+ * @property {string} top
+ * @property {string} left
+ * @property {string} animationDuration
+ * @property {string} animationDelay
+ */
+
 const StarBackground = () => {
     const [state, setState] = useState({
         snow1: '',
         snow2: '',
         snow3: '',
-        stars: [],
-        shootingStars: []
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        stars: /** @type {Star[]} */ ([]),
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        shootingStars: /** @type {ShootingStar[]} */ ([])
     });
 
     useEffect(() => {

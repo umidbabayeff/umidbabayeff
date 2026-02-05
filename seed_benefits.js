@@ -11,6 +11,7 @@ const __dirname = dirname(__filename);
 
 // Load env vars manually
 const envPath = join(__dirname, '.env');
+/** @type {Record<string, string>} */
 let envConfig = {};
 try {
     const envContent = fs.readFileSync(envPath, 'utf8');
@@ -24,8 +25,8 @@ try {
     console.error('Error reading .env file', e);
 }
 
-const supabaseUrl = envConfig.VITE_SUPABASE_URL;
-const supabaseKey = envConfig.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = envConfig['VITE_SUPABASE_URL'];
+const supabaseKey = envConfig['VITE_SUPABASE_ANON_KEY'];
 
 if (!supabaseUrl || !supabaseKey) {
     console.error('Missing Supabase credentials');

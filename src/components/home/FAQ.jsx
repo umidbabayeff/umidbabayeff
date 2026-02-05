@@ -27,14 +27,14 @@ const FAQ = () => {
             } else {
                 // Fallback to json if DB is empty
                 const local = t('faq.items', { returnObjects: true });
-                if (Array.isArray(local)) setFaqItems(local);
+                if (Array.isArray(local)) setFaqItems(/** @type {any[]} */(local));
             }
         };
 
-        fetchFaqs();
+        void fetchFaqs();
     }, [i18n.language, t]);
 
-    const toggleAccordion = (index) => {
+    const toggleAccordion = (/** @type {number} */ index) => {
         setActiveIndex(activeIndex === index ? null : index);
     };
 
