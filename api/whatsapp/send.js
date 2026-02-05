@@ -6,9 +6,6 @@ const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const GREEN_API_ID = process.env.GREEN_API_ID_INSTANCE;
 const GREEN_API_TOKEN = process.env.GREEN_API_API_TOKEN;
 
-// Initialize Supabase Admin Client
-const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-
 /**
  * @typedef {Object} VercelRequest
  * @property {string} method
@@ -30,6 +27,22 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
  * @param {VercelResponse} res
  */
 export default async function handler(req, res) {
+    // Debug: Check Environment Variables
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || !GREEN_API_ID || !GREEN_API_TOKEN) {
+        console.error('Missing Environment Variables');
+        return res.status(500).json({
+            error: 'Server Misconfiguration: Missing Environment Variables',
+            details: {
+                hasUrl: !!SUPABASE_URL,
+                hasKey: !!SUPABASE_SERVICE_ROLE_KEY,
+                hasGreenId: !!GREEN_API_ID,
+                hasGreenToken: !!GREEN_API_TOKEN
+            }
+        });
+    }
+
+    // Initialize Supabase Admin Client inside handler to handle errors gracefully
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
@@ -102,6 +115,14 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error('Error sending WhatsApp message:', error);
-        return res.status(500).json({ error: /** @type {Error} */ (error).message });
+        const err = /** @type {Error} */ (error);
+        const errorMessage = err.message ?? 'Unknown error';
+        return res.status(500).json({
+            error: errorMessage,
+            debug: {
+                receivedChatId: chatId,
+                greenApiUrl: `.../sendMessage/${GREEN_API_TOKEN ? '***' : 'MISSING'}`
+            }
+        });
     }
 }

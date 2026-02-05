@@ -94,6 +94,7 @@ const ClientsManager = () => {
         }
 
         // Format phone number: remove non-digits, strip leading 0, default to 994 for AZ
+        const originalPhone = client.phone;
         let cleanPhone = client.phone.replace(/\D/g, '');
         if (cleanPhone.startsWith('0')) {
             cleanPhone = cleanPhone.substring(1);
@@ -101,6 +102,8 @@ const ClientsManager = () => {
         if (cleanPhone.length === 9) {
             cleanPhone = '994' + cleanPhone;
         }
+        const finalChatId = cleanPhone + '@c.us';
+        console.log('WhatsApp Debug:', { originalPhone, cleanPhone, finalChatId });
 
         try {
             const response = await fetch('/api/whatsapp/send', {
