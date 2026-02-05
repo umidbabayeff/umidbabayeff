@@ -1,24 +1,27 @@
 .wa-chat-container {
     display: flex;
     height: 600px;
-    border: 1px solid var(--border-color, #ddd);
+    border: 1px solid var(--border-color, #333);
     border-radius: 12px;
     overflow: hidden;
-    background-color: var(--bg-card, #fff);
+    background-color: #111b21;
+    /* Dark BG */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #e9edef;
 }
 
 .wa-sidebar {
     width: 300px;
-    border-right: 1px solid var(--border-color, #ddd);
+    border-right: 1px solid #202c33;
     display: flex;
     flex-direction: column;
+    background-color: #111b21;
 }
 
 .wa-sidebar-header {
     padding: 1rem;
-    background-color: var(--bg-secondary, #f5f5f5);
-    border-bottom: 1px solid var(--border-color, #ddd);
+    background-color: #202c33;
+    border-bottom: 1px solid #202c33;
 }
 
 .wa-chat-list {
@@ -31,22 +34,21 @@
     align-items: center;
     padding: 10px 15px;
     cursor: pointer;
-    border-bottom: 1px solid var(--border-subtle, #f0f0f0);
+    border-bottom: 1px solid #202c33;
     transition: background-color 0.2s;
 }
 
 .wa-chat-item:hover {
-    background-color: var(--hover-bg, #f9f9f9);
+    background-color: #202c33;
 }
 
 .wa-chat-item.active {
-    background-color: var(--active-bg, #f0f8ff);
-    /* Light blue for active */
+    background-color: #2a3942;
 }
 
 .wa-avatar {
     font-size: 2.5rem;
-    color: #ccc;
+    color: #667781;
     margin-right: 15px;
 }
 
@@ -61,11 +63,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: #e9edef;
 }
 
 .wa-chat-last-msg {
     font-size: 0.85rem;
-    color: #666;
+    color: #8696a0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -73,7 +76,7 @@
 
 .wa-chat-time {
     font-size: 0.75rem;
-    color: #999;
+    color: #8696a0;
 }
 
 /* Main Chat Area */
@@ -81,15 +84,15 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    background-color: #0b141a;
     background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-    /* WhatsApp Doodle BG */
-    background-color: #e5ddd5;
+    background-blend-mode: overlay;
 }
 
 .wa-header {
     padding: 10px 20px;
-    background-color: var(--bg-secondary, #f5f5f5);
-    border-bottom: 1px solid var(--border-color, #ddd);
+    background-color: #202c33;
+    border-bottom: 1px solid #202c33;
     display: flex;
     align-items: center;
 }
@@ -97,11 +100,12 @@
 .wa-header-info h3 {
     margin: 0;
     font-size: 1rem;
+    color: #e9edef;
 }
 
 .wa-header-info span {
     font-size: 0.8rem;
-    color: #666;
+    color: #8696a0;
 }
 
 .wa-messages-area {
@@ -131,19 +135,21 @@
     padding: 8px 12px;
     border-radius: 8px;
     position: relative;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     font-size: 0.95rem;
     word-wrap: break-word;
+    color: #e9edef;
 }
 
 .wa-message.admin .wa-message-bubble {
-    background-color: #dcf8c6;
-    /* WhatsApp Light Green */
+    background-color: #005c4b;
+    /* WhatsApp Dark Sent Green */
     border-top-right-radius: 0;
 }
 
 .wa-message.client .wa-message-bubble {
-    background-color: #fff;
+    background-color: #202c33;
+    /* WhatsApp Dark Received */
     border-top-left-radius: 0;
 }
 
@@ -157,7 +163,7 @@
 
 .wa-time {
     font-size: 0.7rem;
-    color: #999;
+    color: #8696a0;
 }
 
 .wa-status {
@@ -165,14 +171,13 @@
 }
 
 .wa-status .read {
-    color: #4fc3f7;
-    /* Blue ticks */
+    color: #53bdeb;
 }
 
 /* Input Area */
 .wa-input-area {
     padding: 10px 20px;
-    background-color: #f0f0f0;
+    background-color: #202c33;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -187,13 +192,15 @@
 .wa-input-area input {
     flex: 1;
     padding: 10px 15px;
-    border-radius: 20px;
+    border-radius: 8px;
     border: none;
     outline: none;
+    background-color: #2a3942;
+    color: #e9edef;
 }
 
 .wa-input-area button {
-    background-color: #128c7e;
+    background-color: #00a884;
     color: white;
     border: none;
     border-radius: 50%;
@@ -207,7 +214,7 @@
 }
 
 .wa-input-area button:hover {
-    background-color: #075e54;
+    background-color: #008f6f;
 }
 
 .wa-empty-state {
@@ -215,6 +222,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #666;
-    background-color: #eee;
+    color: #8696a0;
+    background-color: #222e35;
+    border-bottom: 6px solid #00a884;
 }

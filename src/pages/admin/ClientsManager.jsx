@@ -108,7 +108,7 @@ const ClientsManager = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     chatId: cleanPhone + '@c.us',
-                    message: t('admin.clients.welcome_msg', 'Hello! This is Parketera, we received your request.'),
+                    message: t('admin.clients.welcome_msg', 'Hello! This is NewProject, we received your request.'),
                     clientId: client.id
                 }),
             });
