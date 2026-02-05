@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import './WhatsAppChat.css';
-import { FaPaperPlane, FaUserCircle, FaCheck, FaCheckDouble } from 'react-icons/fa';
+import { FaPaperPlane, FaUserCircle, FaCheck, FaCheckDouble, FaArrowLeft } from 'react-icons/fa';
 
 /**
  * WhatsApp Chat Component
@@ -99,9 +99,6 @@ const WhatsAppChat = () => {
         const text = newMessage;
         setNewMessage(''); // Clear input immediately
 
-        // 1. Optimistic UI update (optional, but good UX)
-        // We'll rely on Realtime here for simplicity, or add a temporary message
-
         // Sanitize phone number (same logic as ClientsManager)
         let cleanPhone = (activeChat.clients?.phone || '').replace(/\D/g, '');
         if (cleanPhone.startsWith('0')) {
@@ -134,7 +131,7 @@ const WhatsAppChat = () => {
     };
 
     return (
-        <div className="wa-chat-container">
+        <div className={`wa-chat-container ${activeChat ? 'conversation-active' : ''}`}>
             <div className="wa-sidebar">
                 <div className="wa-sidebar-header">
                     <h3>WhatsApp Chats</h3>
@@ -168,6 +165,9 @@ const WhatsAppChat = () => {
                 {activeChat ? (
                     <>
                         <div className="wa-header">
+                            <button className="wa-back-btn" onClick={() => setActiveChat(null)}>
+                                <FaArrowLeft />
+                            </button>
                             <div className="wa-avatar">
                                 <FaUserCircle />
                             </div>
