@@ -102,13 +102,22 @@ const WhatsAppChat = () => {
         // 1. Optimistic UI update (optional, but good UX)
         // We'll rely on Realtime here for simplicity, or add a temporary message
 
+        // Sanitize phone number (same logic as ClientsManager)
+        let cleanPhone = (activeChat.clients?.phone || '').replace(/\D/g, '');
+        if (cleanPhone.startsWith('0')) {
+            cleanPhone = cleanPhone.substring(1);
+        }
+        if (cleanPhone.length === 9) {
+            cleanPhone = '994' + cleanPhone;
+        }
+
         // 2. Call Vercel Function to send
         try {
             const response = await fetch('/api/whatsapp/send', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    chatId: (activeChat.clients?.phone || '') + '@c.us', // Format phone number
+                    chatId: cleanPhone + '@c.us',
                     message: text,
                     clientId: activeChat.client_id
                 }),
