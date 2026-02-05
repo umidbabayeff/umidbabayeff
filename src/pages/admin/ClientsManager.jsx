@@ -106,13 +106,16 @@ const ClientsManager = () => {
 
             const result = await response.json();
             if (response.ok) {
-                alert('Welcome message sent!');
+                // alert('Welcome message sent!'); 
+                setActiveTab('chat');
             } else {
-                alert('Failed to send: ' + result.error);
+                const proceed = window.confirm(`Failed to send message: ${result.error || response.statusText}. Open chat anyway?`);
+                if (proceed) setActiveTab('chat');
             }
         } catch (error) {
             console.error(error);
-            alert('Error sending message');
+            const proceed = window.confirm('Error sending message (API may not be running locally). Open chat anyway?');
+            if (proceed) setActiveTab('chat');
         }
     };
 
